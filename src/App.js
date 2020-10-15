@@ -1,11 +1,11 @@
 import React from 'react';
-import { Login } from './views/Login';
+import { Main } from './views/Main';
 import './styles/styles.scss';
 
 function App() {
   return (
     <>
-      <Login />
+      <Main />
     </>
   );
 }
