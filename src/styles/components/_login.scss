@@ -1,0 +1,99 @@
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  &__main {
+    background: #fafafa;
+    border-top: 10px solid $secondary;
+    border-radius: 5px;
+    padding: 6em 2em;
+    text-align: center;
+    width: 30%;
+    max-width: 500px;
+  }
+
+  .MuiButton-root {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.login__wrap {
+  width: 80%;
+  margin: auto;
+}
+
+.login__title {
+  font-size: 2.5em;
+  margin-top: 0;
+}
+
+.login__subtitle {
+  font-size: 1.5em;
+  font-weight: normal;
+  margin-bottom: 1.5em;
+}
+
+.login__btn-google {
+  width: 100%;
+
+  img {
+    width: 20px;
+    margin-right: 0.5em;
+  }
+}
+
+.login__separate {
+  display: block;
+  position: relative;
+  margin: 1.5em auto;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 45%;
+    height: 1px;
+    background-color: #ccc;
+  }
+
+  &:after {
+    left: auto;
+    right: 0;
+  }
+}
+
+.login__form {
+  width: 100%;
+  margin: auto;
+
+  .MuiInputLabel-outlined {
+    transform: translate(14px, 16px) scale(1);
+  }
+
+  .MuiFormControl-root {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+
+  .MuiOutlinedInput-input {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  button {
+    background: $secondary;
+    color: #fff;
+    margin-top: 1em;
+    width: 100%;
+
+    &:hover {
+      background: darken($secondary, 5);
+    }
+  }
+}
