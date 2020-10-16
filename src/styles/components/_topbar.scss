@@ -1,4 +1,69 @@
+.header {
+  position: fixed;
+  width: 100%;
+
+  @include mq(md) {
+    height: 55px;
+  }
+}
 .topbar {
   background: $primary;
-  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  padding: 0 1em;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-left: 0.5em;
+      margin-right: 1em;
+    }
+
+    h1 {
+      font-size: 1.3em;
+      font-weight: 500;
+    }
+  }
+
+  &__search {
+    background: $primary;
+    overflow: hidden;
+    padding-left: 2em;
+    padding-right: 7px;
+    padding-bottom: 0.5em;
+
+    @include mq(md) {
+      width: 500px;
+      padding: 0;
+    }
+    .MuiInputBase-root {
+      color: #fff;
+      background: rgba(#fff, 0.1);
+      padding-left: 1em;
+      padding-right: 1em;
+      width: calc(100% - 60px);
+    }
+
+    .MuiIconButton-root {
+      color: #fff;
+      width: 60px;
+    }
+  }
+
+  .MuiIconButton-root {
+    color: #fff;
+  }
+
+  .MuiButton-root {
+    color: #ffffff;
+    text-transform: capitalize;
+  }
+
+  .MuiButton-outlinedSizeSmall {
+    border-color: #ffffff;
+  }
 }

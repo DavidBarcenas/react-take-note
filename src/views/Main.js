@@ -8,6 +8,7 @@ export const Main = () => {
   return (
     <div className="main__wrap">
       <TopBar />
+
       <main className="main">
         <CategorySidebar />
         <NoteList />
