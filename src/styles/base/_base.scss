@@ -15,10 +15,23 @@ body {
   background-color: $bg;
   overflow-x: hidden;
   padding-top: 55px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(#fff, 0.1) $primary;
 }
 
 *,
 *::before,
 *::after {
   box-sizing: inherit;
+}
+::-webkit-scrollbar {
+  width: 7.5px;
+}
+
+::-webkit-scrollbar-track {
+  background: $primary;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(#fff, 0.1);
 }
