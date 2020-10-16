@@ -1,7 +1,17 @@
 .main {
-  display: none;
   width: 100vw;
   height: calc(100vh - 55px);
+
+  .MuiTypography-body1 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-family: 'Poppins', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  }
+}
+
+.sidebar,
+.list {
+  padding: 1em;
 }
 
 .sidebar,

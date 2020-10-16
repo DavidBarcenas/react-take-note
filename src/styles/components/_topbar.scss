@@ -1,13 +1,18 @@
 .header {
+  background: $primary;
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  z-index: 999;
+  min-height: 55px;
+  border-bottom: 1px solid rgba(#fff, 0.05);
 
   @include mq(md) {
     height: 55px;
   }
 }
 .topbar {
-  background: $primary;
   display: flex;
   align-items: center;
   justify-content: space-between;
