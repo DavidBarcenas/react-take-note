@@ -1,6 +1,51 @@
-.list {
-  background: $bg;
-  width: 20%;
-  margin: 0;
-  padding: 0;
+// .list {
+//   margin: 0;
+//   padding: 0;
+// }
+.notelist {
+  color: $text-color;
+  overflow-y: auto;
+
+  @include mq(sm) {
+    position: relative;
+    width: 25%;
+  }
+
+  .MuiList-padding {
+    padding: 0;
+  }
+
+  .MuiListItem-root {
+    margin: 0;
+    min-height: 85px;
+    overflow: hidden;
+
+    &:nth-child(even) {
+      background: lighten($bg, 1);
+    }
+  }
+
+  .MuiListItemText-root {
+    width: calc(100% - 90px);
+  }
+
+  &__date {
+    width: 100px;
+    text-align: right;
+
+    .MuiSvgIcon-root {
+      margin-bottom: 5px;
+      transform: rotateZ(65deg);
+    }
+
+    p {
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+
+  &-active.MuiListItem-root {
+    border-left: 5px solid $yellow;
+    color: #fff;
+  }
 }

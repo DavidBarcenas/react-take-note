@@ -11,8 +11,8 @@ export const Main = () => {
 
       <main className="main">
         <CategorySidebar />
-        {/* <NoteList />
-        <Note /> */}
+        <NoteList />
+        {/* <Note />  */}
       </main>
     </div>
   );

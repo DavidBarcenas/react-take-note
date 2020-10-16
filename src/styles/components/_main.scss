@@ -2,6 +2,10 @@
   width: 100vw;
   height: calc(100vh - 55px);
 
+  @include mq(sm) {
+    display: flex;
+  }
+
   .MuiTypography-body1 {
     font-size: 0.875rem;
     font-weight: 500;
@@ -12,9 +16,8 @@
 .sidebar,
 .list {
   padding: 1em;
-}
-
-.sidebar,
-.list {
   color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
