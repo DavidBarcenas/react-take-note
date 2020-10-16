@@ -1,9 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, TextField } from '@material-ui/core';
 import googleIcon from '../assets/images/googleIcon.svg';
 import stickyIcon from '../assets/images/stickyIcon.svg';
+import { logintWithGoogle } from '../redux/actions/authActions';
 
 export const Login = () => {
+  const dispatch = useDispatch();
+
+  const handleLoginGoogle = () => dispatch(logintWithGoogle());
+
   return (
     <div className="login">
       <div className="login__main">
@@ -13,7 +19,11 @@ export const Login = () => {
           <h3 className="login__subtitle">
             Captura todo lo que quieres manterner siempre a la mano.
           </h3>
-          <Button className="login__btn-google" variant="outlined">
+          <Button
+            className="login__btn-google"
+            variant="outlined"
+            onClick={handleLoginGoogle}
+          >
             <img src={googleIcon} alt="Google" />
             Continuar con google
           </Button>
