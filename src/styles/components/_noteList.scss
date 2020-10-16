@@ -5,6 +5,7 @@
 .notelist {
   color: $text-color;
   overflow-y: auto;
+  z-index: 100;
 
   @include mq(sm) {
     position: relative;

@@ -1,4 +1,51 @@
 .note {
-  background: #fff;
-  width: 65%;
+  background: #fafafa;
+  color: $text-color;
+  z-index: 200;
+  padding-top: 55px;
+  overflow-y: auto;
+
+  @include mq(sm) {
+    padding-top: 0;
+    position: relative;
+    width: 57%;
+  }
+
+  &__actionbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5em;
+  }
+}
+
+.note__title {
+  font-size: 2em;
+  font-weight: 500;
+  color: $primary;
+}
+
+.note__body {
+  font-size: 1.2em;
+  line-height: 30px;
+  margin-bottom: 2em;
+}
+
+.note__footer {
+  text-align: right;
+  padding-bottom: 2em;
+
+  button {
+    width: 130px;
+  }
+
+  .btn__save {
+    background: $secondary;
+    color: #fff;
+    margin-left: 1em;
+
+    &:hover {
+      background: darken($secondary, 3);
+    }
+  }
 }

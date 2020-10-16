@@ -12,7 +12,7 @@ export const Main = () => {
       <main className="main">
         <CategorySidebar />
         <NoteList />
-        {/* <Note />  */}
+        <Note />
       </main>
     </div>
   );
