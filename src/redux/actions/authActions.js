@@ -16,7 +16,7 @@ export const logintWithGoogle = () => {
   };
 };
 
-const login = (uid, displayName) => ({
+export const login = (uid, displayName) => ({
   type: types.authLogin,
   payload: {
     uid,
