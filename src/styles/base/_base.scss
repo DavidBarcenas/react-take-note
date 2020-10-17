@@ -14,7 +14,6 @@ body {
   letter-spacing: 0.01071em;
   background-color: $bg;
   overflow-x: hidden;
-  padding-top: 55px;
   scrollbar-width: thin;
   scrollbar-color: rgba(#fff, 0.1) $primary;
 }
@@ -24,6 +23,7 @@ body {
 *::after {
   box-sizing: inherit;
 }
+
 ::-webkit-scrollbar {
   width: 7.5px;
 }
@@ -34,4 +34,8 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: rgba(#fff, 0.1);
+}
+
+button.MuiButton-root {
+  text-transform: initial;
 }

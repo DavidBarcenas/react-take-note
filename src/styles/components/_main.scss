@@ -1,6 +1,7 @@
 .main {
   width: 100vw;
-  height: calc(100vh - 55px);
+  height: 100vh;
+  padding-top: 55px;
 
   @include mq(sm) {
     display: flex;

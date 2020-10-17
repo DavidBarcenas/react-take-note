@@ -1,9 +1,10 @@
 import React from 'react';
+import { logintWithGoogle } from '../redux/actions/authActions';
 import { useDispatch } from 'react-redux';
-import { Button, TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import googleIcon from '../assets/images/googleIcon.svg';
 import stickyIcon from '../assets/images/stickyIcon.svg';
-import { logintWithGoogle } from '../redux/actions/authActions';
+import { GitHub, Twitter } from '@material-ui/icons';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -20,27 +21,29 @@ export const Login = () => {
             Captura todo lo que quieres manterner siempre a la mano.
           </h3>
           <Button
-            className="login__btn-google"
+            className="login__btn-social"
             variant="outlined"
             onClick={handleLoginGoogle}
           >
-            <img src={googleIcon} alt="Google" />
+            <img src={googleIcon} alt="Google" className="login__btn-icon" />
             Continuar con google
           </Button>
-          <span className="login__separate">o</span>
-          <form className="login__form" noValidate autoComplete="off">
-            <TextField
-              id="outlined-basic"
-              label="Correo elecrónico"
-              variant="outlined"
-            />
-            <TextField
-              id="outlined-basic"
-              label="Contraseña"
-              variant="outlined"
-            />
-            <Button variant="contained">Iniciar sesión</Button>
-          </form>
+          <Button
+            className="login__btn-social"
+            variant="outlined"
+            onClick={handleLoginGoogle}
+          >
+            <Twitter className="login__btn-icon" />
+            Continuar con twitter
+          </Button>
+          <Button
+            className="login__btn-social"
+            variant="outlined"
+            onClick={handleLoginGoogle}
+          >
+            <GitHub className="login__btn-icon" />
+            Continuar con github
+          </Button>
         </div>
       </div>
     </div>
