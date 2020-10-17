@@ -63,4 +63,20 @@
     overflow: hidden;
     width: 20px;
   }
+
+  &.twitter {
+    background: $secondary;
+    color: #fff;
+    &:hover {
+      background: lighten($secondary, 3);
+    }
+  }
+
+  &.git {
+    background: $primary;
+    color: #fff;
+    &:hover {
+      background: lighten($primary, 3);
+    }
+  }
 }

@@ -1,15 +1,17 @@
 import React from 'react';
-import { logintWithGoogle } from '../redux/actions/authActions';
+import { loginSocialNetworks } from '../redux/actions/authActions';
 import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import googleIcon from '../assets/images/googleIcon.svg';
 import stickyIcon from '../assets/images/stickyIcon.svg';
-import { GitHub, Twitter } from '@material-ui/icons';
+import { GitHub } from '@material-ui/icons';
+import { github, google } from '../const/constants';
 
 export const Login = () => {
   const dispatch = useDispatch();
 
-  const handleLoginGoogle = () => dispatch(logintWithGoogle());
+  const handleLogin = (socialNetwork) =>
+    dispatch(loginSocialNetworks(socialNetwork));
 
   return (
     <div className="login">
@@ -23,23 +25,23 @@ export const Login = () => {
           <Button
             className="login__btn-social"
             variant="outlined"
-            onClick={handleLoginGoogle}
+            onClick={() => handleLogin(google)}
           >
             <img src={googleIcon} alt="Google" className="login__btn-icon" />
             Continuar con google
           </Button>
-          <Button
-            className="login__btn-social"
+          {/* <Button
+            className="login__btn-social twitter"
             variant="outlined"
             onClick={handleLoginGoogle}
           >
             <Twitter className="login__btn-icon" />
             Continuar con twitter
-          </Button>
+          </Button> */}
           <Button
-            className="login__btn-social"
+            className="login__btn-social git"
             variant="outlined"
-            onClick={handleLoginGoogle}
+            onClick={() => handleLogin(github)}
           >
             <GitHub className="login__btn-icon" />
             Continuar con github

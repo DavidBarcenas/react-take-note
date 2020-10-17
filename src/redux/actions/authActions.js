@@ -1,18 +1,17 @@
-import { firebase, googleAuthProvider } from '../../providers/firebase';
+import { firebase, socialNetworkProvider } from '../../providers/firebase';
 import { types } from '../types/types';
 
-export const logintWithGoogle = () => {
+export const loginSocialNetworks = (socialNetwok) => {
   return (dispatch) => {
-    try {
-      firebase
-        .auth()
-        .signInWithPopup(googleAuthProvider)
-        .then(({ user }) => {
-          dispatch(login(user.uid, user.displayName));
-        });
-    } catch (error) {
-      console.log('Error login:', error);
-    }
+    firebase
+      .auth()
+      .signInWithPopup(socialNetworkProvider(socialNetwok))
+      .then(({ user }) => {
+        dispatch(login(user.uid, user.displayName));
+      })
+      .catch((err) => {
+        return false;
+      });
   };
 };
 

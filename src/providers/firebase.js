@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { github } from '../const/constants';
 
 var firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -17,6 +18,14 @@ firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
 
 const db = firebase.firestore();
-const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 
-export { db, googleAuthProvider, firebase };
+const socialNetworkProvider = (socialNetwork) => {
+  switch (socialNetwork) {
+    case github:
+      return new firebase.auth.GithubAuthProvider();
+    default:
+      return new firebase.auth.GoogleAuthProvider();
+  }
+};
+
+export { db, firebase, socialNetworkProvider };
