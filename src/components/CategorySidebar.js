@@ -7,12 +7,18 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import { Folder } from '@material-ui/icons';
+import { createNote } from '../redux/actions/noteActions';
+import { useDispatch } from 'react-redux';
 
 export const CategorySidebar = () => {
+  const dispatch = useDispatch();
+
+  const newNote = () => dispatch(createNote());
+
   return (
     <aside className="sidebar">
       <div className="sidebar__btn">
-        <Button>Crear nota</Button>
+        <Button onClick={newNote}>Crear nota</Button>
       </div>
       <div className="sidebar__folders">
         <List component="nav" aria-label="main folders">

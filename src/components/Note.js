@@ -1,8 +1,11 @@
 import React from 'react';
 import { ArrowBack, Delete, Edit, Label } from '@material-ui/icons';
 import { Button, IconButton, Tooltip } from '@material-ui/core';
+import { useNoteSelector } from '../redux/selectors/notesSelector';
 
 export const Note = () => {
+  const { activeNote } = useNoteSelector();
+
   return (
     <div className="note">
       <div className="note__actionbar">
