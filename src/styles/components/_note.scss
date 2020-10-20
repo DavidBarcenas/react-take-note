@@ -1,5 +1,5 @@
 .note {
-  background: #fafafa;
+  background: #fff;
   color: $text-color;
   z-index: 200;
   padding-top: 55px;
@@ -33,7 +33,8 @@
 
 .note__footer {
   text-align: right;
-  padding-bottom: 2em;
+  padding-bottom: 1em;
+  margin-top: 2em;
 
   button {
     width: 130px;
@@ -47,5 +48,18 @@
     &:hover {
       background: darken($secondary, 3);
     }
+  }
+}
+
+.new__note {
+  padding: 2em 1em;
+
+  .MuiFormControl-root {
+    width: 100%;
+    margin-bottom: 2em;
+  }
+
+  .ck.ck-editor__main > .ck-editor__editable {
+    min-height: 400px;
   }
 }
