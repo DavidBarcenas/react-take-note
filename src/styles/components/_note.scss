@@ -32,21 +32,30 @@
 }
 
 .note__footer {
-  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding-bottom: 1em;
   margin-top: 2em;
 
   button {
     width: 130px;
+    margin: 0 0.5em;
   }
 
   .btn__save {
     background: $secondary;
     color: #fff;
-    margin-left: 1em;
+    // margin-left: 1em;
 
     &:hover {
       background: darken($secondary, 3);
+    }
+  }
+
+  .btn__folder {
+    .MuiButton-startIcon {
+      color: $yellow;
     }
   }
 }
@@ -55,11 +64,13 @@
   padding: 2em 1em;
 
   .MuiFormControl-root {
+    color: $primary;
     margin-bottom: 2em;
     width: 100%;
   }
 
   .ck.ck-editor__main > .ck-editor__editable {
     min-height: 400px;
+    color: $primary;
   }
 }
