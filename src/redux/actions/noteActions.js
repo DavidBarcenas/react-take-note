@@ -10,9 +10,9 @@ export const createNote = () => ({
 export const saveNewNote = (note) => {
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
-    const refId = await db.collection(`${uid}/app/notes`).doc().id;
+    const refId = await db.collection(`${uid}/notes/${note.folder}`).doc().id;
     console.log(refId);
     const newNote = { ...noteModel, ...note, id: refId };
-    await db.collection(`${uid}/app/notes`).doc(refId).set(newNote);
+    await db.collection(`${uid}/notes/${note.folder}`).doc(refId).set(newNote);
   };
 };

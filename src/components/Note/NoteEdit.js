@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -17,15 +16,15 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useDispatch } from 'react-redux';
 import { saveNewNote } from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
-import { AttachFile } from '@material-ui/icons';
 
 export const NoteEdit = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [folderName, setFolderName] = useState(null);
   const [value, setValue] = useState({
     title: '',
     body: '',
-    folder: 10,
+    folder: 'general',
   });
 
   const handleInputChange = ({ target }) => {
@@ -62,11 +61,24 @@ export const NoteEdit = () => {
   };
 
   const handleCloseDialog = () => {
+    if (folderName) {
+      setValue({
+        ...value,
+        folder: folderName,
+      });
+    }
     setOpen(false);
+  };
+
+  const handleFolderName = ({ target }) => {
+    if (target.value.trim() !== '') {
+      setFolderName(target.value);
+    }
   };
 
   const handleSubmit = () => {
     if (noteValidation()) {
+      console.log(value);
       dispatch(saveNewNote(value));
     }
   };
@@ -102,23 +114,12 @@ export const NoteEdit = () => {
               <MenuItem value="newFolder">
                 <em>Nueva carpeta</em>
               </MenuItem>
-              <MenuItem value={10}>General</MenuItem>
-              <MenuItem value={20}>Otro</MenuItem>
-              <MenuItem value={30}>Nanai</MenuItem>
+              <MenuItem value="general">General</MenuItem>
+              <MenuItem value="Otro">Otro</MenuItem>
+              <MenuItem value="Nanai">Nanai</MenuItem>
+              <MenuItem value="prueba">prueba</MenuItem>
             </Select>
           </FormControl>
-          <div>
-            <input accept="image/*" id="icon-button-file" type="file" />
-            <label htmlFor="icon-button-file">
-              <IconButton
-                color="primary"
-                aria-label="upload picture"
-                component="span"
-              >
-                <AttachFile />
-              </IconButton>
-            </label>
-          </div>
         </div>
         <div>
           <Button variant="outlined">Cancelar</Button>
@@ -139,6 +140,7 @@ export const NoteEdit = () => {
             id="outlined-basic"
             label="Nombre de carpeta"
             variant="outlined"
+            onChange={handleFolderName}
           />
         </DialogContent>
         <DialogActions>
