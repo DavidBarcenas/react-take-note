@@ -47,9 +47,29 @@ export const saveCollection = (collection) => {
   };
 };
 
-const activateNote = (note) => ({
+export const getNotesFolder = (folder) => {
+  return async (dispatch, getState) => {
+    let notes = [];
+    const foldersRef = await db.collection(folder).get();
+
+    if (foldersRef.docs.length > 0) {
+      foldersRef.docs.map((doc) => (notes = [...notes, doc.data()]));
+      dispatch(activateNote(notes[0]));
+      dispatch(activateFolder(folder));
+    }
+
+    dispatch(folderNotes(notes));
+  };
+};
+
+export const activateNote = (note) => ({
   type: types.activateNote,
   payload: note,
+});
+
+export const activateFolder = (folder) => ({
+  type: types.activateFolder,
+  payload: folder,
 });
 
 const allFolders = (folders) => ({

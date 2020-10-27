@@ -3,6 +3,7 @@ export const types = {
   createNote: 'CREATE_NOTE',
   saveNote: 'SAVE_NOTE',
   activateNote: 'ACTIVATE_NOTE',
+  activateFolder: 'ACTIVATE_FOLDER',
   folders: 'ALL_FOLDERS',
   notes: 'FOLDER_NOTES',
 };

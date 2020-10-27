@@ -18,8 +18,6 @@ export const dateFormat = (noteDate) => {
     noteDate.seconds * 1000 + noteDate.nanoseconds / 1000000
   );
 
-  console.log(date);
-
   const day =
     date.getDay() < 10 ? '0' + date.getDay().toString() : date.getDay();
   const month = months[date.getMonth()];

@@ -7,7 +7,7 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import { Folder } from '@material-ui/icons';
-import { newNote } from '../redux/actions/noteActions';
+import { getNotesFolder, newNote } from '../redux/actions/noteActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const CategorySidebar = () => {
@@ -15,6 +15,7 @@ export const CategorySidebar = () => {
   const { folders, activeFolder } = useSelector((state) => state.notes);
 
   const createNoteBtn = () => dispatch(newNote());
+  const handleActivateFolder = (folder) => dispatch(getNotesFolder(folder));
 
   return (
     <aside className="sidebar">
@@ -28,6 +29,7 @@ export const CategorySidebar = () => {
               button
               className={folder === activeFolder ? 'folder-active' : ''}
               key={folder}
+              onClick={() => handleActivateFolder(folder)}
             >
               <ListItemIcon>
                 <Folder />

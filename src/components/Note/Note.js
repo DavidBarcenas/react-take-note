@@ -36,8 +36,8 @@ export const Note = () => {
           </div>
 
           <div className="note__wrap">
-            <h2 className="note__title">Beautiful memories of develop</h2>
-            {/* <div dangerouslySetInnerHTML={{ __html: prueba }}></div> */}
+            <h2 className="note__title">{activeNote.title}</h2>
+            <div dangerouslySetInnerHTML={{ __html: activeNote.body }}></div>
           </div>
         </>
       )}

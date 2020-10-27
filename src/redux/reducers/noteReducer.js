@@ -34,6 +34,12 @@ export const noteReducer = (state = initialState, action) => {
         activeNote: action.payload,
       };
 
+    case types.activateFolder:
+      return {
+        ...state,
+        activeFolder: action.payload,
+      };
+
     default:
       return state;
   }
