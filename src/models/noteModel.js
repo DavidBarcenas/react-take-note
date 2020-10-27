@@ -5,4 +5,8 @@ export const noteModel = {
   date: new Date(),
   collection: '',
   color: '',
+  user: {
+    uid: null,
+    name: null,
+  },
 };

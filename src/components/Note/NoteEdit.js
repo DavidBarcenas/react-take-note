@@ -16,6 +16,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useDispatch } from 'react-redux';
 import { saveNewNote } from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
+import { noteModel } from '../../models/noteModel';
 
 export const NoteEdit = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ export const NoteEdit = () => {
   const [value, setValue] = useState({
     title: '',
     body: '',
-    folder: 'general',
+    collection: 'general',
   });
 
   const handleInputChange = ({ target }) => {
@@ -47,7 +48,7 @@ export const NoteEdit = () => {
     } else {
       setValue({
         ...value,
-        folder: target.value,
+        collection: target.value,
       });
     }
   };
@@ -64,7 +65,7 @@ export const NoteEdit = () => {
     if (folderName) {
       setValue({
         ...value,
-        folder: folderName,
+        collection: folderName,
       });
     }
     setOpen(false);
@@ -78,8 +79,8 @@ export const NoteEdit = () => {
 
   const handleSubmit = () => {
     if (noteValidation()) {
-      console.log(value);
-      dispatch(saveNewNote(value));
+      const note = { ...noteModel, ...value };
+      dispatch(saveNewNote(note));
     }
   };
 
@@ -106,8 +107,8 @@ export const NoteEdit = () => {
             <InputLabel id="folder">Carpeta</InputLabel>
             <Select
               labelId="folder"
-              value={value.folder}
-              name="folder"
+              value={value.collection}
+              name="collection"
               onChange={handleFolderChange}
               label="Carpeta"
             >

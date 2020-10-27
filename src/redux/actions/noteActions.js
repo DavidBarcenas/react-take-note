@@ -1,18 +1,23 @@
-import { noteModel } from '../../models/noteModel';
 import { types } from '../types/types';
 import { db } from '../../providers/firebase';
 
-export const createNote = () => ({
+export const newNote = () => ({
   type: types.createNote,
-  payload: noteModel,
 });
 
 export const saveNewNote = (note) => {
   return async (dispatch, getState) => {
-    const { uid } = getState().auth;
-    const refId = await db.collection(`${uid}/notes/${note.folder}`).doc().id;
-    console.log(refId);
-    const newNote = { ...noteModel, ...note, id: refId };
-    await db.collection(`${uid}/notes/${note.folder}`).doc(refId).set(newNote);
+    const { auth } = getState();
+
+    const refId = await db.collection(note.collection).doc().id;
+    const newNote = { ...note, user: { ...auth }, id: refId };
+
+    await db.collection(note.collection).doc(refId).set(newNote);
+  };
+};
+
+export const saveCollection = (collection) => {
+  return async (dispatch) => {
+    await db.collection('folders').add(collection);
   };
 };
