@@ -1,16 +1,17 @@
 import React from 'react';
 import { ArrowBack, Delete, Edit, Label } from '@material-ui/icons';
 import { IconButton, Tooltip } from '@material-ui/core';
-import { useNoteSelector } from '../../redux/selectors/notesSelector';
+
 import { NoteEdit } from './NoteEdit';
+import { useSelector } from 'react-redux';
 
 export const Note = () => {
-  const { activeNote } = useNoteSelector();
+  const { activeNote, folders } = useSelector((state) => state.notes);
 
   return (
     <div className="note">
       {!activeNote || activeNote.id === '' ? (
-        <NoteEdit />
+        <NoteEdit note={activeNote} folders={folders} />
       ) : (
         <>
           <div className="note__actionbar">

@@ -19,7 +19,7 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         folders: action.payload,
-        activeFolder: action.payload[0],
+        activeFolder: action.payload,
       };
 
     default:

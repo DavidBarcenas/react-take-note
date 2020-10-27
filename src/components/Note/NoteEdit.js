@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -18,14 +18,16 @@ import { saveCollection, saveNewNote } from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
 import { noteModel } from '../../models/noteModel';
 
-export const NoteEdit = () => {
+export const NoteEdit = ({ note, folders }) => {
   const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
   const [folderName, setFolderName] = useState(null);
+  const [folderList, setFolderList] = useState([]);
   const [value, setValue] = useState({
     title: '',
     body: '',
-    collection: 'general',
+    collection: '',
   });
 
   const handleInputChange = ({ target }) => {
@@ -54,7 +56,11 @@ export const NoteEdit = () => {
   };
 
   const noteValidation = () => {
-    if (value.title.trim() === '' || value.body.trim() === '') {
+    if (
+      value.title.trim() === '' ||
+      value.body.trim() === '' ||
+      value.collection.trim() === ''
+    ) {
       return false;
     }
 
@@ -67,6 +73,7 @@ export const NoteEdit = () => {
         ...value,
         collection: folderName,
       });
+      setFolderList([...folderList, folderName]);
     }
     setOpen(false);
   };
@@ -79,11 +86,17 @@ export const NoteEdit = () => {
 
   const handleSubmit = () => {
     if (noteValidation()) {
-      const note = { ...noteModel, ...value };
-      dispatch(saveNewNote(note));
-      dispatch(saveCollection([value.collection]));
+      dispatch(saveNewNote({ ...noteModel, ...value }));
+
+      if (folderName) {
+        dispatch(saveCollection(folderList));
+      }
     }
   };
+
+  useEffect(() => {
+    setFolderList(folders);
+  }, [folders]);
 
   return (
     <div className="new__note">
@@ -103,7 +116,7 @@ export const NoteEdit = () => {
         config={editorConfig}
       />
       <div className="note__footer">
-        <div>
+        <div className="note__select">
           <FormControl variant="outlined">
             <InputLabel id="folder">Carpeta</InputLabel>
             <Select
@@ -116,10 +129,11 @@ export const NoteEdit = () => {
               <MenuItem value="newFolder">
                 <em>Nueva carpeta</em>
               </MenuItem>
-              <MenuItem value="general">General</MenuItem>
-              <MenuItem value="Otro">Otro</MenuItem>
-              <MenuItem value="Nanai">Nanai</MenuItem>
-              <MenuItem value="prueba">prueba</MenuItem>
+              {folderList.map((folder) => (
+                <MenuItem key={folder} value={folder}>
+                  {folder}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>

@@ -26,7 +26,7 @@ export const CategorySidebar = () => {
           {folders.map((folder) => (
             <ListItem
               button
-              className={folder == activeFolder ? 'folder-active' : ''}
+              className={folder === activeFolder ? 'folder-active' : ''}
               key={folder}
             >
               <ListItemIcon>

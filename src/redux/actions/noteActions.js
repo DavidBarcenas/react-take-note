@@ -7,8 +7,12 @@ export const newNote = () => ({
 
 export const userNotes = () => {
   return async (dispatch) => {
+    let folders = [];
     const foldersRef = await db.collection('folders').get();
-    const folders = foldersRef.docs[0].data().list;
+
+    if (foldersRef.docs.length > 0) {
+      folders = foldersRef.docs[0].data().list;
+    }
 
     dispatch(allFolders(folders));
   };
@@ -41,7 +45,7 @@ const allFolders = (folders) => ({
   payload: folders,
 });
 
-const folderNotes = (notes) => ({
+export const folderNotes = (notes) => ({
   type: types.notes,
   payload: notes,
 });
