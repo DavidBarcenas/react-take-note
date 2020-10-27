@@ -2,6 +2,7 @@ import React from 'react';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { AttachFile } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
+import { dateFormat } from '../util/dateFormat';
 
 export const NoteList = () => {
   const { folderNotes, activeNote } = useSelector((state) => state.notes);
@@ -17,7 +18,7 @@ export const NoteList = () => {
             <ListItemText primary={note.title} />
             <div className="notelist__date">
               <AttachFile />
-              <p>12 Oct 2020</p>
+              <span>{dateFormat(note.date)}</span>
             </div>
           </ListItem>
         ))}

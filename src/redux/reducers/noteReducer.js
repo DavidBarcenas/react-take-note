@@ -18,8 +18,8 @@ export const noteReducer = (state = initialState, action) => {
     case types.folders:
       return {
         ...state,
-        folders: action.payload,
-        activeFolder: action.payload,
+        folders: action.payload.list,
+        activeFolder: action.payload.active,
       };
 
     case types.notes:

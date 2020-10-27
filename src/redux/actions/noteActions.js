@@ -15,9 +15,7 @@ export const userNotes = () => {
       folders = foldersRef.docs[0].data().list;
       const notesRef = await db.collection(folders[0]).get();
       if (notesRef.docs.length > 0) {
-        notesRef.docs.map((doc) => {
-          notes = [...notes, doc.data()];
-        });
+        notesRef.docs.map((doc) => (notes = [...notes, doc.data()]));
         dispatch(activateNote(notes[0]));
       }
     }
@@ -56,7 +54,10 @@ const activateNote = (note) => ({
 
 const allFolders = (folders) => ({
   type: types.folders,
-  payload: folders,
+  payload: {
+    list: folders,
+    active: folders.length > 0 ? folders[0] : null,
+  },
 });
 
 const folderNotes = (notes) => ({
