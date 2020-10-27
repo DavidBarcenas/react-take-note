@@ -10,14 +10,19 @@ export const saveNewNote = (note) => {
     const { auth } = getState();
 
     const refId = await db.collection(note.collection).doc().id;
-    const newNote = { ...note, user: { ...auth }, id: refId };
+    const newNote = { ...note, user: auth, id: refId };
 
     await db.collection(note.collection).doc(refId).set(newNote);
   };
 };
 
 export const saveCollection = (collection) => {
-  return async (dispatch) => {
-    await db.collection('folders').add(collection);
+  return async (dispatch, getState) => {
+    const { auth } = getState();
+
+    await db.collection('folders').add({
+      auth,
+      list: collection,
+    });
   };
 };
