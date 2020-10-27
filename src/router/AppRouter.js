@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import { firebase } from '../providers/firebase';
 import { login } from '../redux/actions/authActions';
+import { userNotes } from '../redux/actions/noteActions';
 import { Login } from '../views/Login';
 import { Main } from '../views/Main';
 
@@ -18,6 +19,7 @@ export const AppRouter = () => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user?.uid) {
         dispatch(login(user.uid, user.displayName));
+        dispatch(userNotes());
       }
     });
   }, [dispatch]);

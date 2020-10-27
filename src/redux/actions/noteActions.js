@@ -5,6 +5,15 @@ export const newNote = () => ({
   type: types.createNote,
 });
 
+export const userNotes = () => {
+  return async (dispatch) => {
+    const foldersRef = await db.collection('folders').get();
+    const folders = foldersRef.docs[0].data().list;
+
+    dispatch(allFolders(folders));
+  };
+};
+
 export const saveNewNote = (note) => {
   return async (dispatch, getState) => {
     const { auth } = getState();
@@ -26,3 +35,13 @@ export const saveCollection = (collection) => {
     });
   };
 };
+
+const allFolders = (folders) => ({
+  type: types.folders,
+  payload: folders,
+});
+
+const folderNotes = (notes) => ({
+  type: types.notes,
+  payload: notes,
+});

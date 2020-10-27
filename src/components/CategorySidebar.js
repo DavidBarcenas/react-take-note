@@ -8,10 +8,11 @@ import {
 } from '@material-ui/core';
 import { Folder } from '@material-ui/icons';
 import { newNote } from '../redux/actions/noteActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const CategorySidebar = () => {
   const dispatch = useDispatch();
+  const { folders, activeFolder } = useSelector((state) => state.notes);
 
   const createNoteBtn = () => dispatch(newNote());
 
@@ -22,96 +23,18 @@ export const CategorySidebar = () => {
       </div>
       <div className="sidebar__folders">
         <List component="nav" aria-label="main folders">
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Capacitaciones" />
-          </ListItem>
-          <ListItem button className="folder-active">
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Ejercicios" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Pruebas técnicas de react y angular" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Liderazgo" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Negocios" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Capacitaciones" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Ejercicios" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Pruebas técnicas" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Liderazgo" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Negocios" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Capacitaciones" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Ejercicios" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Pruebas técnicas" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Liderazgo" />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Folder />
-            </ListItemIcon>
-            <ListItemText primary="Negocios" />
-          </ListItem>
+          {folders.map((folder) => (
+            <ListItem
+              button
+              className={folder == activeFolder ? 'folder-active' : ''}
+              key={folder}
+            >
+              <ListItemIcon>
+                <Folder />
+              </ListItemIcon>
+              <ListItemText primary={folder} />
+            </ListItem>
+          ))}
         </List>
       </div>
     </aside>
