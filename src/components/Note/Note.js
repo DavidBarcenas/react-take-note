@@ -11,7 +11,7 @@ export const Note = () => {
   return (
     <div className="note">
       {!activeNote || activeNote.id === '' ? (
-        <NoteEdit note={activeNote} folders={folders} />
+        <NoteEdit note={activeNote} folders={folders.list} />
       ) : (
         <>
           <div className="note__actionbar">

@@ -12,16 +12,15 @@ export const userNotes = () => {
     const foldersRef = await db.collection('folders').get();
 
     if (foldersRef.docs.length > 0) {
-      folders = foldersRef.docs[0].data().list;
-      const notesRef = await db.collection(folders[0]).get();
+      folders = foldersRef.docs[0].data();
+      const notesRef = await db.collection(folders.list[0]).get();
       if (notesRef.docs.length > 0) {
         notesRef.docs.map((doc) => (notes = [...notes, doc.data()]));
         dispatch(activateNote(notes[0]));
       }
+      dispatch(allFolders(folders.list, folders.id));
+      dispatch(folderNotes(notes));
     }
-
-    dispatch(allFolders(folders));
-    dispatch(folderNotes(notes));
   };
 };
 
@@ -36,14 +35,26 @@ export const saveNewNote = (note) => {
   };
 };
 
-export const saveCollection = (collection) => {
+export const saveCollection = (collection, update = false) => {
   return async (dispatch, getState) => {
-    const { auth } = getState();
+    const { auth, notes } = getState();
 
-    await db.collection('folders').add({
-      auth,
-      list: collection,
-    });
+    if (update) {
+      await db
+        .collection('folders')
+        .doc(notes.folders.id)
+        .update({ list: collection });
+    } else {
+      const refId = await db.collection('folders').doc().id;
+      await db
+        .collection('folders')
+        .doc(refId)
+        .set({
+          user: { ...auth },
+          list: collection,
+          id: refId,
+        });
+    }
   };
 };
 
@@ -72,9 +83,10 @@ export const activateFolder = (folder) => ({
   payload: folder,
 });
 
-const allFolders = (folders) => ({
+const allFolders = (folders, id) => ({
   type: types.folders,
   payload: {
+    id,
     list: folders,
     active: folders.length > 0 ? folders[0] : null,
   },

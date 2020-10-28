@@ -87,9 +87,15 @@ export const NoteEdit = ({ note, folders }) => {
   const handleSubmit = () => {
     if (noteValidation()) {
       dispatch(saveNewNote({ ...noteModel, ...value }));
+      console.log({
+        1: folderName,
+        2: folderList.length,
+      });
 
-      if (folderName) {
+      if (folderName && folderList.length === 1) {
         dispatch(saveCollection(folderList));
+      } else {
+        dispatch(saveCollection(folderList, true));
       }
     }
   };
