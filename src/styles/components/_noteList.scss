@@ -35,18 +35,21 @@
     text-align: right;
 
     .MuiSvgIcon-root {
+      display: block;
       margin-bottom: 5px;
+      margin-left: auto;
       transform: rotateZ(65deg);
+      text-align: center;
     }
 
-    p {
+    span {
       font-size: 12px;
-      margin: 0;
     }
   }
 
   &-active.MuiListItem-root {
     border-left: 4px solid $yellow;
     color: #fff;
+    box-shadow: 5px 5px 5px 5px rgba(#fff, 0.9);
   }
 }

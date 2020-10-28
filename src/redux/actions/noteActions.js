@@ -1,8 +1,10 @@
 import { types } from '../types/types';
 import { db } from '../../providers/firebase';
+import { noteModel } from '../../models/noteModel';
 
 export const newNote = () => ({
   type: types.createNote,
+  payload: noteModel,
 });
 
 export const userNotes = () => {

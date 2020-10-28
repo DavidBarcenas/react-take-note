@@ -8,7 +8,7 @@ import empty from '../../assets/images/empty.svg';
 export const Note = () => {
   const { activeNote, folders } = useSelector((state) => state.notes);
 
-  if (!activeNote) {
+  if (folders.list.length === 0 && !activeNote) {
     return (
       <div className="note note__empty">
         <img src={empty} alt="No hay documentos" />
@@ -21,12 +21,14 @@ export const Note = () => {
 
   return (
     <div className="note">
-      {activeNote.id === '' ? (
+      {activeNote && activeNote.id === '' ? (
         <NoteEdit note={activeNote} folders={folders.list} />
       ) : (
         <>
           <div className="note__actionbar">
-            <ArrowBack />
+            <div className="note__icon-back">
+              <ArrowBack />
+            </div>
             <div>
               <Tooltip title="Editar">
                 <IconButton aria-label="editar">
@@ -48,7 +50,10 @@ export const Note = () => {
 
           <div className="note__wrap">
             <h2 className="note__title">{activeNote.title}</h2>
-            <div dangerouslySetInnerHTML={{ __html: activeNote.body }}></div>
+            <div
+              className="note__body"
+              dangerouslySetInnerHTML={{ __html: activeNote.body }}
+            ></div>
           </div>
         </>
       )}

@@ -6,6 +6,7 @@
   overflow-y: auto;
 
   @include mq(sm) {
+    padding: 2em;
     padding-top: 0;
     position: relative;
     width: 57%;
@@ -18,17 +19,45 @@
     margin-top: 0.5em;
   }
 }
+.note__icon-back {
+  width: 40px;
+  svg {
+    @include mq(sm) {
+      display: none;
+    }
+  }
+}
 
 .note__title {
-  font-size: 2em;
+  font-size: 30px;
   font-weight: 500;
   color: $primary;
+  margin-top: 0;
+  border-bottom: 2px solid #000;
 }
 
 .note__body {
-  font-size: 1.2em;
+  font-size: 18px;
   line-height: 30px;
   margin-bottom: 2em;
+  line-height: 30px;
+
+  h2 {
+    font-size: 20px;
+    border-bottom: 1px solid #000;
+    font-weight: 500;
+    color: $primary;
+  }
+
+  p {
+    line-height: 32px;
+    margin: 22px 0;
+  }
+
+  strong {
+    font-weight: 500;
+    color: $primary;
+  }
 }
 
 .note__footer {
@@ -72,6 +101,8 @@
   .ck.ck-editor__main > .ck-editor__editable {
     min-height: 400px;
     color: $primary;
+    font-size: 16px;
+    line-height: 30px;
   }
 }
 

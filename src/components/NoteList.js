@@ -27,7 +27,7 @@ export const NoteList = () => {
           >
             <ListItemText primary={note.title} />
             <div className="notelist__date">
-              <AttachFile />
+              {note.file && <AttachFile />}
               <span>{dateFormat(note.date)}</span>
             </div>
           </ListItem>

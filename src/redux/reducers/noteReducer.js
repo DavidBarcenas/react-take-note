@@ -15,7 +15,7 @@ export const noteReducer = (state = initialState, action) => {
     case types.createNote:
       return {
         ...state,
-        activeNote: null,
+        activeNote: action.payload,
       };
 
     case types.folders:
