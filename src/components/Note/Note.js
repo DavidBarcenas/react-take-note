@@ -1,16 +1,27 @@
 import React from 'react';
 import { ArrowBack, Delete, Edit, Label } from '@material-ui/icons';
 import { IconButton, Tooltip } from '@material-ui/core';
-
 import { NoteEdit } from './NoteEdit';
 import { useSelector } from 'react-redux';
+import empty from '../../assets/images/empty.svg';
 
 export const Note = () => {
   const { activeNote, folders } = useSelector((state) => state.notes);
 
+  if (!activeNote) {
+    return (
+      <div className="note note__empty">
+        <img src={empty} alt="No hay documentos" />
+        <span>
+          {folders.list.length === 0 ? 'No hay notas' : 'Cargando notas'}
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="note">
-      {!activeNote || activeNote.id === '' ? (
+      {activeNote.id === '' ? (
         <NoteEdit note={activeNote} folders={folders.list} />
       ) : (
         <>

@@ -78,3 +78,19 @@
 .note__select {
   min-width: 200px;
 }
+
+.note__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 300px;
+    margin-bottom: 2em;
+  }
+  span {
+    font-size: 30px;
+    font-weight: bold;
+    color: #ccc;
+  }
+}
