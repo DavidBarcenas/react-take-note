@@ -1,0 +1,20 @@
+.note__alert .MuiSnackbarContent-message {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin-left: 0.5em;
+  }
+}
+
+.note__alert .MuiSnackbarContent-root {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.note__success .MuiSnackbarContent-root {
+  background-color: #4caf50;
+}
+.note__error .MuiSnackbarContent-root {
+  background-color: #f44336;
+}

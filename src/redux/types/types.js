@@ -6,4 +6,6 @@ export const types = {
   activateFolder: 'ACTIVATE_FOLDER',
   folders: 'ALL_FOLDERS',
   notes: 'FOLDER_NOTES',
+  showAlert: 'SHOW_ALERT',
+  hideAlert: 'HIDE_ALERT',
 };

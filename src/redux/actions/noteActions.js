@@ -1,6 +1,11 @@
 import { types } from '../types/types';
 import { db } from '../../providers/firebase';
 import { noteModel } from '../../models/noteModel';
+import { showAlert } from './uiActions';
+import {
+  alert_message_success,
+  alert_type_success,
+} from '../../const/constants';
 
 export const newNote = () => ({
   type: types.createNote,
@@ -34,6 +39,7 @@ export const saveNewNote = (note) => {
     const newNote = { ...note, user: auth, id: refId };
 
     await db.collection(note.collection).doc(refId).set(newNote);
+    dispatch(showAlert(alert_message_success, alert_type_success));
   };
 };
 

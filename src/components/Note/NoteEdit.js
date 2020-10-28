@@ -18,17 +18,19 @@ import { saveCollection, saveNewNote } from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
 import { noteModel } from '../../models/noteModel';
 
+const noteInitial = {
+  title: '',
+  body: '',
+  collection: '',
+};
+
 export const NoteEdit = ({ note, folders }) => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
   const [folderName, setFolderName] = useState(null);
   const [folderList, setFolderList] = useState([]);
-  const [value, setValue] = useState({
-    title: '',
-    body: '',
-    collection: '',
-  });
+  const [value, setValue] = useState(noteInitial);
 
   const handleInputChange = ({ target }) => {
     setValue({
@@ -87,16 +89,13 @@ export const NoteEdit = ({ note, folders }) => {
   const handleSubmit = () => {
     if (noteValidation()) {
       dispatch(saveNewNote({ ...noteModel, ...value }));
-      console.log({
-        1: folderName,
-        2: folderList.length,
-      });
-
       if (folderName && folderList.length === 1) {
         dispatch(saveCollection(folderList));
       } else {
         dispatch(saveCollection(folderList, true));
       }
+
+      setValue(noteInitial);
     }
   };
 
