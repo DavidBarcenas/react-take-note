@@ -17,3 +17,7 @@ export const createDoc = async (collection, data) => {
     .doc(refId)
     .set({ ...data, id: refId });
 };
+
+export const deleteDoc = async (collection, docID) => {
+  await db.collection(collection).doc(docID).delete();
+};

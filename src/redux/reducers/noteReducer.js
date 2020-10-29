@@ -46,6 +46,15 @@ export const noteReducer = (state = initialState, action) => {
         activeFolder: action.payload,
       };
 
+    case types.deleteNote:
+      return {
+        ...state,
+        folderNotes: state.folderNotes.filter(
+          (note) => note.id !== action.payload
+        ),
+        activeNote: state.folderNotes.length > 1 ? state.folderNotes[1] : null,
+      };
+
     default:
       return state;
   }

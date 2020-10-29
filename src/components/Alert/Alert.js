@@ -18,7 +18,7 @@ export const Alert = () => {
         horizontal: 'right',
       }}
       open={alert.show}
-      autoHideDuration={4000}
+      autoHideDuration={3000}
       onClose={handleClose}
       message={
         <>

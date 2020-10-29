@@ -7,6 +7,7 @@ import {
 } from '../../const/constants';
 import {
   createDoc,
+  deleteDoc,
   getCollection,
   updateDoc,
 } from '../../providers/firebaseService';
@@ -78,7 +79,29 @@ export const saveNewNote = (note) => {
         });
       }
     } catch (error) {
-      dispatch(showAlert('No se guardo la nota correctamente', error));
+      dispatch(showAlert('No se guardo la nota correctamente', 'error'));
+    }
+  };
+};
+
+export const deleteNote = () => {
+  return async (dispatch, getState) => {
+    const { activeNote, folderNotes, folders } = getState().notes;
+    const updateList = folders.list.filter((f) => f !== activeNote.collection);
+    try {
+      await deleteDoc(activeNote.collection, activeNote.id);
+      dispatch(showAlert('Nota eliminada', 'success'));
+      dispatch(removeNote(activeNote.id));
+
+      if (folderNotes.length === 1) {
+        dispatch(getAllFolders(updateList), folders.id);
+        dispatch(getNotesFolder(updateList[0]));
+        await updateDoc('folders', folders.id, {
+          list: updateList,
+        });
+      }
+    } catch (error) {
+      dispatch(showAlert('No se pudo eliminar la nota', 'error'));
     }
   };
 };
@@ -110,4 +133,9 @@ const getAllFolders = (folders, id) => ({
 const folderNotes = (notes) => ({
   type: types.notes,
   payload: notes,
+});
+
+const removeNote = (noteId) => ({
+  type: types.deleteNote,
+  payload: noteId,
 });
