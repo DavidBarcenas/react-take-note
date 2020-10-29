@@ -8,6 +8,7 @@ const initialState = {
   folderNotes: [],
   activeNote: null,
   activeFolder: null,
+  editNote: false,
 };
 
 export const noteReducer = (state = initialState, action) => {
@@ -15,7 +16,8 @@ export const noteReducer = (state = initialState, action) => {
     case types.createNote:
       return {
         ...state,
-        activeNote: action.payload,
+        editNote: action.payload.edit,
+        activeNote: action.payload.note,
       };
 
     case types.folders:
@@ -38,12 +40,14 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         activeNote: action.payload,
+        editNote: false,
       };
 
     case types.activateFolder:
       return {
         ...state,
         activeFolder: action.payload,
+        editNote: false,
       };
 
     case types.deleteNote:
@@ -53,6 +57,12 @@ export const noteReducer = (state = initialState, action) => {
           (note) => note.id !== action.payload
         ),
         activeNote: state.folderNotes.length > 1 ? state.folderNotes[1] : null,
+      };
+
+    case types.cancelNote:
+      return {
+        ...state,
+        editNote: false,
       };
 
     default:

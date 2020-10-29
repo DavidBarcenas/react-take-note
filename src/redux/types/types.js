@@ -7,6 +7,7 @@ export const types = {
   folders: 'ALL_FOLDERS',
   notes: 'FOLDER_NOTES',
   deleteNote: 'DELETE_NOTE',
+  cancelNote: 'CANCEL_NOTE',
   showAlert: 'SHOW_ALERT',
   hideAlert: 'HIDE_ALERT',
 };

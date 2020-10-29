@@ -84,6 +84,23 @@ export const saveNewNote = (note) => {
   };
 };
 
+export const updateNote = (note) => {
+  return async (dispatch, getState) => {
+    const { notes } = getState();
+    const noteList = notes.folderNotes.filter((n) => n.id !== note.id);
+
+    try {
+      await updateDoc(note.collection, note.id, note);
+      dispatch(showAlert('¡Se actualizó la nota!', 'success'));
+      dispatch(cancelNoteEdit());
+      dispatch(folderNotes([note, ...noteList]));
+      dispatch(activateNote(note));
+    } catch (error) {
+      dispatch(showAlert('No se pudo actualizar la nota', 'error'));
+    }
+  };
+};
+
 export const deleteNote = () => {
   return async (dispatch, getState) => {
     const { activeNote, folderNotes, folders } = getState().notes;
@@ -106,6 +123,11 @@ export const deleteNote = () => {
   };
 };
 
+export const cancelNoteEdit = () => ({
+  type: types.cancelNote,
+  payload: false,
+});
+
 export const activateNote = (note) => ({
   type: types.activateNote,
   payload: note,
@@ -116,9 +138,12 @@ export const activateFolder = (folder) => ({
   payload: folder,
 });
 
-export const newNote = () => ({
+export const newNote = (note) => ({
   type: types.createNote,
-  payload: noteModel,
+  payload: {
+    edit: true,
+    note,
+  },
 });
 
 const getAllFolders = (folders, id) => ({

@@ -9,12 +9,13 @@ import {
 import { Folder } from '@material-ui/icons';
 import { getNotesFolder, newNote } from '../redux/actions/noteActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { noteModel } from '../models/noteModel';
 
 export const CategorySidebar = () => {
   const dispatch = useDispatch();
   const { folders, activeFolder } = useSelector((state) => state.notes);
 
-  const createNoteBtn = () => dispatch(newNote());
+  const createNoteBtn = () => dispatch(newNote(noteModel));
   const handleActivateFolder = (folder) => dispatch(getNotesFolder(folder));
 
   return (

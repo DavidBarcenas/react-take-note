@@ -13,12 +13,12 @@ import {
 import { NoteEdit } from './NoteEdit';
 import { useDispatch, useSelector } from 'react-redux';
 import empty from '../../assets/images/empty.svg';
-import { deleteNote } from '../../redux/actions/noteActions';
+import { deleteNote, newNote } from '../../redux/actions/noteActions';
 
 export const Note = () => {
   const dispatch = useDispatch();
   const [openDelete, setOpenDelete] = useState(false);
-  const { activeNote, folders, folderNotes } = useSelector(
+  const { activeNote, folders, folderNotes, editNote } = useSelector(
     (state) => state.notes
   );
 
@@ -33,6 +33,8 @@ export const Note = () => {
     );
   }
 
+  const handleEdit = () => dispatch(newNote(activeNote));
+
   const handleDelete = () => {
     dispatch(deleteNote());
     setOpenDelete(false);
@@ -40,7 +42,7 @@ export const Note = () => {
 
   return (
     <div className="note">
-      {activeNote && activeNote.id === '' ? (
+      {activeNote && editNote ? (
         <NoteEdit note={activeNote} folders={folders.list} />
       ) : (
         <>
@@ -50,7 +52,7 @@ export const Note = () => {
             </div>
             <div>
               <Tooltip title="Editar">
-                <IconButton aria-label="editar">
+                <IconButton aria-label="editar" onClick={handleEdit}>
                   <Edit />
                 </IconButton>
               </Tooltip>

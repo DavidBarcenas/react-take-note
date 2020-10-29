@@ -14,7 +14,11 @@ import {
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useDispatch } from 'react-redux';
-import { saveNewNote } from '../../redux/actions/noteActions';
+import {
+  cancelNoteEdit,
+  saveNewNote,
+  updateNote,
+} from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
 import { noteModel } from '../../models/noteModel';
 
@@ -29,8 +33,12 @@ export const NoteEdit = ({ note, folders }) => {
 
   const [open, setOpen] = useState(false);
   const [folderName, setFolderName] = useState(null);
-  const [folderList, setFolderList] = useState([]);
-  const [value, setValue] = useState(noteInitial);
+  const [folderList, setFolderList] = useState(folders);
+  const [value, setValue] = useState({
+    title: note.title,
+    body: note.body,
+    collection: note.collection,
+  });
 
   const handleInputChange = ({ target }) => {
     setValue({
@@ -88,21 +96,28 @@ export const NoteEdit = ({ note, folders }) => {
 
   const handleSubmit = () => {
     if (noteValidation()) {
+      const saveNote = { ...note, ...value };
       // dispatch(saveNewNote({ ...noteModel, ...value }));
       // if (folderName && folderList.length === 1) {
       //   dispatch(saveCollection(folderList));
       // } else {
       //   dispatch(saveCollection(folderList, true));
       // }
-      dispatch(saveNewNote({ ...noteModel, ...value }));
+      if (note.id !== '') {
+        dispatch(updateNote(saveNote));
+      } else {
+        dispatch(saveNewNote(saveNote));
+      }
 
-      setValue(noteInitial);
+      // setValue(noteInitial);
     }
   };
 
-  useEffect(() => {
-    setFolderList(folders);
-  }, [folders]);
+  const handleCancel = () => dispatch(cancelNoteEdit());
+
+  // useEffect(() => {
+  //   setFolderList(folders);
+  // }, [folders]);
 
   return (
     <div className="new__note">
@@ -117,7 +132,7 @@ export const NoteEdit = ({ note, folders }) => {
 
       <CKEditor
         editor={ClassicEditor}
-        data=""
+        data={value.body}
         onBlur={(e, editor) => handleNoteText(editor.getData())}
         config={editorConfig}
       />
@@ -144,7 +159,9 @@ export const NoteEdit = ({ note, folders }) => {
           </FormControl>
         </div>
         <div>
-          <Button variant="outlined">Cancelar</Button>
+          <Button variant="outlined" onClick={handleCancel}>
+            Cancelar
+          </Button>
           <Button
             variant="contained"
             className="btn__save"
