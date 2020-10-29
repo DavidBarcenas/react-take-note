@@ -1,7 +1,7 @@
 import { db } from './firebase';
 
 export const getCollection = async (collection) => {
-  const data = await db.collection(collection).get();
+  const data = await db.collection(collection).orderBy('date', 'desc').get();
   const docs = data.docs.length === 0 ? [] : data.docs.map((doc) => doc.data());
   return docs;
 };

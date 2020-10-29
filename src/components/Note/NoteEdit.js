@@ -14,7 +14,7 @@ import {
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useDispatch } from 'react-redux';
-import { saveCollection, saveNewNote } from '../../redux/actions/noteActions';
+import { saveNewNote } from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
 import { noteModel } from '../../models/noteModel';
 
@@ -88,12 +88,13 @@ export const NoteEdit = ({ note, folders }) => {
 
   const handleSubmit = () => {
     if (noteValidation()) {
+      // dispatch(saveNewNote({ ...noteModel, ...value }));
+      // if (folderName && folderList.length === 1) {
+      //   dispatch(saveCollection(folderList));
+      // } else {
+      //   dispatch(saveCollection(folderList, true));
+      // }
       dispatch(saveNewNote({ ...noteModel, ...value }));
-      if (folderName && folderList.length === 1) {
-        dispatch(saveCollection(folderList));
-      } else {
-        dispatch(saveCollection(folderList, true));
-      }
 
       setValue(noteInitial);
     }
