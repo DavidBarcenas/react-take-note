@@ -6,6 +6,7 @@ import {
   alert_message_success,
   alert_type_success,
 } from '../../const/constants';
+import { dateFormat } from '../../util/dateFormat';
 
 export const newNote = () => ({
   type: types.createNote,
@@ -33,13 +34,36 @@ export const userNotes = () => {
 
 export const saveNewNote = (note) => {
   return async (dispatch, getState) => {
-    const { auth } = getState();
+    const { auth, notes } = getState();
 
     const refId = await db.collection(note.collection).doc().id;
     const newNote = { ...note, user: auth, id: refId };
 
     await db.collection(note.collection).doc(refId).set(newNote);
     dispatch(showAlert(alert_message_success, alert_type_success));
+
+    dispatch(
+      activateNote({ ...note, id: refId, date: dateFormat(note.date, false) })
+    );
+    dispatch(activateFolder(note.collection));
+
+    dispatch(
+      folderNotes([
+        { ...note, id: refId, date: new Date(note.date).getTime() },
+        ...notes.folderNotes,
+      ])
+    );
+
+    const existFolder = notes.folders.list.find((f) => f === note.collection);
+    if (!existFolder) {
+      dispatch(
+        allFolders([note.collection, ...notes.folders.list], notes.folders.id)
+      );
+    }
+
+    const notesRef = await db.collection(note.collection).get();
+
+    dispatch(folderNotes(notesRef.docs.map((doc) => doc.data())));
   };
 };
 

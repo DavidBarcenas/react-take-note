@@ -13,10 +13,14 @@ const months = {
   11: 'Dic',
 };
 
-export const dateFormat = (noteDate) => {
-  const date = new Date(
-    noteDate.seconds * 1000 + noteDate.nanoseconds / 1000000
-  );
+export const dateFormat = (noteDate, tms = true) => {
+  let date;
+
+  if (tms) {
+    date = new Date(noteDate.seconds * 1000 + noteDate.nanoseconds / 1000000);
+  } else {
+    date = new Date(noteDate);
+  }
 
   const day =
     date.getDay() < 10 ? '0' + date.getDay().toString() : date.getDay();
