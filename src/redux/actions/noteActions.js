@@ -6,28 +6,47 @@ import {
   alert_message_success,
   alert_type_success,
 } from '../../const/constants';
-import { dateFormat } from '../../util/dateFormat';
-
-export const newNote = () => ({
-  type: types.createNote,
-  payload: noteModel,
-});
+import {
+  createDoc,
+  getCollection,
+  updateDoc,
+} from '../../providers/firebaseService';
 
 export const userNotes = () => {
   return async (dispatch) => {
-    let folders = [];
-    let notes = [];
-    const foldersRef = await db.collection('folders').get();
+    try {
+      const folders = await getCollection('folders');
+      if (folders.length > 0) {
+        dispatch(getAllFolders(folders[0].list, folders[0].id));
 
-    if (foldersRef.docs.length > 0) {
-      folders = foldersRef.docs[0].data();
-      const notesRef = await db.collection(folders.list[0]).get();
-      if (notesRef.docs.length > 0) {
-        notesRef.docs.map((doc) => (notes = [...notes, doc.data()]));
+        if (folders[0].list.length > 0) {
+          const notes = await getCollection(folders[0].list[0]);
+
+          if (notes.length > 0) {
+            dispatch(activateNote(notes[0]));
+            dispatch(folderNotes(notes));
+          }
+        }
+      }
+    } catch (error) {
+      dispatch(showAlert('Ocurrió un error, intente más tarde', 'error'));
+    }
+  };
+};
+
+export const getNotesFolder = (folder) => {
+  return async (dispatch) => {
+    try {
+      const notes = await getCollection(folder);
+      dispatch(activateFolder(folder));
+      dispatch(folderNotes(notes));
+
+      if (notes.length > 0) {
         dispatch(activateNote(notes[0]));
       }
-      dispatch(allFolders(folders.list, folders.id));
-      dispatch(folderNotes(notes));
+    } catch (error) {
+      console.log('el error', error);
+      dispatch(showAlert('No se pudo obtener las notas', 'error'));
     }
   };
 };
@@ -35,35 +54,67 @@ export const userNotes = () => {
 export const saveNewNote = (note) => {
   return async (dispatch, getState) => {
     const { auth, notes } = getState();
+    const folderExists = notes.folders.list.find((f) => f === note.collection);
 
-    const refId = await db.collection(note.collection).doc().id;
-    const newNote = { ...note, user: auth, id: refId };
+    try {
+      await createDoc(note.collection, {
+        ...note,
+        user: auth,
+      });
+      dispatch(showAlert(alert_message_success, alert_type_success));
+      dispatch(getNotesFolder(note.collection));
 
-    await db.collection(note.collection).doc(refId).set(newNote);
-    dispatch(showAlert(alert_message_success, alert_type_success));
-
-    dispatch(
-      activateNote({ ...note, id: refId, date: dateFormat(note.date, false) })
-    );
-    dispatch(activateFolder(note.collection));
-
-    dispatch(
-      folderNotes([
-        { ...note, id: refId, date: new Date(note.date).getTime() },
-        ...notes.folderNotes,
-      ])
-    );
-
-    const existFolder = notes.folders.list.find((f) => f === note.collection);
-    if (!existFolder) {
-      dispatch(
-        allFolders([note.collection, ...notes.folders.list], notes.folders.id)
-      );
+      if (notes.folders.id) {
+        if (!folderExists) {
+          await updateDoc('folders', notes.folders.id, notes.folders.list);
+          dispatch(
+            getAllFolders(
+              [note.collection, ...notes.folders.list],
+              notes.folders.id
+            )
+          );
+        }
+      } else {
+        await createDoc('folders', {
+          user: { ...auth },
+          list: notes.folders.list,
+        });
+      }
+    } catch (error) {
+      dispatch(showAlert('No se guardo la nota correctamente', 'error'));
     }
 
-    const notesRef = await db.collection(note.collection).get();
+    // const refId = await db.collection(note.collection).doc().id;
+    // const newNote = { ...note, user: auth, id: refId };
 
-    dispatch(folderNotes(notesRef.docs.map((doc) => doc.data())));
+    // await db.collection(note.collection).doc(refId).set(newNote);
+    // dispatch(showAlert(alert_message_success, alert_type_success));
+
+    // dispatch(
+    //   activateNote({ ...note, id: refId, date: dateFormat(note.date, false) })
+    // );
+    // dispatch(activateFolder(note.collection));
+
+    // dispatch(
+    //   folderNotes([
+    //     { ...note, id: refId, date: new Date(note.date).getTime() },
+    //     ...notes.folderNotes,
+    //   ])
+    // );
+
+    // const existFolder = notes.folders.list.find((f) => f === note.collection);
+    // if (!existFolder) {
+    //   dispatch(
+    //     getAllFolders(
+    //       [note.collection, ...notes.folders.list],
+    //       notes.folders.id
+    //     )
+    //   );
+    // }
+
+    // const notesRef = await db.collection(note.collection).get();
+
+    // dispatch(folderNotes(notesRef.docs.map((doc) => doc.data())));
   };
 };
 
@@ -90,21 +141,6 @@ export const saveCollection = (collection, update = false) => {
   };
 };
 
-export const getNotesFolder = (folder) => {
-  return async (dispatch, getState) => {
-    let notes = [];
-    const foldersRef = await db.collection(folder).get();
-
-    if (foldersRef.docs.length > 0) {
-      foldersRef.docs.map((doc) => (notes = [...notes, doc.data()]));
-      dispatch(activateNote(notes[0]));
-      dispatch(activateFolder(folder));
-    }
-
-    dispatch(folderNotes(notes));
-  };
-};
-
 export const activateNote = (note) => ({
   type: types.activateNote,
   payload: note,
@@ -115,7 +151,12 @@ export const activateFolder = (folder) => ({
   payload: folder,
 });
 
-const allFolders = (folders, id) => ({
+export const newNote = () => ({
+  type: types.createNote,
+  payload: noteModel,
+});
+
+const getAllFolders = (folders, id) => ({
   type: types.folders,
   payload: {
     id,

@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 import empty from '../../assets/images/empty.svg';
 
 export const Note = () => {
-  const { activeNote, folders } = useSelector((state) => state.notes);
+  const { activeNote, folders, folderNotes } = useSelector(
+    (state) => state.notes
+  );
 
-  if (folders.list.length === 0 && !activeNote) {
+  if (folders.list.length === 0 || folderNotes.length === 0) {
     return (
       <div className="note note__empty">
         <img src={empty} alt="No hay documentos" />
