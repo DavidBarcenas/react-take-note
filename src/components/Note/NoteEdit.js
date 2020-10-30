@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Dialog,
@@ -20,13 +20,6 @@ import {
   updateNote,
 } from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
-import { noteModel } from '../../models/noteModel';
-
-const noteInitial = {
-  title: '',
-  body: '',
-  collection: '',
-};
 
 export const NoteEdit = ({ note, folders }) => {
   const dispatch = useDispatch();
@@ -38,6 +31,11 @@ export const NoteEdit = ({ note, folders }) => {
     title: note.title,
     body: note.body,
     collection: note.collection,
+  });
+  const [formErrors, setFormErrors] = useState({
+    titleError: false,
+    bodyError: false,
+    folderError: false,
   });
 
   const handleInputChange = ({ target }) => {
@@ -66,11 +64,19 @@ export const NoteEdit = ({ note, folders }) => {
   };
 
   const noteValidation = () => {
-    if (
-      value.title.trim() === '' ||
-      value.body.trim() === '' ||
-      value.collection.trim() === ''
-    ) {
+    setFormErrors({
+      titleError: value.title.trim() === '',
+      bodyError: value.body.trim() === '',
+      folderError: value.collection.trim() === '',
+    });
+
+    if (value.title.trim() === '') {
+      return false;
+    }
+    if (value.body.trim() === '') {
+      return false;
+    }
+    if (value.collection.trim() === '') {
       return false;
     }
 
@@ -96,28 +102,30 @@ export const NoteEdit = ({ note, folders }) => {
 
   const handleSubmit = () => {
     if (noteValidation()) {
-      const saveNote = { ...note, ...value };
-      // dispatch(saveNewNote({ ...noteModel, ...value }));
-      // if (folderName && folderList.length === 1) {
-      //   dispatch(saveCollection(folderList));
-      // } else {
-      //   dispatch(saveCollection(folderList, true));
-      // }
+      const saveNote = { ...note, ...value, date: new Date() };
+
       if (note.id !== '') {
         dispatch(updateNote(saveNote));
       } else {
         dispatch(saveNewNote(saveNote));
       }
 
-      // setValue(noteInitial);
+      setFormErrors({
+        titleError: false,
+        bodyError: false,
+        folderError: false,
+      });
     }
   };
 
-  const handleCancel = () => dispatch(cancelNoteEdit());
-
-  // useEffect(() => {
-  //   setFolderList(folders);
-  // }, [folders]);
+  const handleCancel = () => {
+    dispatch(cancelNoteEdit());
+    setFormErrors({
+      titleError: false,
+      bodyError: false,
+      folderError: false,
+    });
+  };
 
   return (
     <div className="new__note">
@@ -128,14 +136,17 @@ export const NoteEdit = ({ note, folders }) => {
         value={value.title}
         autoComplete="off"
         onChange={handleInputChange}
+        error={formErrors.titleError}
       />
 
-      <CKEditor
-        editor={ClassicEditor}
-        data={value.body}
-        onBlur={(e, editor) => handleNoteText(editor.getData())}
-        config={editorConfig}
-      />
+      <div className={formErrors.bodyError ? 'editor__error' : ''}>
+        <CKEditor
+          editor={ClassicEditor}
+          data={value.body}
+          onBlur={(e, editor) => handleNoteText(editor.getData())}
+          config={editorConfig}
+        />
+      </div>
       <div className="note__footer">
         <div className="note__select">
           <FormControl variant="outlined">
@@ -146,6 +157,7 @@ export const NoteEdit = ({ note, folders }) => {
               name="collection"
               onChange={handleFolderChange}
               label="Carpeta"
+              error={formErrors.folderError}
             >
               <MenuItem value="newFolder">
                 <em>Nueva carpeta</em>

@@ -1,5 +1,4 @@
 import { types } from '../types/types';
-import { noteModel } from '../../models/noteModel';
 import { showAlert } from './uiActions';
 import {
   alert_message_success,

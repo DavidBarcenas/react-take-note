@@ -63,6 +63,7 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         editNote: false,
+        activeNote: state.folderNotes[0],
       };
 
     default:
