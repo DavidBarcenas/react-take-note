@@ -10,6 +10,7 @@ import {
   getCollection,
   updateDoc,
 } from '../../providers/firebaseService';
+import { normalizeName } from '../../util/dateFormat';
 
 export const userNotes = () => {
   return async (dispatch) => {
@@ -55,12 +56,14 @@ export const saveNewNote = (note) => {
     const folderExists = notes.folders.list.find((f) => f === note.collection);
 
     try {
+      const collection = normalizeName(note.collection);
+      console.log(collection);
       await createDoc(note.collection, {
         ...note,
         user: auth,
       });
       dispatch(showAlert(alert_message_success, alert_type_success));
-      dispatch(getNotesFolder(note.collection));
+      dispatch(getNotesFolder(collection));
 
       if (notes.folders.id) {
         if (!folderExists) {
@@ -104,19 +107,23 @@ export const deleteNote = () => {
   return async (dispatch, getState) => {
     const { activeNote, folderNotes, folders } = getState().notes;
     const updateList = folders.list.filter((f) => f !== activeNote.collection);
+    console.log('ipdateList', updateList);
     try {
       await deleteDoc(activeNote.collection, activeNote.id);
       dispatch(showAlert('Nota eliminada', 'success'));
       dispatch(removeNote(activeNote.id));
 
       if (folderNotes.length === 1) {
-        dispatch(getAllFolders(updateList), folders.id);
-        dispatch(getNotesFolder(updateList[0]));
+        dispatch(getAllFolders(updateList, folders.id));
+        if (updateList.length > 0) {
+          dispatch(getNotesFolder(updateList[0]));
+        }
         await updateDoc('folders', folders.id, {
           list: updateList,
         });
       }
     } catch (error) {
+      console.log(error);
       dispatch(showAlert('No se pudo eliminar la nota', 'error'));
     }
   };

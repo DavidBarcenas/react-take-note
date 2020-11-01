@@ -18,11 +18,9 @@ import { deleteNote, newNote } from '../../redux/actions/noteActions';
 export const Note = () => {
   const dispatch = useDispatch();
   const [openDelete, setOpenDelete] = useState(false);
-  const { activeNote, folders, folderNotes, editNote } = useSelector(
-    (state) => state.notes
-  );
+  const { activeNote, folders, editNote } = useSelector((state) => state.notes);
 
-  if (folders.list.length === 0 || folderNotes.length === 0 || !activeNote) {
+  if (!activeNote) {
     return (
       <div className="note note__empty">
         <img src={empty} alt="No hay documentos" />

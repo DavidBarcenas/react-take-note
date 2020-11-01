@@ -29,3 +29,11 @@ export const dateFormat = (noteDate, tms = true) => {
 
   return `${day} ${month} ${year}`;
 };
+
+export const normalizeName = (folderName) => {
+  const removeAccents = folderName
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+  return removeAccents.replace(/ /g, '_');
+};
