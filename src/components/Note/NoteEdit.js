@@ -92,12 +92,18 @@ export const NoteEdit = ({ note, folders }) => {
       setFolderList([...folderList, folderName]);
     }
     setOpen(false);
+    validFolderName(folderName);
   };
 
   const handleFolderName = ({ target }) => {
     if (target.value.trim() !== '') {
       setFolderName(target.value);
     }
+  };
+
+  const validFolderName = (name) => {
+    const regex = /^[A-Za-z0-9 ]*$/i;
+    return regex.test(name);
   };
 
   const handleSubmit = () => {
