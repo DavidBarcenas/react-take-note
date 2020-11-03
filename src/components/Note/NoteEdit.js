@@ -37,6 +37,7 @@ export const NoteEdit = ({ note, folders }) => {
     bodyError: false,
     folderError: false,
   });
+  const [folderNameError, setFolderNameError] = useState(true);
 
   const handleInputChange = ({ target }) => {
     setValue({
@@ -84,15 +85,16 @@ export const NoteEdit = ({ note, folders }) => {
   };
 
   const handleCloseDialog = () => {
+    setFolderNameError(validFolderName(folderName));
     if (folderName) {
       setValue({
         ...value,
         collection: folderName,
       });
       setFolderList([...folderList, folderName]);
+      setFolderName(null);
     }
     setOpen(false);
-    validFolderName(folderName);
   };
 
   const handleFolderName = ({ target }) => {
@@ -197,6 +199,12 @@ export const NoteEdit = ({ note, folders }) => {
             id="outlined-basic"
             label="Nombre de carpeta"
             variant="outlined"
+            helperText={
+              !folderNameError
+                ? 'Solo se permiten letras, números y espacios'
+                : ''
+            }
+            error={!folderNameError}
             onChange={handleFolderName}
           />
         </DialogContent>
