@@ -25,7 +25,7 @@ export const CategorySidebar = () => {
       </div>
       <div className="sidebar__folders">
         <List component="nav" aria-label="main folders">
-          {folders.list.map((folder) => (
+          {folders.map((folder) => (
             <ListItem
               button
               className={folder === activeFolder ? 'folder-active' : ''}

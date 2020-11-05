@@ -24,9 +24,7 @@ export const Note = () => {
     return (
       <div className="note note__empty">
         <img src={empty} alt="No hay documentos" />
-        <span>
-          {folders.list.length === 0 ? 'No hay notas' : 'Cargando notas'}
-        </span>
+        <span>{folders.length === 0 ? 'No hay notas' : 'Cargando notas'}</span>
       </div>
     );
   }
@@ -41,7 +39,7 @@ export const Note = () => {
   return (
     <div className="note">
       {activeNote && editNote ? (
-        <NoteEdit note={activeNote} folders={folders.list} />
+        <NoteEdit note={activeNote} folders={folders} />
       ) : (
         <>
           <div className="note__actionbar">

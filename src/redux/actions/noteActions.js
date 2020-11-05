@@ -5,30 +5,34 @@ import {
   alert_type_success,
 } from '../../const/constants';
 import {
+  createCollection,
   createDoc,
   deleteDoc,
   getCollection,
+  getNotes,
   updateDoc,
 } from '../../providers/firebaseService';
 import { normalizeName } from '../../util/dateFormat';
+import { db } from '../../providers/firebase';
 
 export const userNotes = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { uid, name } = getState().auth;
     try {
-      const folders = await getCollection('folders');
-      if (folders.length > 0) {
-        dispatch(getAllFolders(folders[0].list, folders[0].id));
-
-        if (folders[0].list.length > 0) {
-          const notes = await getCollection(folders[0].list[0]);
-
-          if (notes.length > 0) {
-            dispatch(activateNote(notes[0]));
-            dispatch(folderNotes(notes));
-          }
+      const userdata = await getCollection(uid);
+      if (userdata.length > 0) {
+        const foldersarray = userdata.find((doc) => doc.id === 'notes');
+        if (foldersarray) {
+          dispatch(getAllFolders(foldersarray.folders));
+          const notes = await getNotes(uid, foldersarray.folders[0]);
+          dispatch(folderNotes(notes.docs.map((doc) => doc.data())));
+          dispatch(activateNote(notes[0]));
         }
+      } else {
+        await db.collection(uid).doc('user').set({ name });
       }
     } catch (error) {
+      console.log(error);
       dispatch(showAlert('Ocurrió un error, intente más tarde', 'error'));
     }
   };
@@ -53,34 +57,49 @@ export const getNotesFolder = (folder) => {
 export const saveNewNote = (note) => {
   return async (dispatch, getState) => {
     const { auth, notes } = getState();
-    const folderExists = notes.folders.list.find((f) => f === note.collection);
+    const folderExists = notes.folders.find((f) => f === note.collection);
 
     try {
       const collection = normalizeName(note.collection);
       console.log(collection);
-      await createDoc(note.collection, {
-        ...note,
-        user: auth,
-      });
+      await createDoc(`${auth.uid}/notes/list`, note);
       dispatch(showAlert(alert_message_success, alert_type_success));
-      dispatch(getNotesFolder(collection));
 
-      if (notes.folders.id) {
-        if (!folderExists) {
-          const updateList = [note.collection, ...notes.folders.list];
-          dispatch(getAllFolders(updateList, notes.folders.id));
-          await updateDoc('folders', notes.folders.id, {
-            list: updateList,
-          });
-        }
+      if (!folderExists) {
+        // await updateDoc(`${auth.uid}`, 'notes', {
+        //   folders: [note.collection, ...notes.folders],
+        // });
+        await db
+          .doc(`${auth.uid}/notes`)
+          .set({ folders: [note.collection, ...notes.folders] });
       } else {
-        await createDoc('folders', {
-          user: { ...auth },
-          list: notes.folders.list,
-          date: new Date(),
-        });
+        await db
+          .collection(auth.uid)
+          .doc('notes')
+          .set({
+            folder: [note.collection],
+          });
       }
+
+      // dispatch(getNotesFolder(collection));
+
+      // if (notes.folders.id) {
+      //   if (!folderExists) {
+      //     const updateList = [note.collection, ...notes.folders.list];
+      //     dispatch(getAllFolders(updateList, notes.folders.id));
+      //     await updateDoc('folders', notes.folders.id, {
+      //       list: updateList,
+      //     });
+      //   }
+      // } else {
+      //   await createDoc('folders', {
+      //     user: { ...auth },
+      //     list: notes.folders.list,
+      //     date: new Date(),
+      //   });
+      // }
     } catch (error) {
+      console.log(error);
       dispatch(showAlert('No se guardo la nota correctamente', 'error'));
     }
   };
@@ -152,10 +171,9 @@ export const newNote = (note) => ({
   },
 });
 
-const getAllFolders = (folders, id) => ({
+const getAllFolders = (folders) => ({
   type: types.folders,
   payload: {
-    id,
     list: folders,
     active: folders.length > 0 ? folders[0] : null,
   },

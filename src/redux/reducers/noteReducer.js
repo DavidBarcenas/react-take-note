@@ -1,10 +1,7 @@
 import { types } from '../types/types';
 
 const initialState = {
-  folders: {
-    id: null,
-    list: [],
-  },
+  folders: [],
   folderNotes: [],
   activeNote: null,
   activeFolder: null,
@@ -23,10 +20,7 @@ export const noteReducer = (state = initialState, action) => {
     case types.folders:
       return {
         ...state,
-        folders: {
-          id: action.payload.id,
-          list: action.payload.list,
-        },
+        folders: action.payload.list,
         activeFolder: action.payload.active,
       };
 
