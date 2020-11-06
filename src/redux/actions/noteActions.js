@@ -5,30 +5,22 @@ import {
   alert_type_success,
 } from '../../const/constants';
 import {
-  createCollection,
-  createDoc,
   deleteDoc,
-  getCollection,
   getNotes,
   saveNote,
   updateDoc,
 } from '../../providers/firebaseService';
-import { normalizeName } from '../../util/dateFormat';
 import { db } from '../../providers/firebase';
 
 export const userNotes = () => {
   return async (dispatch, getState) => {
     const { uid, name } = getState().auth;
     try {
-      const userdata = await getCollection(uid);
-      if (userdata.length > 0) {
-        const foldersarray = userdata.find((doc) => doc.id === 'notes');
-        if (foldersarray) {
-          dispatch(getAllFolders(foldersarray.folders));
-          const notes = await getNotes(uid, foldersarray.folders[0]);
-          dispatch(folderNotes(notes.docs.map((doc) => doc.data())));
-          dispatch(activateNote(notes[0]));
-        }
+      const userdata = await db.doc(`${uid}/notes`).get();
+      if (userdata.data()) {
+        const folders = userdata.data().folders;
+        dispatch(getAllFolders(folders));
+        dispatch(getNotesFolder(folders[0]));
       } else {
         await db.collection(uid).doc('user').set({ name });
       }
@@ -60,6 +52,7 @@ export const saveNewNote = (note) => {
           .set({
             folders: [note.collection],
           });
+        dispatch(getAllFolders([note.collection]));
       }
 
       if (note.collection !== notes.activeFolder) {
@@ -81,7 +74,7 @@ export const getNotesFolder = (folder) => {
       const notes = await getNotes(uid, folder);
       dispatch(activateFolder(folder));
       dispatch(folderNotes(notes.docs.map((doc) => doc.data())));
-      dispatch(activateNote(notes.docs[0]));
+      dispatch(activateNote(notes.docs[0].data()));
     } catch (error) {
       dispatch(showAlert('No se pudo obtener las notas', 'error'));
     }
