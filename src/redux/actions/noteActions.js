@@ -83,15 +83,33 @@ export const getNotesFolder = (folder) => {
 
 export const updateNote = (note) => {
   return async (dispatch, getState) => {
-    const { notes } = getState();
+    const { notes, auth } = getState();
     const noteList = notes.folderNotes.filter((n) => n.id !== note.id);
 
     try {
-      await updateDoc(note.collection, note.id, note);
-      dispatch(showAlert('¡Se actualizó la nota!', 'success'));
+      await db.doc(`${auth.uid}/notes/list/${note.id}`).update(note);
+
+      if (note.collection !== notes.activeFolder) {
+        if (notes.folderNotes.length === 1) {
+          const updateFolders = notes.folders.filter(
+            (folder) => folder !== notes.activeFolder
+          );
+          await db.doc(`${auth.uid}/notes`).update({ folders: updateFolders });
+          dispatch(getAllFolders(updateFolders));
+        }
+        if (!notes.folders.includes(note.collection)) {
+          await db
+            .doc(`${auth.uid}/notes`)
+            .update({ folders: [note.collection, ...notes.folders] });
+          dispatch(getAllFolders([note.collection, ...notes.folders]));
+        }
+        dispatch(getNotesFolder(note.collection));
+      } else {
+        dispatch(folderNotes([note, ...noteList]));
+        dispatch(activateNote(note));
+      }
       dispatch(cancelNoteEdit());
-      dispatch(folderNotes([note, ...noteList]));
-      dispatch(activateNote(note));
+      dispatch(showAlert('¡Se actualizó la nota!', 'success'));
     } catch (error) {
       dispatch(showAlert('No se pudo actualizar la nota', 'error'));
     }
