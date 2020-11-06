@@ -11,10 +11,15 @@ export const saveNote = async (uid, note) => {
   return { ...note, id: refId };
 };
 
-/*
-await db.collection(`${uid}`).doc('user').set({ name });
-await db.collection(`${uid}`).doc('notes').collection('list').add([])
-*/
+export const getNotes = async (uid, collection) => {
+  const data = await db
+    .collection(`${uid}/notes/list`)
+    .where('collection', '==', collection)
+    .orderBy('date', 'desc')
+    .get();
+
+  return data;
+};
 
 export const getCollection = async (collection) => {
   const data = await db.collection(collection).get();
@@ -23,15 +28,6 @@ export const getCollection = async (collection) => {
       ? []
       : data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
   return docs;
-};
-
-export const getNotes = async (uid, collection) => {
-  const data = await db
-    .collection(`${uid}/notes/list`)
-    .where('collection', '==', collection)
-    .get();
-
-  return data;
 };
 
 export const updateDoc = async (collection, docID, data) => {

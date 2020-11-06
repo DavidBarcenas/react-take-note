@@ -45,7 +45,7 @@ export const saveNewNote = (note) => {
     const folderExists = notes.folders.find((f) => f === note.collection);
     dispatch(showAlert(alert_message_success, alert_type_success));
     try {
-      const newNote = await saveNote(auth.id, note);
+      const newNote = await saveNote(auth.uid, note);
       if (notes.folders.length > 0) {
         if (!folderExists) {
           await db
@@ -61,9 +61,13 @@ export const saveNewNote = (note) => {
             folders: [note.collection],
           });
       }
-      dispatch(activateFolder(note.collection));
-      dispatch(folderNotes([newNote, ...notes.folderNotes]));
-      dispatch(activateNote(newNote));
+
+      if (note.collection !== notes.activeFolder) {
+        dispatch(getNotesFolder(note.collection));
+      } else {
+        dispatch(folderNotes([newNote, ...notes.folderNotes]));
+        dispatch(activateNote(newNote));
+      }
     } catch (error) {
       dispatch(showAlert('No se guardo la nota correctamente', 'error'));
     }
@@ -71,15 +75,13 @@ export const saveNewNote = (note) => {
 };
 
 export const getNotesFolder = (folder) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth;
     try {
-      const notes = await getCollection(folder);
+      const notes = await getNotes(uid, folder);
       dispatch(activateFolder(folder));
-      dispatch(folderNotes(notes));
-
-      if (notes.length > 0) {
-        dispatch(activateNote(notes[0]));
-      }
+      dispatch(folderNotes(notes.docs.map((doc) => doc.data())));
+      dispatch(activateNote(notes.docs[0]));
     } catch (error) {
       dispatch(showAlert('No se pudo obtener las notas', 'error'));
     }
