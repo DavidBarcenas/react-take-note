@@ -20,7 +20,9 @@ export const userNotes = () => {
       if (userdata.data()) {
         const folders = userdata.data().folders;
         dispatch(getAllFolders(folders));
-        dispatch(getNotesFolder(folders[0]));
+        if (folders.length > 0) {
+          dispatch(getNotesFolder(folders[0]));
+        }
       } else {
         await db.collection(uid).doc('user').set({ name });
       }
@@ -35,7 +37,7 @@ export const saveNewNote = (note) => {
   return async (dispatch, getState) => {
     const { auth, notes } = getState();
     const folderExists = notes.folders.find((f) => f === note.collection);
-    dispatch(showAlert(alert_message_success, alert_type_success));
+
     try {
       const newNote = await saveNote(auth.uid, note);
       if (notes.folders.length > 0) {
@@ -61,6 +63,7 @@ export const saveNewNote = (note) => {
         dispatch(folderNotes([newNote, ...notes.folderNotes]));
         dispatch(activateNote(newNote));
       }
+      dispatch(showAlert(alert_message_success, alert_type_success));
     } catch (error) {
       dispatch(showAlert('No se guardo la nota correctamente', 'error'));
     }
@@ -118,25 +121,24 @@ export const updateNote = (note) => {
 
 export const deleteNote = () => {
   return async (dispatch, getState) => {
-    const { activeNote, folderNotes, folders } = getState().notes;
-    const updateList = folders.list.filter((f) => f !== activeNote.collection);
-    console.log('ipdateList', updateList);
-    try {
-      await deleteDoc(activeNote.collection, activeNote.id);
-      dispatch(showAlert('Nota eliminada', 'success'));
-      dispatch(removeNote(activeNote.id));
+    const { notes, auth } = getState();
+    const updateList = notes.folders.filter(
+      (f) => f !== notes.activeNote.collection
+    );
 
-      if (folderNotes.length === 1) {
-        dispatch(getAllFolders(updateList, folders.id));
+    try {
+      await db.doc(`${auth.uid}/notes/list/${notes.activeNote.id}`).delete();
+      dispatch(showAlert('Nota eliminada', 'success'));
+      dispatch(removeNote(notes.activeNote.id));
+
+      if (notes.folderNotes.length === 1) {
+        dispatch(getAllFolders(updateList));
         if (updateList.length > 0) {
           dispatch(getNotesFolder(updateList[0]));
         }
-        await updateDoc('folders', folders.id, {
-          list: updateList,
-        });
+        await db.doc(`${auth.uid}/notes`).update({ folders: updateList });
       }
     } catch (error) {
-      console.log(error);
       dispatch(showAlert('No se pudo eliminar la nota', 'error'));
     }
   };
