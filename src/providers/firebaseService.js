@@ -1,4 +1,16 @@
 import { db } from './firebase';
+import { v4 as uuidv4 } from 'uuid';
+
+export const saveNote = async (uid, note) => {
+  const refId = uuidv4().replaceAll('-', '').substr(0, 20);
+  await db
+    .collection(`${uid}/notes/list`)
+    .doc(refId)
+    .set({ ...note, id: refId });
+
+  return { ...note, id: refId };
+};
+
 /*
 await db.collection(`${uid}`).doc('user').set({ name });
 await db.collection(`${uid}`).doc('notes').collection('list').add([])

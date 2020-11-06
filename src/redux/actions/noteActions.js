@@ -10,6 +10,7 @@ import {
   deleteDoc,
   getCollection,
   getNotes,
+  saveNote,
   updateDoc,
 } from '../../providers/firebaseService';
 import { normalizeName } from '../../util/dateFormat';
@@ -38,6 +39,37 @@ export const userNotes = () => {
   };
 };
 
+export const saveNewNote = (note) => {
+  return async (dispatch, getState) => {
+    const { auth, notes } = getState();
+    const folderExists = notes.folders.find((f) => f === note.collection);
+    dispatch(showAlert(alert_message_success, alert_type_success));
+    try {
+      const newNote = await saveNote(auth.id, note);
+      if (notes.folders.length > 0) {
+        if (!folderExists) {
+          await db
+            .doc(`${auth.uid}/notes`)
+            .update({ folders: [note.collection, ...notes.folders] });
+          dispatch(getAllFolders([note.collection, ...notes.folders]));
+        }
+      } else {
+        await db
+          .collection(auth.uid)
+          .doc('notes')
+          .set({
+            folders: [note.collection],
+          });
+      }
+      dispatch(activateFolder(note.collection));
+      dispatch(folderNotes([newNote, ...notes.folderNotes]));
+      dispatch(activateNote(newNote));
+    } catch (error) {
+      dispatch(showAlert('No se guardo la nota correctamente', 'error'));
+    }
+  };
+};
+
 export const getNotesFolder = (folder) => {
   return async (dispatch) => {
     try {
@@ -50,57 +82,6 @@ export const getNotesFolder = (folder) => {
       }
     } catch (error) {
       dispatch(showAlert('No se pudo obtener las notas', 'error'));
-    }
-  };
-};
-
-export const saveNewNote = (note) => {
-  return async (dispatch, getState) => {
-    const { auth, notes } = getState();
-    const folderExists = notes.folders.find((f) => f === note.collection);
-
-    try {
-      const collection = normalizeName(note.collection);
-      console.log(collection);
-      await createDoc(`${auth.uid}/notes/list`, note);
-      dispatch(showAlert(alert_message_success, alert_type_success));
-
-      if (!folderExists) {
-        // await updateDoc(`${auth.uid}`, 'notes', {
-        //   folders: [note.collection, ...notes.folders],
-        // });
-        await db
-          .doc(`${auth.uid}/notes`)
-          .set({ folders: [note.collection, ...notes.folders] });
-      } else {
-        await db
-          .collection(auth.uid)
-          .doc('notes')
-          .set({
-            folder: [note.collection],
-          });
-      }
-
-      // dispatch(getNotesFolder(collection));
-
-      // if (notes.folders.id) {
-      //   if (!folderExists) {
-      //     const updateList = [note.collection, ...notes.folders.list];
-      //     dispatch(getAllFolders(updateList, notes.folders.id));
-      //     await updateDoc('folders', notes.folders.id, {
-      //       list: updateList,
-      //     });
-      //   }
-      // } else {
-      //   await createDoc('folders', {
-      //     user: { ...auth },
-      //     list: notes.folders.list,
-      //     date: new Date(),
-      //   });
-      // }
-    } catch (error) {
-      console.log(error);
-      dispatch(showAlert('No se guardo la nota correctamente', 'error'));
     }
   };
 };

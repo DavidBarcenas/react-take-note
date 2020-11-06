@@ -16,7 +16,7 @@ const months = {
 export const dateFormat = (noteDate, tms = true) => {
   let date;
 
-  if (tms) {
+  if (noteDate.hasOwnProperty('seconds')) {
     date = new Date(noteDate.seconds * 1000 + noteDate.nanoseconds / 1000000);
   } else {
     date = new Date(noteDate);
