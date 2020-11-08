@@ -7,7 +7,7 @@ export const loginSocialNetworks = (socialNetwok) => {
       .auth()
       .signInWithPopup(socialNetworkProvider(socialNetwok))
       .then(({ user }) => {
-        dispatch(login(user.uid, user.displayName));
+        dispatch(login(user.uid, user.displayName, user.email, user.photoURL));
       })
       .catch((err) => {
         return false;
@@ -15,10 +15,12 @@ export const loginSocialNetworks = (socialNetwok) => {
   };
 };
 
-export const login = (uid, displayName) => ({
+export const login = (uid, displayName, email, photoUrl) => ({
   type: types.authLogin,
   payload: {
     uid,
     displayName,
+    email,
+    photoUrl,
   },
 });

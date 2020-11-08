@@ -14,9 +14,9 @@ import { db } from '../../providers/firebase';
 
 export const userNotes = () => {
   return async (dispatch, getState) => {
-    const { uid, name } = getState().auth;
+    const { auth } = getState();
     try {
-      const userdata = await db.doc(`${uid}/notes`).get();
+      const userdata = await db.doc(`${auth.uid}/notes`).get();
       if (userdata.data()) {
         const folders = userdata.data().folders;
         dispatch(getAllFolders(folders));
@@ -24,10 +24,9 @@ export const userNotes = () => {
           dispatch(getNotesFolder(folders[0]));
         }
       } else {
-        await db.collection(uid).doc('user').set({ name });
+        await db.collection(auth.uid).doc('user').set(auth);
       }
     } catch (error) {
-      console.log(error);
       dispatch(showAlert('Ocurrió un error, intente más tarde', 'error'));
     }
   };
