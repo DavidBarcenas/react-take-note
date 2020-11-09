@@ -60,6 +60,11 @@ export const noteReducer = (state = initialState, action) => {
         activeNote: state.folderNotes[0],
       };
 
+    case types.logoutNote:
+      return {
+        ...initialState,
+      };
+
     default:
       return state;
   }

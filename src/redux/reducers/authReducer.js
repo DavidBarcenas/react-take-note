@@ -18,6 +18,11 @@ export const authReducer = (state = initialState, action) => {
         photoUrl: action.payload.photoUrl,
       };
 
+    case types.authLogout:
+      return {
+        ...initialState,
+      };
+
     default:
       return state;
   }

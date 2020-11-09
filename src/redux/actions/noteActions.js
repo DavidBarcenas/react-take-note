@@ -161,6 +161,10 @@ export const newNote = (note) => ({
   },
 });
 
+export const resetNotes = () => ({
+  type: types.logoutNote,
+});
+
 const getAllFolders = (folders) => ({
   type: types.folders,
   payload: {

@@ -1,5 +1,6 @@
 import { firebase, socialNetworkProvider } from '../../providers/firebase';
 import { types } from '../types/types';
+import { resetNotes } from '../actions/noteActions';
 
 export const loginSocialNetworks = (socialNetwok) => {
   return (dispatch) => {
@@ -23,4 +24,16 @@ export const login = (uid, displayName, email, photoUrl) => ({
     email,
     photoUrl,
   },
+});
+
+export const logoutApp = () => {
+  return (dispatch) => {
+    firebase.auth().signOut();
+    dispatch(resetNotes());
+    dispatch(logout());
+  };
+};
+
+const logout = () => ({
+  type: types.authLogout,
 });
