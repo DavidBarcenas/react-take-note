@@ -4,12 +4,7 @@ import {
   alert_message_success,
   alert_type_success,
 } from '../../const/constants';
-import {
-  deleteDoc,
-  getNotes,
-  saveNote,
-  updateDoc,
-} from '../../providers/firebaseService';
+import { getNotes, saveNote } from '../../providers/firebaseService';
 import { db } from '../../providers/firebase';
 
 export const userNotes = () => {

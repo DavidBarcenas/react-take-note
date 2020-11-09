@@ -24,7 +24,7 @@ export const Note = () => {
     return (
       <div className="note note__empty">
         <img src={empty} alt="No hay documentos" />
-        <span>{folders.length === 0 ? 'No hay notas' : 'Cargando notas'}</span>
+        <span>¡Empecemos a tomar nota!</span>
       </div>
     );
   }
