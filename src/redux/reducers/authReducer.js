@@ -5,6 +5,7 @@ const initialState = {
   uid: null,
   email: null,
   photoUrl: null,
+  observable: true,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -16,11 +17,13 @@ export const authReducer = (state = initialState, action) => {
         uid: action.payload.uid,
         email: action.payload.email,
         photoUrl: action.payload.photoUrl,
+        observable: false,
       };
 
     case types.authLogout:
       return {
         ...initialState,
+        observable: false,
       };
 
     default:

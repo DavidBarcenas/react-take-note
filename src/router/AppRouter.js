@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import { firebase } from '../providers/firebase';
 import { login } from '../redux/actions/authActions';
@@ -11,26 +11,27 @@ import { PublicRoute } from './PublicRoute';
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
-  const [user, setUser] = useState(false);
+  const { observable, uid } = useSelector((state) => state.auth);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user?.uid) {
-        setUser(true);
         dispatch(login(user.uid, user.displayName, user.email, user.photoURL));
         dispatch(userNotes());
-      } else {
-        setUser(false);
       }
     });
   }, [dispatch]);
+
+  if (observable) {
+    return <div></div>;
+  }
 
   return (
     <Router>
       <div>
         <Switch>
-          <PrivateRoute isAuth={!!user} exact path="/" component={Main} />
-          <PublicRoute isAuth={!!user} exact path="/login" component={Login} />
+          <PrivateRoute isAuth={!!uid} exact path="/" component={Main} />
+          <PublicRoute isAuth={!!uid} exact path="/login" component={Login} />
           <Redirect to="/" />
         </Switch>
       </div>
