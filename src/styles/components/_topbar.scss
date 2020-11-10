@@ -19,10 +19,17 @@
   color: #ffffff;
   padding: 0 1em;
 
-  &__logo {
+  .topbar__logo,
+  .logo__wrap {
     display: flex;
     align-items: center;
+  }
 
+  .logo__wrap {
+    @include mq(sm) {
+      width: 17vw;
+      min-width: 230px;
+    }
     img {
       margin-left: 0.5em;
       margin-right: 1em;
@@ -37,25 +44,27 @@
   &__search {
     background: $primary;
     overflow: hidden;
-    padding-left: 2em;
     padding-right: 7px;
     padding-bottom: 0.5em;
+    position: relative;
 
-    @include mq(md) {
-      width: 500px;
-      padding: 0;
+    @include mq(lg) {
+      width: 25.5vw;
     }
     .MuiInputBase-root {
       color: #fff;
       background: rgba(#fff, 0.1);
       padding-left: 1em;
       padding-right: 1em;
-      width: calc(100% - 60px);
+      width: 100%;
     }
 
     .MuiIconButton-root {
       color: #fff;
       width: 60px;
+      position: absolute;
+      right: 0;
+      top: -6px;
     }
   }
 
@@ -70,5 +79,25 @@
 
   .MuiButton-outlinedSizeSmall {
     border-color: #ffffff;
+  }
+}
+
+.topbar__btns {
+  display: flex;
+  align-items: center;
+
+  .user {
+    margin-right: 1em;
+  }
+
+  .square {
+    display: inline-block;
+    background: $red;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-right: 0.75em;
   }
 }
