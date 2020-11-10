@@ -29,6 +29,7 @@
     @include mq(sm) {
       width: 17vw;
       min-width: 230px;
+      margin-left: 5px;
     }
     img {
       margin-left: 0.5em;

@@ -19,14 +19,6 @@ export const TopBar = () => {
       <div className="topbar">
         <div className="topbar__logo">
           <div className="logo__wrap">
-            <IconButton
-              aria-label="delete"
-              size="medium"
-              className="topbar__menu"
-            >
-              <Menu fontSize="inherit" />
-            </IconButton>
-
             <img src={stickyIcon} alt="Take Note" width="30" />
             <h1>Take Note</h1>
           </div>

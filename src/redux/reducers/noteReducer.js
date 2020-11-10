@@ -57,7 +57,10 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         editNote: false,
-        activeNote: state.folderNotes[0],
+        activeNote:
+          state.activeNote && state.activeNote.id === ''
+            ? state.folderNotes[0]
+            : state.activeNote,
       };
 
     case types.logoutNote:
