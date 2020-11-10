@@ -30,7 +30,8 @@
   height: calc(100% - 65px);
   overflow: auto;
   color: $text-color;
-  padding: 0 1em;
+  padding: 0 0.5em;
+  animation: slideInLeft 1s ease-in;
 
   .MuiListItemIcon-root {
     color: $text-color;
