@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { NoteEdit } from './NoteEdit';
 import { useDispatch, useSelector } from 'react-redux';
-import empty from '../../assets/images/empty.svg';
+import notesIcon from '../../assets/images/notesIcon.svg';
 import { deleteNote, newNote } from '../../redux/actions/noteActions';
 
 export const Note = () => {
@@ -23,7 +23,7 @@ export const Note = () => {
   if (!activeNote) {
     return (
       <div className="note note__empty">
-        <img src={empty} alt="No hay documentos" />
+        <img src={notesIcon} alt="Escribe una nota" />
         <span>¡Empecemos a tomar nota!</span>
       </div>
     );
@@ -37,7 +37,7 @@ export const Note = () => {
   };
 
   return (
-    <div className="note">
+    <div className="note fadeIn">
       {activeNote && editNote ? (
         <NoteEdit note={activeNote} folders={folders} />
       ) : (

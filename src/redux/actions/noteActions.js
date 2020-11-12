@@ -148,7 +148,6 @@ export const getAll = (search) => {
         .filter(
           (doc) => doc.title.includes(search) || doc.body.includes(search)
         );
-      console.log(notes);
       dispatch(searchNotes(notes));
     } catch (error) {
       dispatch(showAlert('No se pudo hacer la búsqueda', 'error'));

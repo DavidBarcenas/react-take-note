@@ -34,6 +34,7 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         activeNote: action.payload,
+        activeFolder: action.payload.collection,
         editNote: false,
       };
 
@@ -67,6 +68,9 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         folderNotes: action.payload,
+        activeNote: action.payload.length > 0 ? action.payload[0] : null,
+        activeFolder:
+          action.payload.length > 0 ? action.payload[0].collection : null,
       };
 
     case types.logoutNote:
