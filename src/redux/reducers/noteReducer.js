@@ -63,6 +63,12 @@ export const noteReducer = (state = initialState, action) => {
             : state.activeNote,
       };
 
+    case types.searchNote:
+      return {
+        ...state,
+        folderNotes: action.payload,
+      };
+
     case types.logoutNote:
       return {
         ...initialState,

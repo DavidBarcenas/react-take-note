@@ -138,6 +138,24 @@ export const deleteNote = () => {
   };
 };
 
+export const getAll = (search) => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth;
+    try {
+      const data = await db.collection(`${uid}/notes/list`).get();
+      const notes = data.docs
+        .map((doc) => doc.data())
+        .filter(
+          (doc) => doc.title.includes(search) || doc.body.includes(search)
+        );
+      console.log(notes);
+      dispatch(searchNotes(notes));
+    } catch (error) {
+      dispatch(showAlert('No se pudo hacer la búsqueda', 'error'));
+    }
+  };
+};
+
 export const cancelNoteEdit = () => ({
   type: types.cancelNote,
   payload: false,
@@ -181,4 +199,9 @@ const folderNotes = (notes) => ({
 const removeNote = (noteId) => ({
   type: types.deleteNote,
   payload: noteId,
+});
+
+const searchNotes = (notes) => ({
+  type: types.searchNote,
+  payload: notes,
 });

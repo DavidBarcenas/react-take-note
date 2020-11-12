@@ -10,6 +10,7 @@ export const types = {
   deleteNote: 'DELETE_NOTE',
   cancelNote: 'CANCEL_NOTE',
   logoutNote: 'LOGOUST_NOTE',
+  searchNote: 'SEARCH_NOTE',
   showAlert: 'SHOW_ALERT',
   hideAlert: 'HIDE_ALERT',
 };
