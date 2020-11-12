@@ -26,6 +26,10 @@ export const login = (uid, displayName, email, photoUrl) => ({
   },
 });
 
+export const observableNext = () => ({
+  type: types.observableNext,
+});
+
 export const logoutApp = () => {
   return (dispatch) => {
     firebase.auth().signOut();

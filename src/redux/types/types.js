@@ -13,4 +13,5 @@ export const types = {
   searchNote: 'SEARCH_NOTE',
   showAlert: 'SHOW_ALERT',
   hideAlert: 'HIDE_ALERT',
+  observableNext: 'OBSERVABLE_NEXT',
 };
