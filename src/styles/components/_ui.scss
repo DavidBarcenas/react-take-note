@@ -28,8 +28,9 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(#000, 0.35);
+  background: rgba(#000, 0.15);
   z-index: 999;
+  animation: fadeIn 0.5s;
 }
 
 .lds-roller {
@@ -49,7 +50,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #fff;
+  background: white;
   margin: -4px 0 0 -4px;
 }
 .lds-roller div:nth-child(1) {
@@ -114,5 +115,14 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

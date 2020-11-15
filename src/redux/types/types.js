@@ -14,4 +14,6 @@ export const types = {
   showAlert: 'SHOW_ALERT',
   hideAlert: 'HIDE_ALERT',
   observableNext: 'OBSERVABLE_NEXT',
+  showLoader: 'SHOW_LOADER',
+  hideLoader: 'HIDE_LOADER',
 };

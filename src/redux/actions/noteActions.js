@@ -1,5 +1,5 @@
 import { types } from '../types/types';
-import { showAlert } from './uiActions';
+import { hideLoader, showAlert, showLoader } from './uiActions';
 import {
   alert_message_success,
   alert_type_success,
@@ -11,6 +11,7 @@ export const userNotes = () => {
   return async (dispatch, getState) => {
     const { auth } = getState();
     try {
+      dispatch(showLoader());
       const userdata = await db.doc(`${auth.uid}/notes`).get();
       if (userdata.data()) {
         const folders = userdata.data().folders;
@@ -21,7 +22,9 @@ export const userNotes = () => {
       } else {
         await db.collection(auth.uid).doc('user').set(auth);
       }
+      dispatch(hideLoader());
     } catch (error) {
+      dispatch(hideLoader());
       dispatch(showAlert('Ocurrió un error, intente más tarde', 'error'));
     }
   };
@@ -31,6 +34,7 @@ export const saveNewNote = (note) => {
   return async (dispatch, getState) => {
     const { auth, notes } = getState();
     const folderExists = notes.folders.find((f) => f === note.collection);
+    dispatch(showLoader());
 
     try {
       const newNote = await saveNote(auth.uid, note);
@@ -57,8 +61,10 @@ export const saveNewNote = (note) => {
         dispatch(folderNotes([newNote, ...notes.folderNotes]));
         dispatch(activateNote(newNote));
       }
+      dispatch(hideLoader());
       dispatch(showAlert(alert_message_success, alert_type_success));
     } catch (error) {
+      dispatch(hideLoader());
       dispatch(showAlert('No se guardo la nota correctamente', 'error'));
     }
   };
@@ -67,12 +73,15 @@ export const saveNewNote = (note) => {
 export const getNotesFolder = (folder) => {
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
+    dispatch(showLoader());
     try {
       const notes = await getNotes(uid, folder);
       dispatch(activateFolder(folder));
       dispatch(folderNotes(notes.docs.map((doc) => doc.data())));
       dispatch(activateNote(notes.docs[0].data()));
+      dispatch(hideLoader());
     } catch (error) {
+      dispatch(hideLoader());
       dispatch(showAlert('No se pudo obtener las notas', 'error'));
     }
   };
@@ -82,6 +91,7 @@ export const updateNote = (note) => {
   return async (dispatch, getState) => {
     const { notes, auth } = getState();
     const noteList = notes.folderNotes.filter((n) => n.id !== note.id);
+    dispatch(showLoader());
 
     try {
       await db.doc(`${auth.uid}/notes/list/${note.id}`).update(note);
@@ -106,8 +116,10 @@ export const updateNote = (note) => {
         dispatch(activateNote(note));
       }
       dispatch(cancelNoteEdit());
+      dispatch(hideLoader());
       dispatch(showAlert('¡Se actualizó la nota!', 'success'));
     } catch (error) {
+      dispatch(hideLoader());
       dispatch(showAlert('No se pudo actualizar la nota', 'error'));
     }
   };
@@ -119,9 +131,11 @@ export const deleteNote = () => {
     const updateList = notes.folders.filter(
       (f) => f !== notes.activeNote.collection
     );
+    dispatch(showLoader());
 
     try {
       await db.doc(`${auth.uid}/notes/list/${notes.activeNote.id}`).delete();
+      dispatch(hideLoader());
       dispatch(showAlert('Nota eliminada', 'success'));
       dispatch(removeNote(notes.activeNote.id));
 
@@ -133,6 +147,7 @@ export const deleteNote = () => {
         await db.doc(`${auth.uid}/notes`).update({ folders: updateList });
       }
     } catch (error) {
+      dispatch(hideLoader());
       dispatch(showAlert('No se pudo eliminar la nota', 'error'));
     }
   };
@@ -141,6 +156,7 @@ export const deleteNote = () => {
 export const getAll = (search) => {
   return async (dispatch, getState) => {
     const { uid } = getState().auth;
+    dispatch(showLoader());
     try {
       const data = await db.collection(`${uid}/notes/list`).get();
       const notes = data.docs
@@ -149,7 +165,9 @@ export const getAll = (search) => {
           (doc) => doc.title.includes(search) || doc.body.includes(search)
         );
       dispatch(searchNotes(notes));
+      dispatch(hideLoader());
     } catch (error) {
+      dispatch(hideLoader());
       dispatch(showAlert('No se pudo hacer la búsqueda', 'error'));
     }
   };

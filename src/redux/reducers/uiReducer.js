@@ -5,6 +5,7 @@ const initialState = {
     show: false,
     message: '',
     type: null,
+    showLoader: false,
   },
   loading: false,
 };
@@ -24,6 +25,18 @@ export const uiReducer = (state = initialState, action) => {
     case types.hideAlert:
       return {
         ...initialState,
+      };
+
+    case types.showLoader:
+      return {
+        ...initialState,
+        showLoader: true,
+      };
+
+    case types.hideLoader:
+      return {
+        ...initialState,
+        showLoader: false,
       };
 
     default:
