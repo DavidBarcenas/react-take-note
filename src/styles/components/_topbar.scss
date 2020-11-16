@@ -87,7 +87,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  @include mq(lg) {
+    width: 100%;
+  }
 
   .user__account {
     display: flex;
@@ -95,7 +97,11 @@
   }
 
   .user {
-    margin-right: 1em;
+    display: none;
+    @include mq(sm) {
+      margin-right: 1em;
+      display: inline-block;
+    }
   }
 
   .square {

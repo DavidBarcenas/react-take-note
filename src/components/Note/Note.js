@@ -43,9 +43,6 @@ export const Note = () => {
       ) : (
         <>
           <div className="note__actionbar">
-            <div className="note__icon-back">
-              <ArrowBack />
-            </div>
             <div>
               <Tooltip title="Editar">
                 <IconButton aria-label="editar" onClick={handleEdit}>

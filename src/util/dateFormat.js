@@ -23,7 +23,7 @@ export const dateFormat = (noteDate, tms = true) => {
   }
 
   const day =
-    date.getDay() < 10 ? '0' + date.getDay().toString() : date.getDay();
+    date.getDate() < 10 ? '0' + date.getDate().toString() : date.getDate();
   const month = months[date.getMonth()];
   const year = date.getFullYear();
 
