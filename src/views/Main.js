@@ -13,7 +13,7 @@ export const Main = () => {
     <div className="main__wrap">
       <TopBar />
       {showLoader && <Loader />}
-
+      {/* <Loader /> */}
       <main className="main">
         <Alert />
         <CategorySidebar />

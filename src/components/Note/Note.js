@@ -37,7 +37,7 @@ export const Note = () => {
   };
 
   return (
-    <div className="note fadeIn">
+    <div className="note fadeIn" key={activeNote.id}>
       {activeNote && editNote ? (
         <NoteEdit note={activeNote} folders={folders} />
       ) : (
@@ -58,11 +58,6 @@ export const Note = () => {
                   onClick={() => setOpenDelete(true)}
                 >
                   <Delete />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Mover a">
-                <IconButton aria-label="mover a">
-                  <Label />
                 </IconButton>
               </Tooltip>
             </div>
