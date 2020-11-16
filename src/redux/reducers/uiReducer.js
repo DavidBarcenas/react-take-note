@@ -7,7 +7,6 @@ const initialState = {
     type: null,
     showLoader: false,
   },
-  loading: false,
 };
 
 export const uiReducer = (state = initialState, action) => {

@@ -46,7 +46,6 @@
     background: $primary;
     overflow: hidden;
     padding-right: 7px;
-    padding-bottom: 0.5em;
     position: relative;
 
     @include mq(lg) {
@@ -58,6 +57,7 @@
       padding-left: 1em;
       padding-right: 1em;
       width: 100%;
+      padding-right: 2.5em;
     }
 
     .MuiIconButton-root {
@@ -86,6 +86,13 @@
 .topbar__btns {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .user__account {
+    display: flex;
+    align-items: center;
+  }
 
   .user {
     margin-right: 1em;

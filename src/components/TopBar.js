@@ -7,10 +7,11 @@ import SearchOutlined from '@material-ui/icons/SearchOutlined';
 import stickyIcon from '../assets/images/stickyIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutApp } from '../redux/actions/authActions';
+import { Loader } from './Loader/Loader';
 
 export const TopBar = () => {
   const dispatch = useDispatch();
-  const { name } = useSelector((state) => state.auth);
+  const { auth, ui } = useSelector((state) => state);
   const mq = useMediaQuery('(min-width:767px)');
   const [showSearch, setShowSearch] = useState(false);
 
@@ -26,28 +27,35 @@ export const TopBar = () => {
         </div>
 
         <div className="topbar__btns">
-          {name && (
-            <div className="user">
-              <span className="square">{name.substr(0, 1)}</span>
-              <span className="user__name">{name}</span>
-            </div>
-          )}
-          {!mq && (
+          <div>
+            {ui.showLoader && <Loader />}
+            {/* <Loader /> */}
+          </div>
+
+          <div className="user__account">
+            {auth.name && (
+              <div className="user">
+                <span className="square">{auth.name.substr(0, 1)}</span>
+                <span className="user__name">{auth.name}</span>
+              </div>
+            )}
+            {!mq && (
+              <IconButton
+                type="button"
+                aria-label="search"
+                onClick={() => setShowSearch(!showSearch)}
+              >
+                {showSearch ? <Clear /> : <SearchOutlined />}
+              </IconButton>
+            )}
             <IconButton
               type="button"
-              aria-label="search"
-              onClick={() => setShowSearch(!showSearch)}
+              aria-label="exit"
+              onClick={() => dispatch(logoutApp())}
             >
-              {showSearch ? <Clear /> : <SearchOutlined />}
+              <ExitToApp />
             </IconButton>
-          )}
-          <IconButton
-            type="button"
-            aria-label="exit"
-            onClick={() => dispatch(logoutApp())}
-          >
-            <ExitToApp />
-          </IconButton>
+          </div>
         </div>
       </div>
 

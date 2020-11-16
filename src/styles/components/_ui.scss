@@ -20,15 +20,15 @@
 }
 
 .loader {
+  padding-left: 1em;
+  overflow: hidden;
+}
+.overlayLoader {
   position: fixed;
-  top: 55px;
-  left: 0%;
   width: 100vw;
   height: calc(100vh - 55px);
-  background: transparent;
-  z-index: 999;
-  padding-top: 5px;
-  padding-left: 45%;
+  top: 55px;
+  left: 0;
 }
 
 $offset: 187;
@@ -57,7 +57,7 @@ $duration: 1.4s;
 
 @keyframes colors {
   0% {
-    stroke: #4285f4;
+    stroke: #fff;
   }
   25% {
     stroke: #de3e35;
@@ -69,7 +69,7 @@ $duration: 1.4s;
     stroke: #1b9a59;
   }
   100% {
-    stroke: #4285f4;
+    stroke: #fff;
   }
 }
 
@@ -84,5 +84,20 @@ $duration: 1.4s;
   100% {
     stroke-dashoffset: $offset;
     transform: rotate(450deg);
+  }
+}
+.circleloader {
+  box-sizing: border-box;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #fff;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
   }
 }
