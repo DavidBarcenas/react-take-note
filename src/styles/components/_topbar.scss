@@ -6,6 +6,7 @@
   width: 100%;
   z-index: 999;
   min-height: 55px;
+  padding-top: 2px;
   border-bottom: 1px solid rgba(#fff, 0.05);
 
   @include mq(md) {
@@ -39,16 +40,22 @@
     h1 {
       font-size: 1.3em;
       font-weight: 500;
+      margin: 0;
     }
   }
 
   &__search {
     background: $primary;
     overflow: hidden;
-    padding-right: 7px;
     position: relative;
+    padding: 1em;
 
-    @include mq(lg) {
+    @include mq(sm) {
+      padding: 0;
+      padding-right: 15px;
+      width: 50vw;
+    }
+    @include mq(md) {
       width: 25.5vw;
     }
     .MuiInputBase-root {
@@ -65,7 +72,11 @@
       width: 60px;
       position: absolute;
       right: 0;
-      top: -6px;
+      top: 6px;
+
+      @include mq(sm) {
+        top: -6px;
+      }
     }
   }
 
@@ -98,7 +109,7 @@
 
   .user {
     display: none;
-    @include mq(sm) {
+    @include mq(md) {
       margin-right: 1em;
       display: inline-block;
     }
