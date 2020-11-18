@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import googleIcon from '../assets/images/googleIcon.svg';
 import stickyIcon from '../assets/images/stickyIcon.svg';
-import { GitHub } from '@material-ui/icons';
-import { github, google } from '../const/constants';
+import { GitHub, Twitter } from '@material-ui/icons';
+import { github, google, twitter } from '../const/constants';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -30,14 +30,14 @@ export const Login = () => {
             <img src={googleIcon} alt="Google" className="login__btn-icon" />
             Continuar con google
           </Button>
-          {/* <Button
+          <Button
             className="login__btn-social twitter"
             variant="outlined"
-            onClick={handleLoginGoogle}
+            onClick={() => handleLogin(twitter)}
           >
             <Twitter className="login__btn-icon" />
             Continuar con twitter
-          </Button> */}
+          </Button>
           <Button
             className="login__btn-social git"
             variant="outlined"
