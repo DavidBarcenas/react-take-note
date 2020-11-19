@@ -19,3 +19,15 @@ export const showLoader = () => ({
 export const hideLoader = () => ({
   type: types.hideLoader,
 });
+
+export const showFolderMobile = () => ({
+  type: types.showFolderMobile,
+});
+
+export const showNotesMobile = () => ({
+  type: types.showNotesMobile,
+});
+
+export const showNoteMobile = () => ({
+  type: types.showNoteMobile,
+});

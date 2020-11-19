@@ -16,4 +16,7 @@ export const types = {
   observableNext: 'OBSERVABLE_NEXT',
   showLoader: 'SHOW_LOADER',
   hideLoader: 'HIDE_LOADER',
+  showFolderMobile: 'SHOW_FOLDER_MOBILE',
+  showNotesMobile: 'SHOW_NOTES_MOBILE',
+  showNoteMobile: 'SHOW_NOTE_MOBILE',
 };

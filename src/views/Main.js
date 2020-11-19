@@ -4,6 +4,7 @@ import { NoteList } from '../components/NoteList';
 import { TopBar } from '../components/TopBar';
 import { Note } from '../components/Note/Note';
 import { Alert } from '../components/Alert/Alert';
+import { BottomBar } from '../components/BottomBar/BottomBar';
 
 export const Main = () => {
   return (
@@ -16,6 +17,10 @@ export const Main = () => {
         <NoteList />
         <Note />
       </main>
+
+      <div className="bottom__bar__wrap">
+        <BottomBar />
+      </div>
     </div>
   );
 };

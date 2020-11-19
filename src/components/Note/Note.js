@@ -18,9 +18,9 @@ import { deleteNote, newNote } from '../../redux/actions/noteActions';
 export const Note = () => {
   const dispatch = useDispatch();
   const [openDelete, setOpenDelete] = useState(false);
-  const { activeNote, folders, editNote } = useSelector((state) => state.notes);
+  const { notes, ui } = useSelector((state) => state);
 
-  if (!activeNote) {
+  if (!notes.activeNote) {
     return (
       <div className="note note__empty">
         <img src={notesIcon} alt="Escribe una nota" />
@@ -29,7 +29,7 @@ export const Note = () => {
     );
   }
 
-  const handleEdit = () => dispatch(newNote(activeNote));
+  const handleEdit = () => dispatch(newNote(notes.activeNote));
 
   const handleDelete = () => {
     dispatch(deleteNote());
@@ -37,9 +37,12 @@ export const Note = () => {
   };
 
   return (
-    <div className="note fadeIn" key={activeNote.id}>
-      {activeNote && editNote ? (
-        <NoteEdit note={activeNote} folders={folders} />
+    <div
+      className={`note fadeIn ${!ui.mobile.showNote ? 'no-show' : 'show'}`}
+      key={notes.activeNote.id}
+    >
+      {notes.activeNote && notes.editNote ? (
+        <NoteEdit note={notes.activeNote} folders={notes.folders} />
       ) : (
         <>
           <div className="note__actionbar">
@@ -61,10 +64,10 @@ export const Note = () => {
           </div>
 
           <div className="note__wrap">
-            <h2 className="note__title">{activeNote.title}</h2>
+            <h2 className="note__title">{notes.activeNote.title}</h2>
             <div
               className="note__body"
-              dangerouslySetInnerHTML={{ __html: activeNote.body }}
+              dangerouslySetInnerHTML={{ __html: notes.activeNote.body }}
             ></div>
           </div>
         </>
@@ -78,7 +81,7 @@ export const Note = () => {
         <DialogTitle id="alert-dialog-title">Eliminar nota</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Estás seguro que quieres eliminar "{activeNote.title}"?
+            ¿Estás seguro que quieres eliminar "{notes.activeNote.title}"?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

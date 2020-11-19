@@ -1,0 +1,26 @@
+.bottom__bar__wrap {
+  background: $primary;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 500;
+
+  @include mq(md) {
+    display: none;
+  }
+}
+
+.bottom__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .MuiIconButton-root {
+    flex: 1;
+    background: $primary;
+    border-radius: 0;
+    padding: 0.65em 0;
+    color: #fff;
+  }
+}

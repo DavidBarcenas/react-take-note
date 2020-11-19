@@ -15,7 +15,7 @@
 }
 
 .sidebar,
-.list,
+.notelist,
 .note {
   padding: 1em;
   color: #fff;
@@ -24,4 +24,23 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.sidebar.no-show {
+  left: 100%;
+}
+.notelist.no-show {
+  left: 100%;
+}
+.note.no-show {
+  left: 100%;
+}
+.sidebar.show {
+  left: 0%;
+}
+.notelist.show {
+  left: 0%;
+}
+.note.show {
+  left: 0%;
 }

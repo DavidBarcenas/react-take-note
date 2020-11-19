@@ -13,22 +13,22 @@ import { noteModel } from '../models/noteModel';
 
 export const CategorySidebar = () => {
   const dispatch = useDispatch();
-  const { folders, activeFolder } = useSelector((state) => state.notes);
+  const { notes, ui } = useSelector((state) => state);
 
   const createNoteBtn = () => dispatch(newNote(noteModel));
   const handleActivateFolder = (folder) => dispatch(getNotesFolder(folder));
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${!ui.mobile.showFolders ? 'no-show' : 'show'}`}>
       <div className="sidebar__btn">
         <Button onClick={createNoteBtn}>Crear nota</Button>
       </div>
       <div className="sidebar__folders">
         <List component="nav" aria-label="main folders">
-          {folders.map((folder) => (
+          {notes.folders.map((folder) => (
             <ListItem
               button
-              className={folder === activeFolder ? 'folder-active' : ''}
+              className={folder === notes.activeFolder ? 'folder-active' : ''}
               key={folder}
               onClick={() => handleActivateFolder(folder)}
             >

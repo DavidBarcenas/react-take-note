@@ -7,7 +7,7 @@ import { activateNote } from '../redux/actions/noteActions';
 import empty from '../assets/images/empty.svg';
 
 export const NoteList = () => {
-  const { folderNotes, activeNote } = useSelector((state) => state.notes);
+  const { notes, ui } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleActivateNote = (note) => {
@@ -15,15 +15,15 @@ export const NoteList = () => {
   };
 
   return (
-    <div className="notelist">
-      {folderNotes.length > 0 ? (
+    <div className={`notelist ${!ui.mobile.showNotes ? 'no-show' : 'show'}`}>
+      {notes.folderNotes.length > 0 ? (
         <List aria-label="Lista de notas">
-          {folderNotes.map((note) => (
+          {notes.folderNotes.map((note) => (
             <ListItem
               key={note.id}
               button
               className={
-                note.id === (activeNote && activeNote.id)
+                note.id === (notes.activeNote && notes.activeNote.id)
                   ? 'notelist-active'
                   : ''
               }

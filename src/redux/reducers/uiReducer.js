@@ -7,6 +7,11 @@ const initialState = {
     type: null,
     showLoader: false,
   },
+  mobile: {
+    showFolders: false,
+    showNotes: false,
+    showNote: false,
+  },
 };
 
 export const uiReducer = (state = initialState, action) => {
@@ -23,19 +28,46 @@ export const uiReducer = (state = initialState, action) => {
 
     case types.hideAlert:
       return {
-        ...initialState,
+        ...state,
       };
 
     case types.showLoader:
       return {
-        ...initialState,
+        ...state,
         showLoader: true,
       };
 
     case types.hideLoader:
       return {
-        ...initialState,
+        ...state,
         showLoader: false,
+      };
+    case types.showFolderMobile:
+      return {
+        ...state,
+        mobile: {
+          showFolders: true,
+          showNotes: false,
+          showNote: false,
+        },
+      };
+    case types.showNotesMobile:
+      return {
+        ...state,
+        mobile: {
+          showFolders: false,
+          showNotes: true,
+          showNote: false,
+        },
+      };
+    case types.showNoteMobile:
+      return {
+        ...state,
+        mobile: {
+          showFolders: false,
+          showNotes: false,
+          showNote: true,
+        },
       };
 
     default:
