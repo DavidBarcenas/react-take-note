@@ -1,5 +1,5 @@
 import { types } from '../types/types';
-import { hideLoader, showAlert, showLoader } from './uiActions';
+import { hideLoader, showAlert, showLoader, showNoteMobile } from './uiActions';
 import {
   alert_message_success,
   alert_type_success,
@@ -18,6 +18,7 @@ export const userNotes = () => {
         dispatch(getAllFolders(folders));
         if (folders.length > 0) {
           dispatch(getNotesFolder(folders[0]));
+          dispatch(showNoteMobile());
         }
       } else {
         await db.collection(auth.uid).doc('user').set(auth);

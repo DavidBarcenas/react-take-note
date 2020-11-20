@@ -1,10 +1,9 @@
 .sidebar {
   background: $primary;
   padding: 0;
-  left: -100%;
   z-index: 300;
 
-  @include mq(sm) {
+  @include mq(md) {
     left: 0;
     position: relative;
     width: 18%;

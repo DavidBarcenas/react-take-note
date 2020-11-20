@@ -2,12 +2,10 @@
   background: #fff;
   color: $text-color;
   z-index: 200;
-  padding-top: 55px;
   overflow-y: auto;
 
-  @include mq(sm) {
+  @include mq(md) {
     padding: 2em;
-    padding-top: 0;
     position: relative;
     width: 57%;
   }

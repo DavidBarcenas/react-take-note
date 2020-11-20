@@ -20,27 +20,40 @@
   padding: 1em;
   color: #fff;
   position: fixed;
-  top: 0;
+  top: 55px;
   left: 0;
   width: 100%;
   height: 100%;
+
+  @include mq(md) {
+    top: 0;
+  }
 }
 
 .sidebar.no-show {
-  left: 100%;
+  display: none;
+  @include mq(md) {
+    display: block !important;
+  }
 }
 .notelist.no-show {
-  left: 100%;
+  display: none;
+  @include mq(md) {
+    display: block !important;
+  }
 }
 .note.no-show {
-  left: 100%;
+  display: none;
+  @include mq(md) {
+    display: block !important;
+  }
 }
 .sidebar.show {
-  left: 0%;
+  display: block;
 }
 .notelist.show {
-  left: 0%;
+  display: block;
 }
 .note.show {
-  left: 0%;
+  display: block;
 }
