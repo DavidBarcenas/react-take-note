@@ -10,13 +10,17 @@ import { Folder } from '@material-ui/icons';
 import { getNotesFolder, newNote } from '../redux/actions/noteActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { noteModel } from '../models/noteModel';
+import { showNotesMobile } from '../redux/actions/uiActions';
 
 export const CategorySidebar = () => {
   const dispatch = useDispatch();
   const { notes, ui } = useSelector((state) => state);
 
   const createNoteBtn = () => dispatch(newNote(noteModel));
-  const handleActivateFolder = (folder) => dispatch(getNotesFolder(folder));
+  const handleActivateFolder = (folder) => {
+    dispatch(getNotesFolder(folder));
+    dispatch(showNotesMobile());
+  };
 
   return (
     <aside className={`sidebar ${!ui.mobile.showFolders ? 'no-show' : 'show'}`}>

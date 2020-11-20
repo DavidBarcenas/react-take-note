@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dateFormat } from '../util/dateFormat';
 import { activateNote } from '../redux/actions/noteActions';
 import empty from '../assets/images/empty.svg';
+import { showNoteMobile } from '../redux/actions/uiActions';
 
 export const NoteList = () => {
   const { notes, ui } = useSelector((state) => state);
@@ -12,6 +13,7 @@ export const NoteList = () => {
 
   const handleActivateNote = (note) => {
     dispatch(activateNote(note));
+    dispatch(showNoteMobile());
   };
 
   return (
