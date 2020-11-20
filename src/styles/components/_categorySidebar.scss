@@ -14,6 +14,12 @@
 .sidebar__btn {
   padding: 1em 2em;
   height: 65px;
+  display: none;
+
+  @include mq(md) {
+    display: block !important;
+  }
+
   button {
     background: $secondary;
     color: #fff;
