@@ -178,7 +178,7 @@ export const NoteEdit = ({ note, folders }) => {
             </Select>
           </FormControl>
         </div>
-        <div>
+        <div className="note__footer--btns">
           <Button variant="outlined" onClick={handleCancel}>
             Cancelar
           </Button>

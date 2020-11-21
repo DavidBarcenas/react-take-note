@@ -46,21 +46,19 @@ export const Note = () => {
       ) : (
         <>
           <div className="note__actionbar">
-            <div>
-              <Tooltip title="Editar">
-                <IconButton aria-label="editar" onClick={handleEdit}>
-                  <Edit />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Eliminar">
-                <IconButton
-                  aria-label="eliminar"
-                  onClick={() => setOpenDelete(true)}
-                >
-                  <Delete />
-                </IconButton>
-              </Tooltip>
-            </div>
+            <Tooltip title="Editar">
+              <IconButton aria-label="editar" onClick={handleEdit}>
+                <Edit />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Eliminar">
+              <IconButton
+                aria-label="eliminar"
+                onClick={() => setOpenDelete(true)}
+              >
+                <Delete />
+              </IconButton>
+            </Tooltip>
           </div>
 
           <div className="note__wrap">

@@ -6,24 +6,14 @@
 
   @include mq(md) {
     padding: 2em;
+    padding-top: 0;
     position: relative;
     width: 57%;
   }
 
   &__actionbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.75em;
     height: 30px;
-  }
-}
-.note__icon-back {
-  width: 40px;
-  svg {
-    @include mq(sm) {
-      display: none;
-    }
+    text-align: right;
   }
 }
 
@@ -32,11 +22,17 @@
 }
 
 .note__title {
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 500;
   color: $primary;
   margin-top: 0;
   border-bottom: 2px solid #000;
+  padding-top: 0.5em;
+  padding-bottom: 0.4em;
+
+  @include mq(md) {
+    font-size: 30px;
+  }
 }
 
 .note__body {
@@ -63,37 +59,11 @@
   }
 }
 
-.note__footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 1em;
-  margin-top: 2em;
-
-  button {
-    width: 130px;
-    margin: 0 0.5em;
-  }
-
-  .btn__save {
-    background: $secondary;
-    color: #fff;
-    // margin-left: 1em;
-
-    &:hover {
-      background: darken($secondary, 3);
-    }
-  }
-
-  .btn__folder {
-    .MuiButton-startIcon {
-      color: $yellow;
-    }
-  }
-}
-
 .new__note {
-  padding: 2em 1em;
+  padding-top: 2em;
+  @include mq(md) {
+    padding: 2em 1em;
+  }
 
   .MuiFormControl-root {
     color: $primary;
@@ -131,4 +101,44 @@
 
 .editor__error {
   border: 1px solid #f44336;
+}
+
+.note__footer {
+  padding-bottom: 1em;
+  margin-top: 2em;
+
+  @include mq(sm) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .MuiFormControl-root {
+    margin-bottom: 0;
+  }
+
+  &--btns {
+    text-align: right;
+  }
+
+  button {
+    width: 130px;
+    margin: 0 0.5em;
+  }
+
+  .btn__save {
+    background: $secondary;
+    color: #fff;
+    // margin-left: 1em;
+
+    &:hover {
+      background: darken($secondary, 3);
+    }
+  }
+
+  .btn__folder {
+    .MuiButton-startIcon {
+      color: $yellow;
+    }
+  }
 }
