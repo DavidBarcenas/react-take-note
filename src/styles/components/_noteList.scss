@@ -6,6 +6,7 @@
   color: $text-color;
   overflow-y: auto;
   z-index: 100;
+  padding-left: 0;
 
   @include mq(md) {
     position: relative;
