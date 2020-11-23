@@ -12,7 +12,6 @@
   &__main {
     display: flex;
     align-items: center;
-    background: #fafafa;
     border-top: 10px solid $secondary;
     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
       0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
@@ -22,6 +21,7 @@
     height: 100%;
 
     @include mq(sm) {
+      background: #fafafa;
       height: auto;
       padding: 6em 2em;
       width: 500px;
@@ -37,11 +37,17 @@
 .login__wrap {
   width: 80%;
   margin: auto;
+  color: #fff;
+
+  @include mq(sm) {
+    color: $primary;
+  }
 }
 
 .login__title {
   font-size: 2.5em;
   margin: 0;
+  margin-top: 15px;
 }
 
 .login__subtitle {
@@ -64,6 +70,14 @@
     width: 20px;
   }
 
+  &.google {
+    background: #fff;
+    color: $primary;
+    &:hover {
+      background: rgba(#000, 0.02);
+    }
+  }
+
   &.twitter {
     background: $secondary;
     color: #fff;
@@ -76,7 +90,7 @@
     background: $primary;
     color: #fff;
     &:hover {
-      background: lighten($primary, 3);
+      background: lighten($primary, 5);
     }
   }
 }

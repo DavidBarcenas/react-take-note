@@ -23,7 +23,7 @@ export const Login = () => {
             Captura todo lo que quieres manterner siempre a la mano.
           </h3>
           <Button
-            className="login__btn-social"
+            className="login__btn-social google"
             variant="outlined"
             onClick={() => handleLogin(google)}
           >
