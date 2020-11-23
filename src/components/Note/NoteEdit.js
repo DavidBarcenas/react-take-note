@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -8,6 +9,7 @@ import {
   FormControl,
   IconButton,
   InputLabel,
+  LinearProgress,
   MenuItem,
   Select,
   TextField,
@@ -23,7 +25,7 @@ import {
 } from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
 import { AttachFile } from '@material-ui/icons';
-import { uploadFile } from '../../providers/firebaseService';
+import { firebase } from '../../providers/firebase';
 
 export const NoteEdit = ({ note, folders }) => {
   const dispatch = useDispatch();
@@ -42,7 +44,7 @@ export const NoteEdit = ({ note, folders }) => {
     folderError: false,
   });
   const [folderNameError, setFolderNameError] = useState(true);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState(0);
 
   const handleInputChange = ({ target }) => {
     setValue({
@@ -142,7 +144,36 @@ export const NoteEdit = ({ note, folders }) => {
 
   const handleFile = ({ target }) => {
     console.log(target.files[0]);
-    uploadFile('cghK1k38L4bLKTYkbqIZyPStDyf1', target.files);
+    if (
+      target.files[0].type === 'application/pdf' ||
+      target.files[0].type.slice(0, 5) === 'image'
+    ) {
+      const storageRef = firebase.storage().ref();
+      const uploadTask = storageRef
+        .child(`cghK1k38L4bLKTYkbqIZyPStDyf1/${target.files[0].name}`)
+        .put(target.files[0]);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          let progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          setFile(progress);
+        },
+        (error) => {
+          console.log('ocurrio un error al subir arvhivo', error);
+          setFile(0);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            console.log('File available at', downloadURL);
+            setFile(0);
+          });
+        }
+      );
+    }
+    // uploadFile('cghK1k38L4bLKTYkbqIZyPStDyf1', target.files);
   };
 
   return (
@@ -165,6 +196,7 @@ export const NoteEdit = ({ note, folders }) => {
           config={editorConfig}
         />
       </div>
+      {file > 0 && <LinearProgress variant="determinate" value={file} />}
       <div className="note__footer">
         <div className="note__select">
           <FormControl variant="outlined">
