@@ -81,6 +81,8 @@
 
 .note__select {
   min-width: 200px;
+  display: flex;
+  width: 40%;
 }
 
 .note__empty {
@@ -145,5 +147,13 @@
     .MuiButton-startIcon {
       color: $yellow;
     }
+  }
+}
+
+.note__file__upload {
+  margin-left: 1em;
+  margin-top: 5px;
+  input {
+    display: none;
   }
 }

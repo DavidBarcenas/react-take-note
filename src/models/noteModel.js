@@ -5,5 +5,5 @@ export const noteModel = {
   date: new Date(),
   collection: '',
   color: '',
-  user: null,
+  files: [],
 };

@@ -6,10 +6,12 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
   TextField,
+  Tooltip,
 } from '@material-ui/core';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -20,6 +22,8 @@ import {
   updateNote,
 } from '../../redux/actions/noteActions';
 import { editorConfig } from '../../util/editorConfig';
+import { AttachFile } from '@material-ui/icons';
+import { uploadFile } from '../../providers/firebaseService';
 
 export const NoteEdit = ({ note, folders }) => {
   const dispatch = useDispatch();
@@ -38,6 +42,7 @@ export const NoteEdit = ({ note, folders }) => {
     folderError: false,
   });
   const [folderNameError, setFolderNameError] = useState(true);
+  const [file, setFile] = useState(null);
 
   const handleInputChange = ({ target }) => {
     setValue({
@@ -135,6 +140,11 @@ export const NoteEdit = ({ note, folders }) => {
     });
   };
 
+  const handleFile = ({ target }) => {
+    console.log(target.files[0]);
+    uploadFile('cghK1k38L4bLKTYkbqIZyPStDyf1', target.files);
+  };
+
   return (
     <div className="new__note">
       <TextField
@@ -177,6 +187,20 @@ export const NoteEdit = ({ note, folders }) => {
               ))}
             </Select>
           </FormControl>
+          <div className="note__file__upload">
+            <input id="icon-button-file" type="file" onChange={handleFile} />
+            <Tooltip title="Subir archivo">
+              <label htmlFor="icon-button-file">
+                <IconButton
+                  color="primary"
+                  aria-label="subir archivo"
+                  component="span"
+                >
+                  <AttachFile />
+                </IconButton>
+              </label>
+            </Tooltip>
+          </div>
         </div>
         <div className="note__footer--btns">
           <Button variant="outlined" onClick={handleCancel}>
@@ -185,6 +209,7 @@ export const NoteEdit = ({ note, folders }) => {
           <Button
             variant="contained"
             className="btn__save"
+            accept="image/*,.pdf"
             onClick={handleSubmit}
           >
             Guardar
