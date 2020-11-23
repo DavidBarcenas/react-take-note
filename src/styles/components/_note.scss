@@ -119,6 +119,11 @@
 
   &--btns {
     text-align: right;
+    margin-top: 2em;
+
+    @include mq(sm) {
+      margin-top: 0;
+    }
   }
 
   button {

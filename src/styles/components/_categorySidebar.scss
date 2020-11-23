@@ -34,12 +34,20 @@
 .sidebar__folders {
   height: calc(100% - 65px);
   overflow: auto;
-  color: $text-color;
+  color: #7c87a8;
   padding: 0 0.5em;
-  animation: slideInLeft 1s ease-in;
+  animation: slideInLeft 0.5s ease-in;
 
   .MuiListItemIcon-root {
-    color: $text-color;
+    color: #7c87a8;
+  }
+
+  .MuiTypography-body1 {
+    font-size: 1.125rem;
+
+    @include mq(md) {
+      font-size: 0.875rem;
+    }
   }
 
   .MuiListItem-button.folder-active,

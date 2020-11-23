@@ -3,10 +3,11 @@
 //   padding: 0;
 // }
 .notelist {
-  color: $text-color;
+  color: #7c87a8;
   overflow-y: auto;
   z-index: 100;
   padding-left: 0;
+  padding-right: 0;
 
   @include mq(md) {
     position: relative;
@@ -28,7 +29,7 @@
     }
 
     &:hover {
-      background: darken($bg, 1);
+      background: darken($bg, 2);
     }
   }
 
@@ -54,6 +55,7 @@
   }
 
   &-active.MuiListItem-root {
+    background: darken($bg, 2);
     border-left: 4px solid $yellow;
     color: #fff;
   }
