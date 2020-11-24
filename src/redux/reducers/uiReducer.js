@@ -29,6 +29,10 @@ export const uiReducer = (state = initialState, action) => {
     case types.hideAlert:
       return {
         ...state,
+        alert: {
+          ...state.alert,
+          show: false,
+        },
       };
 
     case types.showLoader:

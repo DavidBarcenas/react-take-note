@@ -252,7 +252,7 @@ export const NoteEdit = ({ note, folders }) => {
               ))}
             </Select>
           </FormControl>
-          <div className="note__file__upload">
+          {/* <div className="note__file__upload">
             <input id="icon-button-file" type="file" onChange={handleFile} />
             <Tooltip title="Subir archivo">
               <label htmlFor="icon-button-file">
@@ -265,7 +265,7 @@ export const NoteEdit = ({ note, folders }) => {
                 </IconButton>
               </label>
             </Tooltip>
-          </div>
+          </div> */}
         </div>
         <div className="note__footer--btns">
           <Button variant="outlined" onClick={handleCancel}>
@@ -274,7 +274,6 @@ export const NoteEdit = ({ note, folders }) => {
           <Button
             variant="contained"
             className="btn__save"
-            accept="image/*,.pdf"
             onClick={handleSubmit}
           >
             Guardar
