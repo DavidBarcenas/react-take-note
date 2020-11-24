@@ -37,6 +37,7 @@ export const NoteEdit = ({ note, folders }) => {
     title: note.title,
     body: note.body,
     collection: note.collection,
+    files: note.files || [],
   });
   const [formErrors, setFormErrors] = useState({
     titleError: false,
@@ -44,7 +45,8 @@ export const NoteEdit = ({ note, folders }) => {
     folderError: false,
   });
   const [folderNameError, setFolderNameError] = useState(true);
-  const [file, setFile] = useState(0);
+  const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState(0);
 
   const handleInputChange = ({ target }) => {
     setValue({
@@ -117,6 +119,11 @@ export const NoteEdit = ({ note, folders }) => {
 
   const handleSubmit = () => {
     if (noteValidation()) {
+      if (file) {
+        uploadFile(file);
+
+        return;
+      }
       const saveNote = { ...note, ...value, date: new Date() };
 
       if (note.id !== '') {
@@ -143,37 +150,61 @@ export const NoteEdit = ({ note, folders }) => {
   };
 
   const handleFile = ({ target }) => {
-    console.log(target.files[0]);
-    if (
-      target.files[0].type === 'application/pdf' ||
-      target.files[0].type.slice(0, 5) === 'image'
-    ) {
-      const storageRef = firebase.storage().ref();
-      const uploadTask = storageRef
-        .child(`cghK1k38L4bLKTYkbqIZyPStDyf1/${target.files[0].name}`)
-        .put(target.files[0]);
-
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          let progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          setFile(progress);
-        },
-        (error) => {
-          console.log('ocurrio un error al subir arvhivo', error);
-          setFile(0);
-        },
-        () => {
-          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-            console.log('File available at', downloadURL);
-            setFile(0);
-          });
-        }
-      );
+    if (target.files.length > 0) {
+      if (
+        target.files[0].type === 'application/pdf' ||
+        target.files[0].type.slice(0, 5) === 'image'
+      ) {
+        setFile(target);
+      } else {
+        setFile(null);
+      }
     }
     // uploadFile('cghK1k38L4bLKTYkbqIZyPStDyf1', target.files);
+  };
+
+  const uploadFile = (target) => {
+    const storageRef = firebase.storage().ref();
+    const uploadTask = storageRef
+      .child(`cghK1k38L4bLKTYkbqIZyPStDyf1/${target.files[0].name}`)
+      .put(target.files[0]);
+
+    let unsubcribe = uploadTask.on(
+      'state_changed',
+      (snapshot) => {
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        setProgress(progress);
+      },
+      (error) => {
+        console.log('ocurrio un error al subir arvhivo', error);
+        setProgress(0);
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log('File available at', downloadURL);
+
+          const saveNote = {
+            ...note,
+            ...value,
+            date: new Date(),
+            files: [
+              ...value.files,
+              {
+                name: target.files[0].name,
+                url: downloadURL,
+              },
+            ],
+          };
+          console.log(saveNote);
+          if (note.id !== '') {
+            dispatch(updateNote(saveNote));
+          } else {
+            dispatch(saveNewNote(saveNote));
+          }
+        });
+      }
+    );
   };
 
   return (
@@ -196,7 +227,9 @@ export const NoteEdit = ({ note, folders }) => {
           config={editorConfig}
         />
       </div>
-      {file > 0 && <LinearProgress variant="determinate" value={file} />}
+      {progress > 0 && (
+        <LinearProgress variant="determinate" value={progress} />
+      )}
       <div className="note__footer">
         <div className="note__select">
           <FormControl variant="outlined">

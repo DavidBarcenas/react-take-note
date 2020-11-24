@@ -120,6 +120,7 @@ export const updateNote = (note) => {
       dispatch(hideLoader());
       dispatch(showAlert('¡Se actualizó la nota!', 'success'));
     } catch (error) {
+      console.log(error);
       dispatch(hideLoader());
       dispatch(showAlert('No se pudo actualizar la nota', 'error'));
     }
