@@ -1,4 +1,4 @@
-.sidebar {
+.categories {
   background: $primary;
   padding: 0;
   z-index: 300;
@@ -11,7 +11,7 @@
   }
 }
 
-.sidebar__btn {
+.categories-btn {
   padding: 1em 2em;
   height: 65px;
   display: none;
@@ -31,15 +31,15 @@
   }
 }
 
-.sidebar__folders {
+.categories-folders {
   height: calc(100% - 65px);
   overflow: auto;
-  color: #7c87a8;
+  color: $listColor;
   padding: 0 0.5em;
-  animation: slideInLeft 0.5s ease-in;
+  animation: slideInLeft 0.3s ease-in-out;
 
   .MuiListItemIcon-root {
-    color: #7c87a8;
+    color: $listColor;
   }
 
   .MuiTypography-body1 {

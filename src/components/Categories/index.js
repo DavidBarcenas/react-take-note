@@ -1,4 +1,9 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNotesFolder, newNote } from '../../redux/actions/noteActions';
+import { showNotesMobile } from '../../redux/actions/uiActions';
+import { noteModel } from '../../models/noteModel';
+import { Folder } from '@material-ui/icons';
 import {
   Button,
   List,
@@ -6,29 +11,27 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@material-ui/core';
-import { Folder } from '@material-ui/icons';
-import { getNotesFolder, newNote } from '../redux/actions/noteActions';
-import { useDispatch, useSelector } from 'react-redux';
-import { noteModel } from '../models/noteModel';
-import { showNotesMobile } from '../redux/actions/uiActions';
 
-export const CategorySidebar = () => {
+export const Categories = () => {
   const dispatch = useDispatch();
   const { notes, ui } = useSelector((state) => state);
 
   const createNoteBtn = () => dispatch(newNote(noteModel));
+
   const handleActivateFolder = (folder) => {
     dispatch(getNotesFolder(folder));
     dispatch(showNotesMobile());
   };
 
   return (
-    <aside className={`sidebar ${!ui.mobile.showFolders ? 'no-show' : 'show'}`}>
-      <div className="sidebar__btn">
+    <aside
+      className={`categories ${!ui.mobile.showFolders ? 'no-show' : 'show'}`}
+    >
+      <div className="categories-btn">
         <Button onClick={createNoteBtn}>Crear nota</Button>
       </div>
-      <div className="sidebar__folders">
-        <List component="nav" aria-label="main folders">
+      <div className="categories-folders">
+        <List component="nav" aria-label="folders">
           {notes.folders.map((folder) => (
             <ListItem
               button

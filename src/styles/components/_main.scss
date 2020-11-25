@@ -14,7 +14,7 @@
   }
 }
 
-.sidebar,
+.categories,
 .notelist,
 .note {
   color: #fff;
@@ -28,7 +28,7 @@
   min-height: 100%;
 }
 
-.sidebar.no-show,
+.categories.no-show,
 .notelist.no-show,
 .notelist.no-show {
   display: none;
@@ -37,7 +37,7 @@
   }
 }
 
-.sidebar.show,
+.categories.show,
 .notelist.show,
 .note.show {
   display: block;

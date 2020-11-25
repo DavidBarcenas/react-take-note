@@ -1,10 +1,10 @@
 import React from 'react';
-import { CategorySidebar } from '../components/CategorySidebar';
 import { NoteList } from '../components/NoteList';
 import { Note } from '../components/Note/Note';
 import { Alert } from '../components/Alert/Alert';
 import { TopBar } from '../components/TopBar';
 import { BottomBar } from '../components/BottomBar';
+import { Categories } from '../components/Categories';
 
 export const Main = () => {
   return (
@@ -13,7 +13,7 @@ export const Main = () => {
 
       <main className="main-content">
         <Alert />
-        <CategorySidebar />
+        <Categories />
         <NoteList />
         <Note />
       </main>
