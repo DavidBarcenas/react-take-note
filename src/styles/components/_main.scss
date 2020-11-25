@@ -1,4 +1,4 @@
-.main {
+.main-content {
   width: 100vw;
   height: 100vh;
   padding-top: 55px;
@@ -17,41 +17,28 @@
 .sidebar,
 .notelist,
 .note {
+  color: #fff;
   padding: 1em;
   padding-top: 0;
-  color: #fff;
+  padding-bottom: 65px;
   position: relative;
   top: 0;
   left: 0;
   width: 100%;
   min-height: 100%;
-  padding-bottom: 65px;
 }
 
-.sidebar.no-show {
-  display: none;
-  @include mq(md) {
-    display: block !important;
-  }
-}
+.sidebar.no-show,
+.notelist.no-show,
 .notelist.no-show {
   display: none;
   @include mq(md) {
     display: block !important;
   }
 }
-.note.no-show {
-  display: none;
-  @include mq(md) {
-    display: block !important;
-  }
-}
-.sidebar.show {
-  display: block;
-}
-.notelist.show {
-  display: block;
-}
+
+.sidebar.show,
+.notelist.show,
 .note.show {
   display: block;
 }

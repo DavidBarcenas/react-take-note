@@ -8,17 +8,17 @@ import { BottomBar } from '../components/BottomBar/BottomBar';
 
 export const Main = () => {
   return (
-    <div className="main__wrap">
+    <div className="main-wrap">
       <TopBar />
 
-      <main className="main">
+      <main className="main-content">
         <Alert />
         <CategorySidebar />
         <NoteList />
         <Note />
       </main>
 
-      <div className="bottom__bar__wrap">
+      <div className="bottom-bar-wrap">
         <BottomBar />
       </div>
     </div>
