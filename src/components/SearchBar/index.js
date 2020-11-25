@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { IconButton, InputBase } from '@material-ui/core';
 import { SearchOutlined } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
-import { getAll } from '../redux/actions/noteActions';
-import { showNotesMobile } from '../redux/actions/uiActions';
+import { getAll } from '../../redux/actions/noteActions';
+import { showNotesMobile } from '../../redux/actions/uiActions';
 
 export const SearchBar = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export const SearchBar = () => {
   };
 
   return (
-    <div className="topbar__search">
+    <div className="search">
       <InputBase
         placeholder="Buscar nota..."
         inputProps={{ 'aria-label': 'buscar nota' }}

@@ -1,10 +1,10 @@
 import React from 'react';
 import { CategorySidebar } from '../components/CategorySidebar';
 import { NoteList } from '../components/NoteList';
-import { TopBar } from '../components/TopBar';
 import { Note } from '../components/Note/Note';
 import { Alert } from '../components/Alert/Alert';
-import { BottomBar } from '../components/BottomBar/BottomBar';
+import { TopBar } from '../components/TopBar';
+import { BottomBar } from '../components/BottomBar';
 
 export const Main = () => {
   return (

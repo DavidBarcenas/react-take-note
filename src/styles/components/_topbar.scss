@@ -20,13 +20,13 @@
   color: #ffffff;
   padding: 0 1em;
 
-  .topbar__logo,
-  .logo__wrap {
+  &-logo,
+  &-logo-wrap {
     display: flex;
     align-items: center;
   }
 
-  .logo__wrap {
+  &-logo-wrap {
     @include mq(sm) {
       width: 17vw;
       min-width: 230px;
@@ -44,42 +44,6 @@
     }
   }
 
-  &__search {
-    background: $primary;
-    overflow: hidden;
-    position: relative;
-    padding: 1em;
-
-    @include mq(sm) {
-      padding: 0;
-      padding-right: 15px;
-      width: 50vw;
-    }
-    @include mq(md) {
-      width: 25.5vw;
-    }
-    .MuiInputBase-root {
-      color: #fff;
-      background: rgba(#fff, 0.1);
-      padding-left: 1em;
-      padding-right: 1em;
-      width: 100%;
-      padding-right: 2.5em;
-    }
-
-    .MuiIconButton-root {
-      color: #fff;
-      width: 60px;
-      position: absolute;
-      right: 0;
-      top: 6px;
-
-      @include mq(sm) {
-        top: -6px;
-      }
-    }
-  }
-
   .MuiIconButton-root {
     color: #fff;
   }
@@ -94,7 +58,7 @@
   }
 }
 
-.topbar__btns {
+.topbar-btns {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -124,5 +88,42 @@
     line-height: 30px;
     text-align: center;
     margin-right: 0.75em;
+  }
+}
+
+// SearchBar
+.search {
+  background: $primary;
+  overflow: hidden;
+  position: relative;
+  padding: 1em;
+
+  @include mq(sm) {
+    padding: 0;
+    padding-right: 15px;
+    width: 50vw;
+  }
+  @include mq(md) {
+    width: 25.5vw;
+  }
+  .MuiInputBase-root {
+    color: #fff;
+    background: rgba(#fff, 0.1);
+    padding-left: 1em;
+    padding-right: 1em;
+    width: 100%;
+    padding-right: 2.5em;
+  }
+
+  .MuiIconButton-root {
+    color: #fff;
+    width: 60px;
+    position: absolute;
+    right: 0;
+    top: 6px;
+
+    @include mq(sm) {
+      top: -6px;
+    }
   }
 }

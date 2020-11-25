@@ -2,18 +2,18 @@ import React from 'react';
 import { IconButton } from '@material-ui/core';
 import { Add, Folder, Note } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
+import { newNote } from '../../redux/actions/noteActions';
+import { noteModel } from '../../models/noteModel';
 import {
   showFolderMobile,
   showNotesMobile,
   showNoteMobile,
 } from '../../redux/actions/uiActions';
-import { newNote } from '../../redux/actions/noteActions';
-import { noteModel } from '../../models/noteModel';
 
 export const BottomBar = () => {
   const dispatch = useDispatch();
   return (
-    <div className="bottom__bar">
+    <div className="bottom-bar">
       <IconButton
         aria-label="folders"
         onClick={() => dispatch(showFolderMobile())}
@@ -30,7 +30,7 @@ export const BottomBar = () => {
         <Add />
       </IconButton>
       <IconButton
-        aria-label="Notas"
+        aria-label="notas"
         onClick={() => dispatch(showNotesMobile())}
       >
         <Note />
