@@ -3,7 +3,7 @@ import { hideLoader, showAlert, showLoader, showNoteMobile } from './uiActions';
 import {
   alert_message_success,
   alert_type_success,
-} from '../../const/constants';
+} from '../../constants/constants';
 import { getNotes, saveNote } from '../../providers/firebaseService';
 import { db } from '../../providers/firebase';
 

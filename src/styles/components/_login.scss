@@ -9,7 +9,7 @@
   left: 0;
   width: 100vw;
 
-  &__main {
+  &-main {
     display: flex;
     align-items: center;
     border-top: 10px solid $secondary;
@@ -34,7 +34,7 @@
   }
 }
 
-.login__wrap {
+.login-wrap {
   width: 80%;
   margin: auto;
   color: #fff;
@@ -44,13 +44,13 @@
   }
 }
 
-.login__title {
+.login-title {
   font-size: 2.5em;
   margin: 0;
   margin-top: 15px;
 }
 
-.login__subtitle {
+.login-subtitle {
   font-size: 1.2em;
   font-weight: normal;
   margin-bottom: 1.5em;
@@ -60,14 +60,20 @@
   }
 }
 
-.login__btn-social.MuiButtonBase-root {
+// LoginButton Component
+.login-btn-social.MuiButtonBase-root {
   width: 100%;
   margin-bottom: 1em;
 
-  .login__btn-icon {
+  .login-btn-icon {
     margin-right: 14px;
     overflow: hidden;
     width: 20px;
+  }
+
+  .login-btn-name {
+    text-transform: capitalize;
+    margin-left: 5px;
   }
 
   &.google {
@@ -86,7 +92,7 @@
     }
   }
 
-  &.git {
+  &.github {
     background: $primary;
     color: #fff;
     &:hover {

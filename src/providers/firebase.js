@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
-import { github } from '../const/constants';
+import { github } from '../constants/constants';
 
 var firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
