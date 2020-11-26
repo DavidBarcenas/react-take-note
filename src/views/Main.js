@@ -1,10 +1,10 @@
 import React from 'react';
-import { Note } from '../components/Note/Note';
 import { Alert } from '../components/Alert/Alert';
 import { TopBar } from '../components/TopBar';
 import { BottomBar } from '../components/BottomBar';
 import { Categories } from '../components/Categories';
 import { NoteList } from '../components/NoteList';
+import { Note } from '../components/Note';
 
 export const Main = () => {
   return (

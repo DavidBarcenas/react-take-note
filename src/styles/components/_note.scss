@@ -11,17 +11,17 @@
     width: 57%;
   }
 
-  &__actionbar {
+  &-actionbar {
     height: 30px;
     text-align: right;
   }
 }
 
-.fadeIn {
+.fade-in {
   animation: fadeIn 0.35s ease-in-out;
 }
 
-.note__title {
+.note-title {
   font-size: 22px;
   font-weight: 500;
   color: $primary;
@@ -35,7 +35,7 @@
   }
 }
 
-.note__body {
+.note-body {
   font-size: 18px;
   line-height: 30px;
   margin-bottom: 2em;
@@ -85,7 +85,7 @@
   width: 40%;
 }
 
-.note__empty {
+.note-empty {
   display: flex;
   flex-direction: column;
   align-items: center;

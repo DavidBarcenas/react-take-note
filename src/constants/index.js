@@ -7,4 +7,11 @@ export const constants = {
   createNote: 'Creart nota',
   noteList: 'Lista de notas',
   noNotesFound: 'No se encontraron notas',
+  writeNote: 'Escribe una nota',
+  takingNote: '¡Empecemos a tomar nota!',
+  edit: 'Editar',
+  delete: 'Eliminar',
+  cancel: 'Cancelar',
+  deleteNote: 'Eliminar nota',
+  sureToDelete: 'Estás seguro que quieres eliminar',
 };
