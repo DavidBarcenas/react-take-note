@@ -1,36 +1,29 @@
 import React, { useState } from 'react';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useDispatch } from 'react-redux';
+import { editorConfig } from '../../util/editorConfig';
+import {
+  cancelNoteEdit,
+  saveNewNote,
+  updateNote,
+  showModalFolder,
+} from '../../redux/actions/noteActions';
 import {
   Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   FormControl,
-  IconButton,
   InputLabel,
   LinearProgress,
   MenuItem,
   Select,
   TextField,
-  Tooltip,
 } from '@material-ui/core';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { useDispatch } from 'react-redux';
-import {
-  cancelNoteEdit,
-  saveNewNote,
-  updateNote,
-} from '../../redux/actions/noteActions';
-import { editorConfig } from '../../util/editorConfig';
-import { AttachFile } from '@material-ui/icons';
-import { firebase } from '../../providers/firebase';
+import { DialogFolder } from './DialogFolder';
 
 export const NoteEdit = ({ note, folders }) => {
   const dispatch = useDispatch();
 
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [folderName, setFolderName] = useState(null);
   const [folderList, setFolderList] = useState(folders);
   const [value, setValue] = useState({
@@ -64,7 +57,7 @@ export const NoteEdit = ({ note, folders }) => {
 
   const handleFolderChange = ({ target }) => {
     if (target.value === 'newFolder') {
-      setOpen(true);
+      dispatch(showModalFolder(true));
     } else {
       setValue({
         ...value,
@@ -103,7 +96,7 @@ export const NoteEdit = ({ note, folders }) => {
       setFolderList([...folderList, folderName]);
       setFolderName(null);
     }
-    setOpen(false);
+    setOpenModal(false);
   };
 
   const handleFolderName = ({ target }) => {
@@ -119,11 +112,6 @@ export const NoteEdit = ({ note, folders }) => {
 
   const handleSubmit = () => {
     if (noteValidation()) {
-      if (file) {
-        uploadFile(file);
-
-        return;
-      }
       const saveNote = { ...note, ...value, date: new Date() };
 
       if (note.id !== '') {
@@ -161,50 +149,6 @@ export const NoteEdit = ({ note, folders }) => {
       }
     }
     // uploadFile('cghK1k38L4bLKTYkbqIZyPStDyf1', target.files);
-  };
-
-  const uploadFile = (target) => {
-    const storageRef = firebase.storage().ref();
-    const uploadTask = storageRef
-      .child(`cghK1k38L4bLKTYkbqIZyPStDyf1/${target.files[0].name}`)
-      .put(target.files[0]);
-
-    let unsubcribe = uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        setProgress(progress);
-      },
-      (error) => {
-        console.log('ocurrio un error al subir arvhivo', error);
-        setProgress(0);
-      },
-      () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log('File available at', downloadURL);
-
-          const saveNote = {
-            ...note,
-            ...value,
-            date: new Date(),
-            files: [
-              ...value.files,
-              {
-                name: target.files[0].name,
-                url: downloadURL,
-              },
-            ],
-          };
-          console.log(saveNote);
-          if (note.id !== '') {
-            dispatch(updateNote(saveNote));
-          } else {
-            dispatch(saveNewNote(saveNote));
-          }
-        });
-      }
-    );
   };
 
   return (
@@ -252,20 +196,7 @@ export const NoteEdit = ({ note, folders }) => {
               ))}
             </Select>
           </FormControl>
-          {/* <div className="note__file__upload">
-            <input id="icon-button-file" type="file" onChange={handleFile} />
-            <Tooltip title="Subir archivo">
-              <label htmlFor="icon-button-file">
-                <IconButton
-                  color="primary"
-                  aria-label="subir archivo"
-                  component="span"
-                >
-                  <AttachFile />
-                </IconButton>
-              </label>
-            </Tooltip>
-          </div> */}
+          {/* UploadFile */}
         </div>
         <div className="note__footer--btns">
           <Button variant="outlined" onClick={handleCancel}>
@@ -281,31 +212,7 @@ export const NoteEdit = ({ note, folders }) => {
         </div>
       </div>
 
-      <Dialog aria-labelledby="new-folder" open={open}>
-        <DialogTitle id="new-folder">Crear carpeta</DialogTitle>
-        <DialogContent>
-          <TextField
-            id="outlined-basic"
-            label="Nombre de carpeta"
-            variant="outlined"
-            helperText={
-              !folderNameError
-                ? 'Solo se permiten letras, números y espacios'
-                : ''
-            }
-            error={!folderNameError}
-            onChange={handleFolderName}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={handleCloseDialog} color="primary">
-            Aceptar
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DialogFolder openModal={openModal} />
     </div>
   );
 };

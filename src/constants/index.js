@@ -12,6 +12,8 @@ export const constants = {
   edit: 'Editar',
   delete: 'Eliminar',
   cancel: 'Cancelar',
+  accept: 'Aceptar',
   deleteNote: 'Eliminar nota',
   sureToDelete: 'Estás seguro que quieres eliminar',
+  createFolder: 'Crear carpeta',
 };

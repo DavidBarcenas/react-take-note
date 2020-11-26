@@ -6,6 +6,7 @@ const initialState = {
   activeNote: null,
   activeFolder: null,
   editNote: false,
+  showModalFolder: false,
 };
 
 export const noteReducer = (state = initialState, action) => {
@@ -73,6 +74,11 @@ export const noteReducer = (state = initialState, action) => {
           action.payload.length > 0 ? action.payload[0].collection : null,
       };
 
+    case types.showModalFolder:
+      return {
+        ...state,
+        showModalFolder: action.payload,
+      };
     case types.logoutNote:
       return {
         ...initialState,

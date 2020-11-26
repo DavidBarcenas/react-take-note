@@ -224,3 +224,8 @@ const searchNotes = (notes) => ({
   type: types.searchNote,
   payload: notes,
 });
+
+export const showModalFolder = (show) => ({
+  type: types.showModalFolder,
+  payload: show,
+});

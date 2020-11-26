@@ -19,4 +19,5 @@ export const types = {
   showFolderMobile: 'SHOW_FOLDER_MOBILE',
   showNotesMobile: 'SHOW_NOTES_MOBILE',
   showNoteMobile: 'SHOW_NOTE_MOBILE',
+  showModalFolder: 'SHOW_MODAL_FOLDER',
 };
