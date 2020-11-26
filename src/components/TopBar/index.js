@@ -5,7 +5,7 @@ import { Clear, ExitToApp } from '@material-ui/icons';
 import { SearchBar } from '../SearchBar';
 import { Loader } from '../Loader/Loader';
 import { logoutApp } from '../../redux/actions/authActions';
-import { loginConstants } from '../../constants/loginConstants';
+import { constants } from '../../constants';
 import SearchOutlined from '@material-ui/icons/SearchOutlined';
 import stickyIcon from '../../assets/images/stickyIcon.svg';
 
@@ -20,8 +20,8 @@ export const TopBar = () => {
       <div className="topbar">
         <div className="topbar-logo">
           <div className="topbar-logo-wrap">
-            <img src={stickyIcon} alt={loginConstants.title} width="30" />
-            <h1>{loginConstants.title}</h1>
+            <img src={stickyIcon} alt={constants.title} width="30" />
+            <h1>{constants.title}</h1>
           </div>
           {mq && <SearchBar />}
         </div>

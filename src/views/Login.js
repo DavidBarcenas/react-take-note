@@ -1,5 +1,5 @@
 import React from 'react';
-import { loginConstants } from '../constants/loginConstants';
+import { constants } from '../constants';
 import { LoginButton } from '../components/LoginButton/LoginButton';
 import stickyIcon from '../assets/images/stickyIcon.svg';
 
@@ -8,12 +8,12 @@ export const Login = () => {
     <div className="login">
       <div className="login-main">
         <div className="login-wrap">
-          <img src={stickyIcon} alt={loginConstants.title} width="60" />
-          <h1 className="login-title">{loginConstants.title}</h1>
-          <h3 className="login-subtitle">{loginConstants.subtitle}</h3>
-          <LoginButton socialNetwork={loginConstants.google} />
-          <LoginButton socialNetwork={loginConstants.twitter} />
-          <LoginButton socialNetwork={loginConstants.github} />
+          <img src={stickyIcon} alt={constants.title} width="60" />
+          <h1 className="login-title">{constants.title}</h1>
+          <h3 className="login-subtitle">{constants.subtitle}</h3>
+          <LoginButton socialNetwork={constants.google} />
+          <LoginButton socialNetwork={constants.twitter} />
+          <LoginButton socialNetwork={constants.github} />
         </div>
       </div>
     </div>

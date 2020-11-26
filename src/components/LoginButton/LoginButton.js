@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
 import { loginSocialNetworks } from '../../redux/actions/authActions';
-import { loginConstants } from '../../constants/loginConstants';
+import { constants } from '../../constants';
 import { GitHub, Twitter } from '@material-ui/icons';
 import googleIcon from '../../assets/images/googleIcon.svg';
 
@@ -17,13 +17,13 @@ export const LoginButton = ({ socialNetwork }) => {
       variant="outlined"
       onClick={() => handleLogin(socialNetwork)}
     >
-      {socialNetwork === loginConstants.google && (
+      {socialNetwork === constants.google && (
         <img src={googleIcon} alt={socialNetwork} className="login-btn-icon" />
       )}
-      {socialNetwork === loginConstants.twitter && (
+      {socialNetwork === constants.twitter && (
         <Twitter className="login-btn-icon" />
       )}
-      {socialNetwork === loginConstants.github && (
+      {socialNetwork === constants.github && (
         <GitHub className="login-btn-icon" />
       )}
       Continuar con <span className="login-btn-name">{socialNetwork}</span>

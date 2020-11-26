@@ -4,7 +4,7 @@ import { AttachFile } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { dateFormat } from '../../util/dateFormat';
 import { activateNote } from '../../redux/actions/noteActions';
-import empty from '../assets/images/empty.svg';
+import empty from '../../assets/images/empty.svg';
 import { showNoteMobile } from '../../redux/actions/uiActions';
 import { constants } from '../../constants';
 
