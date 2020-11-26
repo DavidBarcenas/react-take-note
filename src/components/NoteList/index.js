@@ -2,10 +2,11 @@ import React from 'react';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { AttachFile } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { dateFormat } from '../util/dateFormat';
-import { activateNote } from '../redux/actions/noteActions';
+import { dateFormat } from '../../util/dateFormat';
+import { activateNote } from '../../redux/actions/noteActions';
 import empty from '../assets/images/empty.svg';
-import { showNoteMobile } from '../redux/actions/uiActions';
+import { showNoteMobile } from '../../redux/actions/uiActions';
+import { constants } from '../../constants';
 
 export const NoteList = () => {
   const { notes, ui } = useSelector((state) => state);
@@ -19,7 +20,7 @@ export const NoteList = () => {
   return (
     <div className={`notelist ${!ui.mobile.showNotes ? 'no-show' : 'show'}`}>
       {notes.folderNotes.length > 0 ? (
-        <List aria-label="Lista de notas">
+        <List aria-label={constants.noteList}>
           {notes.folderNotes.map((note) => (
             <ListItem
               key={note.id}
@@ -32,7 +33,7 @@ export const NoteList = () => {
               onClick={() => handleActivateNote(note)}
             >
               <ListItemText primary={note.title} />
-              <div className="notelist__date">
+              <div className="notelist-date">
                 {note.file && <AttachFile />}
                 <span>{dateFormat(note.date)}</span>
               </div>
@@ -41,8 +42,8 @@ export const NoteList = () => {
         </List>
       ) : (
         <div className="no-notes">
-          <img src={empty} alt="No se encontraron notas" />
-          <span>No se econtraron notas.</span>
+          <img src={empty} alt={constants.noNotesFound} />
+          <span>{constants.noNotesFound}</span>
         </div>
       )}
     </div>

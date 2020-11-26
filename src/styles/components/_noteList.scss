@@ -1,9 +1,5 @@
-// .list {
-//   margin: 0;
-//   padding: 0;
-// }
 .notelist {
-  color: #7c87a8;
+  color: $listColor;
   overflow-y: auto;
   z-index: 100;
   padding-left: 0;
@@ -37,7 +33,7 @@
     width: calc(100% - 90px);
   }
 
-  &__date {
+  &-date {
     width: 100px;
     text-align: right;
 

@@ -13,7 +13,7 @@ const months = {
   11: 'Dic',
 };
 
-export const dateFormat = (noteDate, tms = true) => {
+export const dateFormat = (noteDate) => {
   let date;
 
   if (noteDate.hasOwnProperty('seconds')) {
@@ -28,12 +28,4 @@ export const dateFormat = (noteDate, tms = true) => {
   const year = date.getFullYear();
 
   return `${day} ${month} ${year}`;
-};
-
-export const normalizeName = (folderName) => {
-  const removeAccents = folderName
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-  return removeAccents.replace(/ /g, '_');
 };
