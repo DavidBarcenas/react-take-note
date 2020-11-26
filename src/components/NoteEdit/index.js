@@ -7,7 +7,7 @@ import {
   cancelNoteEdit,
   saveNewNote,
   updateNote,
-  showModalFolder,
+  showModalFCreateFolder,
 } from '../../redux/actions/noteActions';
 import {
   Button,
@@ -57,7 +57,7 @@ export const NoteEdit = ({ note, folders }) => {
 
   const handleFolderChange = ({ target }) => {
     if (target.value === 'newFolder') {
-      dispatch(showModalFolder(true));
+      dispatch(showModalFCreateFolder(true));
     } else {
       setValue({
         ...value,
@@ -180,7 +180,7 @@ export const NoteEdit = ({ note, folders }) => {
             <InputLabel id="folder">Carpeta</InputLabel>
             <Select
               labelId="folder"
-              value={value.collection}
+              value={note.collection}
               name="collection"
               onChange={handleFolderChange}
               label="Carpeta"
@@ -189,7 +189,7 @@ export const NoteEdit = ({ note, folders }) => {
               <MenuItem value="newFolder">
                 <em>Nueva carpeta</em>
               </MenuItem>
-              {folderList.map((folder) => (
+              {folders.map((folder) => (
                 <MenuItem key={folder} value={folder}>
                   {folder}
                 </MenuItem>

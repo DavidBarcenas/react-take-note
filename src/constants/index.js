@@ -16,4 +16,5 @@ export const constants = {
   deleteNote: 'Eliminar nota',
   sureToDelete: 'Estás seguro que quieres eliminar',
   createFolder: 'Crear carpeta',
+  folderNameError: 'Debe tener minimo 3 caracteres o ya existe',
 };

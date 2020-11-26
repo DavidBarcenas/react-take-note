@@ -20,4 +20,5 @@ export const types = {
   showNotesMobile: 'SHOW_NOTES_MOBILE',
   showNoteMobile: 'SHOW_NOTE_MOBILE',
   showModalFolder: 'SHOW_MODAL_FOLDER',
+  addNewFolder: 'ADD_NEW_FOLDER',
 };

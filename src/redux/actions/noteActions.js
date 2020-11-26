@@ -225,7 +225,12 @@ const searchNotes = (notes) => ({
   payload: notes,
 });
 
-export const showModalFolder = (show) => ({
+export const showModalFCreateFolder = (show) => ({
   type: types.showModalFolder,
   payload: show,
+});
+
+export const addFolder = (folder) => ({
+  type: types.addNewFolder,
+  payload: folder,
 });

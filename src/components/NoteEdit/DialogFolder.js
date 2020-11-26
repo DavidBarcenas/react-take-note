@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import { constants } from '../../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addFolder,
+  showModalFCreateFolder,
+} from '../../redux/actions/noteActions';
+
 import {
   Button,
   Dialog,
@@ -8,14 +14,13 @@ import {
   DialogTitle,
   TextField,
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
 
 export const DialogFolder = () => {
-  const { showModalFolder } = useSelector((state) => state.notes);
+  const dispatch = useDispatch();
+  const { showModalFolder, folders } = useSelector((state) => state.notes);
   const [folder, setFolder] = useState({
     name: '',
-    error: null,
-    open: false,
+    error: false,
   });
 
   const handleFolderName = ({ target }) =>
@@ -23,13 +28,20 @@ export const DialogFolder = () => {
 
   const handleCloseModal = (buttonType) => {
     if (buttonType === constants.accept) {
-      if (folder.name.length >= 3) {
-        // action
+      const exist = folders.includes(folder.name.toLowerCase());
+      if (folder.name.length >= 3 && !exist) {
+        dispatch(addFolder(folder.name));
+        dispatch(showModalFCreateFolder(false));
+        setFolder({ name: '', error: false });
       } else {
-        setFolder({ ...folder, error: 'Debe tener minimo 3 caracteres' });
+        setFolder({
+          ...folder,
+          error: true,
+        });
       }
     } else {
-      setFolder({ name: '', error: null, open: false });
+      setFolder({ name: '', error: false });
+      dispatch(showModalFCreateFolder(false));
     }
   };
 
@@ -43,6 +55,8 @@ export const DialogFolder = () => {
           variant="outlined"
           onChange={handleFolderName}
           value={folder.name}
+          error={folder.error}
+          helperText={folder.error ? constants.folderNameError : ''}
         />
       </DialogContent>
       <DialogActions>
