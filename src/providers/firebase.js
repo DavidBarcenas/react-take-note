@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 import 'firebase/storage';
-import { github } from '../constants/constants';
+import { constants } from '../constants';
 
 var firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -21,9 +21,12 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const socialNetworkProvider = (socialNetwork) => {
+  console.log(socialNetwork);
   switch (socialNetwork) {
-    case github:
+    case constants.github:
       return new firebase.auth.GithubAuthProvider();
+    case constants.twitter:
+      return new firebase.auth.TwitterAuthProvider();
     default:
       return new firebase.auth.GoogleAuthProvider();
   }
