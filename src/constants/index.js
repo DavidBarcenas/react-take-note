@@ -13,8 +13,10 @@ export const constants = {
   delete: 'Eliminar',
   cancel: 'Cancelar',
   accept: 'Aceptar',
+  save: 'Guardar',
   deleteNote: 'Eliminar nota',
   sureToDelete: 'Estás seguro que quieres eliminar',
   createFolder: 'Crear carpeta',
   folderNameError: 'Debe tener minimo 3 caracteres o ya existe',
+  newFolder: 'newFolder',
 };

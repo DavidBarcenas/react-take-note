@@ -3,6 +3,7 @@ import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useDispatch } from 'react-redux';
 import { editorConfig } from '../../util/editorConfig';
+import { DialogFolder } from './DialogFolder';
 import {
   cancelNoteEdit,
   saveNewNote,
@@ -17,7 +18,7 @@ import {
   Select,
   TextField,
 } from '@material-ui/core';
-import { DialogFolder } from './DialogFolder';
+import { constants } from '../../constants';
 
 export const NoteEdit = ({ note, folderList }) => {
   const collection = useRef(note.collection);
@@ -57,7 +58,7 @@ export const NoteEdit = ({ note, folderList }) => {
   };
 
   const handleFolderChange = ({ target }) => {
-    if (target.value === 'newFolder') {
+    if (target.value === constants.newFolder) {
       dispatch(showModalFCreateFolder(true));
     } else {
       setValue({
@@ -74,13 +75,11 @@ export const NoteEdit = ({ note, folderList }) => {
       folderError: value.collection.trim() === '',
     });
 
-    if (value.title.trim() === '') {
-      return false;
-    }
-    if (value.body.trim() === '') {
-      return false;
-    }
-    if (value.collection.trim() === '') {
+    if (
+      value.title.trim() === '' ||
+      value.body.trim() === '' ||
+      value.collection.trim() === ''
+    ) {
       return false;
     }
 
@@ -115,7 +114,7 @@ export const NoteEdit = ({ note, folderList }) => {
   };
 
   return (
-    <div className="new__note">
+    <div className="new-note">
       <TextField
         label="Titulo"
         variant="outlined"
@@ -126,7 +125,7 @@ export const NoteEdit = ({ note, folderList }) => {
         error={formErrors.titleError}
       />
 
-      <div className={formErrors.bodyError ? 'editor__error' : ''}>
+      <div className={formErrors.bodyError ? 'editor-error' : ''}>
         <CKEditor
           editor={ClassicEditor}
           data={value.body}
@@ -135,8 +134,8 @@ export const NoteEdit = ({ note, folderList }) => {
         />
       </div>
 
-      <div className="note__footer">
-        <div className="note__select">
+      <div className="note-footer">
+        <div className="note-select">
           <FormControl variant="outlined">
             <InputLabel id="folder">Carpeta</InputLabel>
             <Select
@@ -147,7 +146,7 @@ export const NoteEdit = ({ note, folderList }) => {
               label="Carpeta"
               error={formErrors.folderError}
             >
-              <MenuItem value="newFolder">
+              <MenuItem value={constants.newFolder}>
                 <em>Nueva carpeta</em>
               </MenuItem>
               {folders.map((folder) => (
@@ -159,16 +158,16 @@ export const NoteEdit = ({ note, folderList }) => {
           </FormControl>
           {/* UploadFile */}
         </div>
-        <div className="note__footer--btns">
+        <div className="note-footer-btns">
           <Button variant="outlined" onClick={handleCancel}>
-            Cancelar
+            {constants.cancel}
           </Button>
           <Button
             variant="contained"
-            className="btn__save"
+            className="btn-save"
             onClick={handleSubmit}
           >
-            Guardar
+            {constants.save}
           </Button>
         </div>
       </div>

@@ -59,7 +59,7 @@
   }
 }
 
-.new__note {
+.new-note {
   padding-top: 2em;
   @include mq(md) {
     padding: 2em 1em;
@@ -79,7 +79,7 @@
   }
 }
 
-.note__select {
+.note-select {
   min-width: 200px;
   display: flex;
   width: 40%;
@@ -101,11 +101,11 @@
   }
 }
 
-.editor__error {
+.editor-error {
   border: 1px solid #f44336;
 }
 
-.note__footer {
+.note-footer {
   padding-bottom: 1em;
   margin-top: 2em;
 
@@ -119,7 +119,7 @@
     margin-bottom: 0;
   }
 
-  &--btns {
+  &-btns {
     text-align: right;
     margin-top: 2em;
 
@@ -133,27 +133,12 @@
     margin: 0 0.5em;
   }
 
-  .btn__save {
+  .btn-save {
     background: $secondary;
     color: #fff;
-    // margin-left: 1em;
 
     &:hover {
       background: darken($secondary, 3);
     }
-  }
-
-  .btn__folder {
-    .MuiButton-startIcon {
-      color: $yellow;
-    }
-  }
-}
-
-.note__file__upload {
-  margin-left: 1em;
-  margin-top: 5px;
-  input {
-    display: none;
   }
 }
