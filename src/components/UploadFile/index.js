@@ -2,6 +2,20 @@ import React from 'react';
 import { IconButton, Tooltip } from '@material-ui/core';
 
 export const UploadFile = () => {
+  const handleFile = ({ target }) => {
+    if (target.files.length > 0) {
+      if (
+        target.files[0].type === 'application/pdf' ||
+        target.files[0].type.slice(0, 5) === 'image'
+      ) {
+        setFile(target);
+      } else {
+        setFile(null);
+      }
+    }
+    // uploadFile('cghK1k38L4bLKTYkbqIZyPStDyf1', target.files);
+  };
+
   const uploadFile = (target) => {
     const storageRef = firebase.storage().ref();
     const uploadTask = storageRef

@@ -83,7 +83,6 @@ export const noteReducer = (state = initialState, action) => {
     case types.addNewFolder:
       return {
         ...state,
-        folders: [...state.folders, action.payload],
         activeNote: { ...state.activeNote, collection: action.payload },
       };
     case types.logoutNote:

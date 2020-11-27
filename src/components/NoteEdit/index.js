@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useDispatch } from 'react-redux';
@@ -13,19 +13,15 @@ import {
   Button,
   FormControl,
   InputLabel,
-  LinearProgress,
   MenuItem,
   Select,
   TextField,
 } from '@material-ui/core';
 import { DialogFolder } from './DialogFolder';
 
-export const NoteEdit = ({ note, folders }) => {
+export const NoteEdit = ({ note, folderList }) => {
+  const collection = useRef(note.collection);
   const dispatch = useDispatch();
-
-  const [openModal, setOpenModal] = useState(false);
-  const [folderName, setFolderName] = useState(null);
-  const [folderList, setFolderList] = useState(folders);
   const [value, setValue] = useState({
     title: note.title,
     body: note.body,
@@ -37,9 +33,14 @@ export const NoteEdit = ({ note, folders }) => {
     bodyError: false,
     folderError: false,
   });
-  const [folderNameError, setFolderNameError] = useState(true);
-  const [file, setFile] = useState(null);
-  const [progress, setProgress] = useState(0);
+  const [folders, setFolders] = useState(folderList);
+
+  useEffect(() => {
+    setValue(() => ({ ...note }));
+    if (collection.current !== note.collection) {
+      setFolders((folders) => [...folders, note.collection]);
+    }
+  }, [note]);
 
   const handleInputChange = ({ target }) => {
     setValue({
@@ -86,30 +87,6 @@ export const NoteEdit = ({ note, folders }) => {
     return true;
   };
 
-  const handleCloseDialog = () => {
-    setFolderNameError(validFolderName(folderName));
-    if (folderName) {
-      setValue({
-        ...value,
-        collection: folderName,
-      });
-      setFolderList([...folderList, folderName]);
-      setFolderName(null);
-    }
-    setOpenModal(false);
-  };
-
-  const handleFolderName = ({ target }) => {
-    if (target.value.trim() !== '') {
-      setFolderName(target.value);
-    }
-  };
-
-  const validFolderName = (name) => {
-    const regex = /^[A-Za-z0-9 ]*$/i;
-    return regex.test(name);
-  };
-
   const handleSubmit = () => {
     if (noteValidation()) {
       const saveNote = { ...note, ...value, date: new Date() };
@@ -137,20 +114,6 @@ export const NoteEdit = ({ note, folders }) => {
     });
   };
 
-  const handleFile = ({ target }) => {
-    if (target.files.length > 0) {
-      if (
-        target.files[0].type === 'application/pdf' ||
-        target.files[0].type.slice(0, 5) === 'image'
-      ) {
-        setFile(target);
-      } else {
-        setFile(null);
-      }
-    }
-    // uploadFile('cghK1k38L4bLKTYkbqIZyPStDyf1', target.files);
-  };
-
   return (
     <div className="new__note">
       <TextField
@@ -171,16 +134,14 @@ export const NoteEdit = ({ note, folders }) => {
           config={editorConfig}
         />
       </div>
-      {progress > 0 && (
-        <LinearProgress variant="determinate" value={progress} />
-      )}
+
       <div className="note__footer">
         <div className="note__select">
           <FormControl variant="outlined">
             <InputLabel id="folder">Carpeta</InputLabel>
             <Select
               labelId="folder"
-              value={note.collection}
+              value={value.collection}
               name="collection"
               onChange={handleFolderChange}
               label="Carpeta"
@@ -212,7 +173,7 @@ export const NoteEdit = ({ note, folders }) => {
         </div>
       </div>
 
-      <DialogFolder openModal={openModal} />
+      <DialogFolder />
     </div>
   );
 };
