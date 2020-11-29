@@ -1,11 +1,8 @@
 import { types } from '../types/types';
 import { hideLoader, showAlert, showLoader, showNoteMobile } from './uiActions';
-import {
-  alert_message_success,
-  alert_type_success,
-} from '../../constants/constants';
 import { getNotes, saveNote } from '../../providers/firebaseService';
 import { db } from '../../providers/firebase';
+import { constants } from '../../constants';
 
 export const userNotes = () => {
   return async (dispatch, getState) => {
@@ -26,7 +23,7 @@ export const userNotes = () => {
       dispatch(hideLoader());
     } catch (error) {
       dispatch(hideLoader());
-      dispatch(showAlert('Ocurrió un error, intente más tarde', 'error'));
+      dispatch(showAlert(constants.userNotesError, constants.error));
     }
   };
 };
@@ -66,7 +63,7 @@ export const saveNewNote = (note) => {
       dispatch(showAlert(alert_message_success, alert_type_success));
     } catch (error) {
       dispatch(hideLoader());
-      dispatch(showAlert('No se guardo la nota correctamente', 'error'));
+      dispatch(showAlert(constants.saveNoteError, constants.alertError));
     }
   };
 };
@@ -83,7 +80,7 @@ export const getNotesFolder = (folder) => {
       dispatch(hideLoader());
     } catch (error) {
       dispatch(hideLoader());
-      dispatch(showAlert('No se pudo obtener las notas', 'error'));
+      dispatch(showAlert(constants.getNotesError, constants.alertError));
     }
   };
 };
@@ -118,11 +115,11 @@ export const updateNote = (note) => {
       }
       dispatch(cancelNoteEdit());
       dispatch(hideLoader());
-      dispatch(showAlert('¡Se actualizó la nota!', 'success'));
+      dispatch(showAlert(constants.updateNoteSuccess, constants.alertSuccess));
     } catch (error) {
       console.log(error);
       dispatch(hideLoader());
-      dispatch(showAlert('No se pudo actualizar la nota', 'error'));
+      dispatch(showAlert(constants.updateNoteError, constants.alertError));
     }
   };
 };
@@ -150,7 +147,7 @@ export const deleteNote = () => {
       }
     } catch (error) {
       dispatch(hideLoader());
-      dispatch(showAlert('No se pudo eliminar la nota', 'error'));
+      dispatch(showAlert(constants.deleteNoteError, constants.alertError));
     }
   };
 };
@@ -170,7 +167,7 @@ export const getAll = (search) => {
       dispatch(hideLoader());
     } catch (error) {
       dispatch(hideLoader());
-      dispatch(showAlert('No se pudo hacer la búsqueda', 'error'));
+      dispatch(showAlert(constants.searchNoteError, constants.alertError));
     }
   };
 };
