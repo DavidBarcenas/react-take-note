@@ -19,6 +19,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import { constants } from '../../constants';
+import { UploadFile } from '../UploadFile';
 
 export const NoteEdit = ({ note, folderList }) => {
   const collection = useRef(note.collection);
@@ -156,7 +157,7 @@ export const NoteEdit = ({ note, folderList }) => {
               ))}
             </Select>
           </FormControl>
-          {/* UploadFile */}
+          <UploadFile />
         </div>
         <div className="note-footer-btns">
           <Button variant="outlined" onClick={handleCancel}>

@@ -21,6 +21,7 @@ export const constants = {
   newFolder: 'newFolder',
   alertError: 'error',
   alertSuccess: 'success',
+  saveNoteSuccess: '¡Nota guardada!',
   userNotesError: 'Ocurrió un error, intente más tarde',
   saveNoteError: 'No se guardo la nota correctamente',
   getNotesError: 'No se pudo obtener las notas',

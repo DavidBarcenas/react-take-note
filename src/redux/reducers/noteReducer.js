@@ -7,6 +7,7 @@ const initialState = {
   activeFolder: null,
   editNote: false,
   showModalFolder: false,
+  files: [],
 };
 
 export const noteReducer = (state = initialState, action) => {
@@ -88,6 +89,11 @@ export const noteReducer = (state = initialState, action) => {
     case types.logoutNote:
       return {
         ...initialState,
+      };
+    case types.saveFiles:
+      return {
+        ...state,
+        files: [...state.files, action.payload],
       };
 
     default:

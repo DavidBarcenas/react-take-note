@@ -60,7 +60,7 @@ export const saveNewNote = (note) => {
         dispatch(activateNote(newNote));
       }
       dispatch(hideLoader());
-      dispatch(showAlert(alert_message_success, alert_type_success));
+      dispatch(showAlert(constants.saveNoteSuccess, constants.alertSuccess));
     } catch (error) {
       dispatch(hideLoader());
       dispatch(showAlert(constants.saveNoteError, constants.alertError));
@@ -230,4 +230,9 @@ export const showModalFCreateFolder = (show) => ({
 export const addFolder = (folder) => ({
   type: types.addNewFolder,
   payload: folder,
+});
+
+export const saveFiles = (files) => ({
+  type: types.saveFiles,
+  payload: files,
 });
