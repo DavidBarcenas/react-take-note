@@ -71,3 +71,22 @@ export const uploadFile = (uid, fileList) => {
     }
   );
 };
+
+export const deleteFile = (file) => {
+  console.log('entra');
+  // Create a reference to the file to delete
+  const storageRef = firebase.storage().ref();
+  const desertRef = storageRef.child(`cghK1k38L4bLKTYkbqIZyPStDyf1/${file}`);
+
+  // Delete the file
+  desertRef
+    .delete()
+    .then(function () {
+      // File deleted successfully
+      console.log('eliminada');
+    })
+    .catch(function (error) {
+      // Uh-oh, an error occurred!
+      console.log('no eliminada', error);
+    });
+};

@@ -20,8 +20,9 @@ import {
 } from '@material-ui/core';
 import { constants } from '../../constants';
 import { UploadFile } from '../UploadFile';
+import { deleteFile } from '../../providers/firebaseService';
 
-export const NoteEdit = ({ note, folderList }) => {
+export const NoteEdit = ({ note, folderList, files }) => {
   const collection = useRef(note.collection);
   const dispatch = useDispatch();
   const [value, setValue] = useState({
@@ -112,6 +113,9 @@ export const NoteEdit = ({ note, folderList }) => {
       bodyError: false,
       folderError: false,
     });
+    if (files.length > 0) {
+      files.map((file) => deleteFile(file.name));
+    }
   };
 
   return (
@@ -172,6 +176,8 @@ export const NoteEdit = ({ note, folderList }) => {
           </Button>
         </div>
       </div>
+      <h3>Archivos:</h3>
+      <div className="files-list">{note.files.map((file) => file.name)}</div>
 
       <DialogFolder />
     </div>

@@ -33,7 +33,11 @@ export const Note = () => {
       key={notes.activeNote.id}
     >
       {notes.activeNote && notes.editNote ? (
-        <NoteEdit note={notes.activeNote} folderList={notes.folders} />
+        <NoteEdit
+          note={notes.activeNote}
+          folderList={notes.folders}
+          files={notes.files}
+        />
       ) : (
         <NoteView
           note={notes.activeNote}
