@@ -28,30 +28,28 @@ export const TopBar = () => {
         </div>
 
         <div className="topbar-btns">
-          <div className="user-account">
-            {name && (
-              <div className="user">
-                <span className="square">{name.substr(0, 1)}</span>
-                <span className="user-name">{name}</span>
-              </div>
-            )}
-            {!mq && (
-              <IconButton
-                type="button"
-                aria-label="search"
-                onClick={() => setShowSearch(!showSearch)}
-              >
-                {showSearch ? <Clear /> : <SearchOutlined />}
-              </IconButton>
-            )}
+          {name && (
+            <div className="user">
+              <span className="square">{name.substr(0, 1)}</span>
+              <span className="user-name">{name}</span>
+            </div>
+          )}
+          {!mq && (
             <IconButton
               type="button"
-              aria-label="exit"
-              onClick={() => dispatch(logoutApp())}
+              aria-label="search"
+              onClick={() => setShowSearch(!showSearch)}
             >
-              <ExitToApp />
+              {showSearch ? <Clear /> : <SearchOutlined />}
             </IconButton>
-          </div>
+          )}
+          <IconButton
+            type="button"
+            aria-label="exit"
+            onClick={() => dispatch(logoutApp())}
+          >
+            <ExitToApp />
+          </IconButton>
         </div>
       </div>
 
