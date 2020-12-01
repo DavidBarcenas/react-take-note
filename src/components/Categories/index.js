@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 
 export const Categories = () => {
+  console.log('SE RENDERIZA ==== FOLDERS ===');
   const dispatch = useDispatch();
   const { notes, ui } = useSelector((state) => state);
 

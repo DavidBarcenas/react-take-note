@@ -1,10 +1,17 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 export const Loader = () => {
-  return (
-    <div className="loader">
-      <div className="circleloader"></div>
-      <div className="overlayLoader"></div>
-    </div>
-  );
+  console.log('=== LOADER ===');
+  const showLoader = useSelector((state) => state.ui.showLoader);
+
+  if (showLoader) {
+    return (
+      <div className="loader">
+        <div className="circleloader"></div>
+      </div>
+    );
+  }
+
+  return null;
 };

@@ -5,6 +5,7 @@ import { BottomBar } from '../components/BottomBar';
 import { Categories } from '../components/Categories';
 import { NoteList } from '../components/NoteList';
 import { Note } from '../components/Note';
+import { Loader } from '../components/Loader/Loader';
 
 export const Main = () => {
   return (
@@ -12,6 +13,7 @@ export const Main = () => {
       <TopBar />
 
       <main className="main-content">
+        <Loader />
         <Alert />
         <Categories />
         <NoteList />

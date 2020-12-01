@@ -20,15 +20,17 @@
 }
 
 .loader {
-  padding-left: 1em;
-  overflow: hidden;
-}
-.overlayLoader {
   position: fixed;
-  width: 100vw;
-  height: calc(100vh - 55px);
-  top: 55px;
+  top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.circleloader {
+  margin-left: 45%;
+  margin-top: 10px;
 }
 
 $offset: 187;

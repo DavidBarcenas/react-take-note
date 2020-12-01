@@ -23,6 +23,7 @@ import { UploadFile } from '../UploadFile';
 import { deleteFile } from '../../providers/firebaseService';
 
 export const NoteEdit = ({ note, folderList, files }) => {
+  console.log('SE RENDERIZA ==== NOTEEDIT ===');
   const collection = useRef(note.collection);
   const dispatch = useDispatch();
   const [value, setValue] = useState({
@@ -177,7 +178,13 @@ export const NoteEdit = ({ note, folderList, files }) => {
         </div>
       </div>
       <h3>Archivos:</h3>
-      <div className="files-list">{note.files.map((file) => file.name)}</div>
+      <div className="files-list">
+        {note.files.map((file) => (
+          <a href={file.url} rel="noreferrer" target="_blank">
+            Prueba
+          </a>
+        ))}
+      </div>
 
       <DialogFolder />
     </div>

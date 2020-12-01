@@ -9,6 +9,7 @@ import { showNoteMobile } from '../../redux/actions/uiActions';
 import { constants } from '../../constants';
 
 export const NoteList = () => {
+  console.log('SE RENDERIZA ==== NOTELIST ===');
   const { notes, ui } = useSelector((state) => state);
   const dispatch = useDispatch();
 
