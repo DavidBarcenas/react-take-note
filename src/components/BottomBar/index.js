@@ -3,7 +3,7 @@ import { IconButton } from '@material-ui/core';
 import { Add, Folder, Note } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { newNote } from '../../redux/actions/noteActions';
-import { noteModel } from '../../models/noteModel';
+import { NoteModel } from '../../models/noteModel';
 import {
   showFolderMobile,
   showNotesMobile,
@@ -23,7 +23,7 @@ export const BottomBar = () => {
       <IconButton
         aria-label="agregar"
         onClick={() => {
-          dispatch(newNote(noteModel));
+          dispatch(newNote(NoteModel));
           dispatch(showNoteMobile());
         }}
       >

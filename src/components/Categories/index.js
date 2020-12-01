@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getNotesFolder, newNote } from '../../redux/actions/noteActions';
 import { showNotesMobile } from '../../redux/actions/uiActions';
-import { noteModel } from '../../models/noteModel';
+import { NoteModel } from '../../models/noteModel';
 import { Folder } from '@material-ui/icons';
 import {
   Button,
@@ -19,7 +19,7 @@ export const Categories = () => {
   const folders = useSelector((state) => state.notes.folders);
   const showFolders = useSelector((state) => state.ui.showFolders);
 
-  const createNoteBtn = () => dispatch(newNote(noteModel));
+  const createNoteBtn = () => dispatch(newNote(NoteModel));
 
   const handleActivateFolder = (folder) => {
     dispatch(getNotesFolder(folder));
