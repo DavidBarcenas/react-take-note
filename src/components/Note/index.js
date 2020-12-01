@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { deleteNote, newNote } from '../../redux/actions/noteActions';
 import { constants } from '../../constants';
 import { NoteEdit } from '../NoteEdit';
@@ -11,16 +11,20 @@ export const Note = () => {
   console.log('SE RENDERIZA ==== NOTE ===');
   const dispatch = useDispatch();
   const [openDelete, setOpenDelete] = useState(false);
-  const { notes, ui } = useSelector((state) => state);
+  const showNote = useSelector((state) => state.ui.mobile.showNote);
+  const { activeNote, folders, files, editNote } = useSelector(
+    (state) => state.notes,
+    shallowEqual
+  );
 
-  const handleEdit = () => dispatch(newNote(notes.activeNote));
+  const handleEdit = () => dispatch(newNote(activeNote));
 
   const handleDelete = () => {
     dispatch(deleteNote());
     setOpenDelete(false);
   };
 
-  if (!notes.activeNote) {
+  if (!activeNote) {
     return (
       <div className="note note-empty">
         <img src={notesIcon} alt={constants.writeNote} />
@@ -30,18 +34,14 @@ export const Note = () => {
   }
   return (
     <div
-      className={`note fade-in ${!ui.mobile.showNote ? 'no-show' : 'show'}`}
-      key={notes.activeNote.id}
+      className={`note fade-in ${!showNote ? 'no-show' : 'show'}`}
+      key={activeNote.id}
     >
-      {notes.activeNote && notes.editNote ? (
-        <NoteEdit
-          note={notes.activeNote}
-          folderList={notes.folders}
-          files={notes.files}
-        />
+      {activeNote && editNote ? (
+        <NoteEdit note={activeNote} folderList={folders} files={files} />
       ) : (
         <NoteView
-          note={notes.activeNote}
+          note={activeNote}
           edit={handleEdit}
           openModal={setOpenDelete}
         />
@@ -51,7 +51,7 @@ export const Note = () => {
         openDialog={openDelete}
         closeDialog={setOpenDelete}
         deleteNote={handleDelete}
-        noteTitle={notes.activeNote.title}
+        noteTitle={activeNote.title}
       />
     </div>
   );
