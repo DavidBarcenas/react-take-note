@@ -10,7 +10,9 @@ import { constants } from '../../constants';
 
 export const NoteList = () => {
   console.log('SE RENDERIZA ==== NOTELIST ===');
-  const { notes, ui } = useSelector((state) => state);
+  const showNotes = useSelector((state) => state.ui.mobile.showNote);
+  const folderNotes = useSelector((state) => state.notes.folderNotes);
+  const activeNote = useSelector((state) => state.notes.activeNote);
   const dispatch = useDispatch();
 
   const handleActivateNote = (note) => {
@@ -19,15 +21,15 @@ export const NoteList = () => {
   };
 
   return (
-    <div className={`notelist ${!ui.mobile.showNotes ? 'no-show' : 'show'}`}>
-      {notes.folderNotes.length > 0 ? (
+    <div className={`notelist ${!showNotes ? 'no-show' : 'show'}`}>
+      {folderNotes.length > 0 ? (
         <List aria-label={constants.noteList}>
-          {notes.folderNotes.map((note) => (
+          {folderNotes.map((note) => (
             <ListItem
               key={note.id}
               button
               className={
-                note.id === (notes.activeNote && notes.activeNote.id)
+                note.id === (activeNote && activeNote.id)
                   ? 'notelist-active'
                   : ''
               }

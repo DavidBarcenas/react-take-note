@@ -15,7 +15,9 @@ import {
 export const Categories = () => {
   console.log('SE RENDERIZA ==== FOLDERS ===');
   const dispatch = useDispatch();
-  const { notes, ui } = useSelector((state) => state);
+  const activeFolder = useSelector((state) => state.notes.activeFolder);
+  const folders = useSelector((state) => state.notes.folders);
+  const showFolders = useSelector((state) => state.ui.showFolders);
 
   const createNoteBtn = () => dispatch(newNote(noteModel));
 
@@ -25,18 +27,16 @@ export const Categories = () => {
   };
 
   return (
-    <aside
-      className={`categories ${!ui.mobile.showFolders ? 'no-show' : 'show'}`}
-    >
+    <aside className={`categories ${!showFolders ? 'no-show' : 'show'}`}>
       <div className="categories-btn">
         <Button onClick={createNoteBtn}>Crear nota</Button>
       </div>
       <div className="categories-folders">
         <List component="nav" aria-label="folders">
-          {notes.folders.map((folder) => (
+          {folders.map((folder) => (
             <ListItem
               button
-              className={folder === notes.activeFolder ? 'folder-active' : ''}
+              className={folder === activeFolder ? 'folder-active' : ''}
               key={folder}
               onClick={() => handleActivateFolder(folder)}
             >
