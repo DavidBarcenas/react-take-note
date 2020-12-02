@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, useMediaQuery } from '@material-ui/core';
 import { Clear, ExitToApp } from '@material-ui/icons';
 import { SearchBar } from '../SearchBar';
-import { Loader } from '../Loader/Loader';
 import { logoutApp } from '../../redux/actions/authActions';
 import { constants } from '../../constants';
 import SearchOutlined from '@material-ui/icons/SearchOutlined';
@@ -12,7 +11,7 @@ import stickyIcon from '../../assets/images/stickyIcon.svg';
 export const TopBar = () => {
   console.log('SE RENDERIZA ==== TOPBAR ===');
   const dispatch = useDispatch();
-  const { name } = useSelector((state) => state.auth);
+  const name = useSelector((state) => state.auth.name);
   const [showSearch, setShowSearch] = useState(false);
   const mq = useMediaQuery('(min-width:767px)');
 

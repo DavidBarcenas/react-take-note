@@ -3,6 +3,7 @@ import { hideLoader, showAlert, showLoader, showNoteMobile } from './uiActions';
 import { getNotes, saveNote } from '../../providers/firebaseService';
 import { db } from '../../providers/firebase';
 import { constants } from '../../constants';
+import { UserModel } from '../../models/userModel';
 
 export const userNotes = () => {
   return async (dispatch, getState) => {
@@ -11,6 +12,7 @@ export const userNotes = () => {
       dispatch(showLoader());
       const userdata = await db.doc(`${auth.uid}/notes`).get();
       if (userdata.data()) {
+        console.log('entra al 1');
         const folders = userdata.data().folders;
         dispatch(getAllFolders(folders));
         if (folders.length > 0) {
@@ -18,7 +20,13 @@ export const userNotes = () => {
           dispatch(showNoteMobile());
         }
       } else {
-        await db.collection(auth.uid).doc('user').set(auth);
+        const user = UserModel;
+        user.uid = auth.uid;
+        user.name = auth.name;
+        user.email = auth.email;
+        user.photo = auth.photoUrl;
+
+        await db.collection(auth.uid).doc('user').set(user);
       }
       dispatch(hideLoader());
     } catch (error) {
