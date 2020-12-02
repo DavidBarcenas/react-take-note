@@ -17,7 +17,8 @@ import {
 
 export const DialogFolder = () => {
   const dispatch = useDispatch();
-  const { showModalFolder, folders } = useSelector((state) => state.notes);
+  const showModalFolder = useSelector((state) => state.notes.showModalFolder);
+  const folders = useSelector((state) => state.notes.folders);
   const [folder, setFolder] = useState({
     name: '',
     error: false,
