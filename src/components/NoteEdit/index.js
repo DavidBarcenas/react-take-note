@@ -21,6 +21,7 @@ import {
   Select,
   TextField,
 } from '@material-ui/core';
+import { FileListEdit } from './FileListEdit';
 
 export const NoteEdit = ({ note, folderList, files }) => {
   console.log('SE RENDERIZA ==== NOTEEDIT ===');
@@ -182,14 +183,7 @@ export const NoteEdit = ({ note, folderList, files }) => {
           </Button>
         </div>
       </div>
-      {/* <h3>Archivos:</h3>
-      <div className="files-list">
-        {note.files.map((file) => (
-          <a href={file.url} rel="noreferrer" target="_blank">
-            Prueba
-          </a>
-        ))}
-      </div> */}
+      {note.files.length > 0 && <FileListEdit files={note.files} />}
 
       <DialogFolder />
     </div>
