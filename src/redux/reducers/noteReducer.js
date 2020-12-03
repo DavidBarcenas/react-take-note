@@ -94,10 +94,11 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         files: [...state.files, action.payload],
-        activeNote: {
-          ...state.activeNote,
-          files: [...state.activeNote.files, action.payload],
-        },
+      };
+    case types.resetFiles:
+      return {
+        ...state,
+        files: [],
       };
 
     default:

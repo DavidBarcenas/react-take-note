@@ -22,4 +22,5 @@ export const types = {
   showModalFolder: 'SHOW_MODAL_FOLDER',
   addNewFolder: 'ADD_NEW_FOLDER',
   saveFiles: 'SAVE_FILES',
+  resetFiles: 'RESET_FILES',
 };

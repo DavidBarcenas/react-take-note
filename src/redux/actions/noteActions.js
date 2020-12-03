@@ -67,6 +67,7 @@ export const saveNewNote = (note) => {
         dispatch(folderNotes([newNote, ...notes.folderNotes]));
         dispatch(activateNote(newNote));
       }
+      dispatch(resetFiles());
       dispatch(hideLoader());
       dispatch(showAlert(constants.saveNoteSuccess, constants.alertSuccess));
     } catch (error) {
@@ -122,6 +123,7 @@ export const updateNote = (note) => {
         dispatch(activateNote(note));
       }
       dispatch(cancelNoteEdit());
+      dispatch(resetFiles());
       dispatch(hideLoader());
       dispatch(showAlert(constants.updateNoteSuccess, constants.alertSuccess));
     } catch (error) {
@@ -243,4 +245,7 @@ export const addFolder = (folder) => ({
 export const saveFiles = (files) => ({
   type: types.saveFiles,
   payload: files,
+});
+export const resetFiles = () => ({
+  type: types.saveFiles,
 });

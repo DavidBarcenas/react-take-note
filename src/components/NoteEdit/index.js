@@ -4,6 +4,9 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useDispatch } from 'react-redux';
 import { editorConfig } from '../../util/editorConfig';
 import { DialogFolder } from './DialogFolder';
+import { constants } from '../../constants';
+import { UploadFile } from '../UploadFile';
+import { deleteFile } from '../../providers/firebaseService';
 import {
   cancelNoteEdit,
   saveNewNote,
@@ -18,9 +21,6 @@ import {
   Select,
   TextField,
 } from '@material-ui/core';
-import { constants } from '../../constants';
-import { UploadFile } from '../UploadFile';
-import { deleteFile } from '../../providers/firebaseService';
 
 export const NoteEdit = ({ note, folderList, files }) => {
   console.log('SE RENDERIZA ==== NOTEEDIT ===');
@@ -30,7 +30,7 @@ export const NoteEdit = ({ note, folderList, files }) => {
     title: note.title,
     body: note.body,
     collection: note.collection,
-    files: note.files || [],
+    files: note.files,
   });
   const [formErrors, setFormErrors] = useState({
     titleError: false,
@@ -40,9 +40,9 @@ export const NoteEdit = ({ note, folderList, files }) => {
   const [folders, setFolders] = useState(folderList);
 
   useEffect(() => {
-    setValue(() => ({ ...note }));
     if (collection.current !== note.collection) {
       setFolders((folders) => [...folders, note.collection]);
+      setValue((value) => ({ ...value, collection: note.collection }));
     }
   }, [note]);
 
@@ -91,7 +91,12 @@ export const NoteEdit = ({ note, folderList, files }) => {
 
   const handleSubmit = () => {
     if (noteValidation()) {
-      const saveNote = { ...note, ...value, date: new Date() };
+      const saveNote = {
+        ...note,
+        ...value,
+        date: new Date(),
+        files: [...note.files, ...files],
+      };
 
       if (note.id !== '') {
         dispatch(updateNote(saveNote));
@@ -177,14 +182,14 @@ export const NoteEdit = ({ note, folderList, files }) => {
           </Button>
         </div>
       </div>
-      <h3>Archivos:</h3>
+      {/* <h3>Archivos:</h3>
       <div className="files-list">
         {note.files.map((file) => (
           <a href={file.url} rel="noreferrer" target="_blank">
             Prueba
           </a>
         ))}
-      </div>
+      </div> */}
 
       <DialogFolder />
     </div>

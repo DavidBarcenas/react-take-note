@@ -1,25 +1,35 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { firebase } from '.././../providers/firebase';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { firebase } from '../../providers/firebase';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { AttachFile } from '@material-ui/icons';
 import { saveFiles } from '../../redux/actions/noteActions';
 
 export const UploadFile = () => {
   const dispatch = useDispatch();
-  const [progress, setProgress] = useState(0);
+  const noteFiles = useSelector((state) => state.notes.activeNote.files);
+  const uploadFiles = useSelector((state) => state.notes.files);
 
   const handleFile = ({ target }) => {
-    if (target.files.length > 0) {
+    if (target.files.length) {
       if (
-        target.files[0].type === 'application/pdf' ||
-        target.files[0].type.slice(0, 5) === 'image'
+        (target.files[0].type === 'application/pdf' ||
+          target.files[0].type.slice(0, 5) === 'image') &&
+        fileExists(target.files[0])
       ) {
-        // seleccionado
         uploadFileFs(target);
-      } else {
-        // no-seleccionado
       }
+    }
+  };
+
+  const fileExists = (file) => {
+    const existsInNote = noteFiles.filter((f) => f.name === file.name);
+    const existsInUpload = uploadFiles.filter((f) => f.name === file.name);
+
+    if (existsInNote.length > 0 || existsInUpload.length > 0) {
+      return false;
+    } else {
+      return true;
     }
   };
 
@@ -29,16 +39,16 @@ export const UploadFile = () => {
       .child(`cghK1k38L4bLKTYkbqIZyPStDyf1/${target.files[0].name}`)
       .put(target.files[0]);
 
-    let unsubcribe = uploadTask.on(
+    uploadTask.on(
       'state_changed',
       (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
-        setProgress(progress);
+        // setProgress(progress);
       },
       (error) => {
         console.log('ocurrio un error al subir arvhivo', error);
-        setProgress(0);
+        // setProgress(0);
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
