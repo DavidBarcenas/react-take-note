@@ -71,6 +71,7 @@ export const noteReducer = (state = initialState, action) => {
               },
 
         deleteFiles: [],
+        files: [],
       };
 
     case types.searchNote:
@@ -117,6 +118,11 @@ export const noteReducer = (state = initialState, action) => {
           ),
         },
         deleteFiles: [...state.deleteFiles, action.payload],
+      };
+    case types.removeUploadFiles:
+      return {
+        ...state,
+        files: state.files.filter((f) => f.name !== action.payload.name),
       };
 
     default:

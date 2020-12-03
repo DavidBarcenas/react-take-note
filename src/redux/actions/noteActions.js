@@ -254,3 +254,8 @@ export const removeFile = (file) => ({
   type: types.removeFiles,
   payload: file,
 });
+
+export const removeUploadFile = (file) => ({
+  type: types.removeUploadFiles,
+  payload: file,
+});

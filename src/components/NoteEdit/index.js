@@ -21,6 +21,7 @@ import {
   Select,
   TextField,
 } from '@material-ui/core';
+import { FileListUpload } from './FileListUpload';
 import { FileListEdit } from './FileListEdit';
 
 export const NoteEdit = ({ note, folderList, files, deleteFiles }) => {
@@ -189,7 +190,12 @@ export const NoteEdit = ({ note, folderList, files, deleteFiles }) => {
           </Button>
         </div>
       </div>
-      {note.files.length > 0 && <FileListEdit files={note.files} />}
+      <div className="files_wrap">
+        {note.files.length > 0 && (
+          <FileListEdit title="Archivos" files={note.files} />
+        )}
+        {files.length > 0 && <FileListUpload title="Subir" files={files} />}
+      </div>
 
       <DialogFolder />
     </div>

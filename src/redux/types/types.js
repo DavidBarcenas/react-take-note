@@ -24,4 +24,5 @@ export const types = {
   saveFiles: 'SAVE_FILES',
   resetFiles: 'RESET_FILES',
   removeFiles: 'REMOVE_FILES',
+  removeUploadFiles: 'REMOVE_UPLAOD_FILES',
 };

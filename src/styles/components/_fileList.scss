@@ -1,5 +1,5 @@
 .files-list-edit {
-  width: 40%;
+  width: 45%;
   h3 {
     margin-bottom: 10px;
   }
@@ -21,4 +21,9 @@
     width: 80%;
     text-overflow: ellipsis;
   }
+}
+
+.files_wrap {
+  display: flex;
+  justify-content: space-between;
 }
