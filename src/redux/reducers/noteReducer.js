@@ -8,6 +8,7 @@ const initialState = {
   editNote: false,
   showModalFolder: false,
   files: [],
+  deleteFiles: [],
 };
 
 export const noteReducer = (state = initialState, action) => {
@@ -38,6 +39,7 @@ export const noteReducer = (state = initialState, action) => {
         activeNote: action.payload,
         activeFolder: action.payload.collection,
         editNote: false,
+        deleteFiles: [],
       };
 
     case types.activateFolder:
@@ -63,7 +65,12 @@ export const noteReducer = (state = initialState, action) => {
         activeNote:
           state.activeNote && state.activeNote.id === ''
             ? state.folderNotes[0]
-            : state.activeNote,
+            : {
+                ...state.activeNote,
+                files: [...state.activeNote.files, ...state.deleteFiles],
+              },
+
+        deleteFiles: [],
       };
 
     case types.searchNote:
@@ -99,6 +106,17 @@ export const noteReducer = (state = initialState, action) => {
       return {
         ...state,
         files: [],
+      };
+    case types.removeFiles:
+      return {
+        ...state,
+        activeNote: {
+          ...state.activeNote,
+          files: state.activeNote.files.filter(
+            (f) => f.name !== action.payload.name
+          ),
+        },
+        deleteFiles: [...state.deleteFiles, action.payload],
       };
 
     default:

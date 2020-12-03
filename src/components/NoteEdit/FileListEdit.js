@@ -1,11 +1,14 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { IconButton } from '@material-ui/core';
-import { deleteFile } from '../../providers/firebaseService';
+import { removeFile } from '../../redux/actions/noteActions';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 export const FileListEdit = ({ files }) => {
+  const dispatch = useDispatch();
+
   const handleDelete = (fileName) => {
-    deleteFile(fileName);
+    dispatch(removeFile(fileName));
   };
 
   return (
@@ -18,7 +21,7 @@ export const FileListEdit = ({ files }) => {
           </a>
           <IconButton
             aria-label="Eliminar Archivo"
-            onClick={() => handleDelete(file.name)}
+            onClick={() => handleDelete(file)}
           >
             <DeleteIcon />
           </IconButton>

@@ -23,4 +23,5 @@ export const types = {
   addNewFolder: 'ADD_NEW_FOLDER',
   saveFiles: 'SAVE_FILES',
   resetFiles: 'RESET_FILES',
+  removeFiles: 'REMOVE_FILES',
 };

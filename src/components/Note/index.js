@@ -12,7 +12,7 @@ export const Note = () => {
   const dispatch = useDispatch();
   const [openDelete, setOpenDelete] = useState(false);
   const showNote = useSelector((state) => state.ui.mobile.showNote);
-  const { activeNote, folders, files, editNote } = useSelector(
+  const { activeNote, folders, files, editNote, deleteFiles } = useSelector(
     (state) => state.notes,
     shallowEqual
   );
@@ -38,7 +38,12 @@ export const Note = () => {
       key={activeNote.id}
     >
       {activeNote && editNote ? (
-        <NoteEdit note={activeNote} folderList={folders} files={files} />
+        <NoteEdit
+          note={activeNote}
+          folderList={folders}
+          files={files}
+          deleteFiles={deleteFiles}
+        />
       ) : (
         <NoteView
           note={activeNote}

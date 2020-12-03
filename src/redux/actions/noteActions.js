@@ -249,3 +249,8 @@ export const saveFiles = (files) => ({
 export const resetFiles = () => ({
   type: types.resetFiles,
 });
+
+export const removeFile = (file) => ({
+  type: types.removeFiles,
+  payload: file,
+});

@@ -23,7 +23,7 @@ import {
 } from '@material-ui/core';
 import { FileListEdit } from './FileListEdit';
 
-export const NoteEdit = ({ note, folderList, files }) => {
+export const NoteEdit = ({ note, folderList, files, deleteFiles }) => {
   console.log('SE RENDERIZA ==== NOTEEDIT ===');
   const collection = useRef(note.collection);
   const dispatch = useDispatch();
@@ -98,6 +98,12 @@ export const NoteEdit = ({ note, folderList, files }) => {
         date: new Date(),
         files: [...note.files, ...files],
       };
+
+      console.log('cuantos hay::', deleteFiles.length);
+      if (deleteFiles.length > 0) {
+        console.log('entra');
+        deleteFiles.map((file) => deleteFile(file.name));
+      }
 
       if (note.id !== '') {
         dispatch(updateNote(saveNote));
