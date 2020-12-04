@@ -12,7 +12,6 @@ export const userNotes = () => {
       dispatch(showLoader());
       const userdata = await db.doc(`${auth.uid}/notes`).get();
       if (userdata.data()) {
-        console.log('entra al 1');
         const folders = userdata.data().folders;
         dispatch(getAllFolders(folders));
         if (folders.length > 0) {
@@ -127,7 +126,6 @@ export const updateNote = (note) => {
       dispatch(hideLoader());
       dispatch(showAlert(constants.updateNoteSuccess, constants.alertSuccess));
     } catch (error) {
-      console.log(error);
       dispatch(hideLoader());
       dispatch(showAlert(constants.updateNoteError, constants.alertError));
     }

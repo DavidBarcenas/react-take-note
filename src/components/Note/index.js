@@ -8,7 +8,6 @@ import { NoteView } from './NoteView';
 import { DialogDeleteNote } from './DialogDeleteNote';
 
 export const Note = () => {
-  console.log('SE RENDERIZA ==== NOTE ===');
   const dispatch = useDispatch();
   const [openDelete, setOpenDelete] = useState(false);
   const showNote = useSelector((state) => state.ui.mobile.showNote);

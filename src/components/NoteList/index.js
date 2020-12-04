@@ -9,7 +9,6 @@ import { showNoteMobile } from '../../redux/actions/uiActions';
 import { constants } from '../../constants';
 
 export const NoteList = () => {
-  console.log('SE RENDERIZA ==== NOTELIST ===');
   const showNotes = useSelector((state) => state.ui.mobile.showNote);
   const folderNotes = useSelector((state) => state.notes.folderNotes);
   const activeNote = useSelector((state) => state.notes.activeNote);

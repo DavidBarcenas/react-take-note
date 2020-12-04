@@ -21,7 +21,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const socialNetworkProvider = (socialNetwork) => {
-  console.log(socialNetwork);
   switch (socialNetwork) {
     case constants.github:
       return new firebase.auth.GithubAuthProvider();

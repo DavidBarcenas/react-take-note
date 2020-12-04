@@ -9,7 +9,6 @@ import SearchOutlined from '@material-ui/icons/SearchOutlined';
 import stickyIcon from '../../assets/images/stickyIcon.svg';
 
 export const TopBar = () => {
-  console.log('SE RENDERIZA ==== TOPBAR ===');
   const dispatch = useDispatch();
   const name = useSelector((state) => state.auth.name);
   const [showSearch, setShowSearch] = useState(false);

@@ -43,17 +43,13 @@ export const UploadFile = () => {
       'state_changed',
       (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
         // setProgress(progress);
       },
       (error) => {
-        console.log('ocurrio un error al subir arvhivo', error);
         // setProgress(0);
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log('File available at', downloadURL);
-          console.log('el file', target.files[0]);
           dispatch(
             saveFiles({
               name: target.files[0].name,

@@ -25,7 +25,6 @@ import { FileListUpload } from './FileListUpload';
 import { FileListEdit } from './FileListEdit';
 
 export const NoteEdit = ({ note, folderList, files, deleteFiles }) => {
-  console.log('SE RENDERIZA ==== NOTEEDIT ===');
   const collection = useRef(note.collection);
   const dispatch = useDispatch();
   const [value, setValue] = useState({
@@ -100,9 +99,7 @@ export const NoteEdit = ({ note, folderList, files, deleteFiles }) => {
         files: [...note.files, ...files],
       };
 
-      console.log('cuantos hay::', deleteFiles.length);
       if (deleteFiles.length > 0) {
-        console.log('entra');
         deleteFiles.map((file) => deleteFile(file.name));
       }
 

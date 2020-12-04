@@ -59,21 +59,15 @@ export const uploadFile = (uid, fileList) => {
     'state_changed',
     (snapshot) => {
       let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
     },
-    (error) => {
-      console.log('ocurrio un error al subir arvhivo', error);
-    },
+    (error) => {},
     () => {
-      uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-        console.log('File available at', downloadURL);
-      });
+      uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {});
     }
   );
 };
 
 export const deleteFile = (file) => {
-  console.log('entra');
   // Create a reference to the file to delete
   const storageRef = firebase.storage().ref();
   const desertRef = storageRef.child(`cghK1k38L4bLKTYkbqIZyPStDyf1/${file}`);
@@ -83,10 +77,8 @@ export const deleteFile = (file) => {
     .delete()
     .then(function () {
       // File deleted successfully
-      console.log('eliminada');
     })
     .catch(function (error) {
       // Uh-oh, an error occurred!
-      console.log('no eliminada', error);
     });
 };
