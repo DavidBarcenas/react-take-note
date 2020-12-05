@@ -109,13 +109,14 @@ $duration: 1.4s;
   }
 }
 
-.MuiPopover-paper {
-  top: 100px !important;
-  left: auto !important;
-  right: 40px;
-
+.menu-files {
+  display: flex;
   a {
+    color: $secondary;
+    display: block;
+    width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
     text-decoration: none;
-    width: 100%;
   }
 }

@@ -144,8 +144,16 @@
 }
 
 .note-file-upload {
+  display: flex;
+  align-items: center;
   margin-left: 1em;
+  width: 200px;
   input {
     display: none;
+  }
+
+  .MuiCircularProgress-colorPrimary {
+    width: 25px !important;
+    height: 25px !important;
   }
 }

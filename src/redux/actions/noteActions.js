@@ -1,6 +1,10 @@
 import { types } from '../types/types';
 import { hideLoader, showAlert, showLoader, showNoteMobile } from './uiActions';
-import { getNotes, saveNote } from '../../providers/firebaseService';
+import {
+  deleteFile,
+  getNotes,
+  saveNote,
+} from '../../providers/firebaseService';
 import { db } from '../../providers/firebase';
 import { constants } from '../../constants';
 import { UserModel } from '../../models/userModel';
@@ -144,6 +148,10 @@ export const deleteNote = () => {
       await db.doc(`${auth.uid}/notes/list/${notes.activeNote.id}`).delete();
       dispatch(hideLoader());
       dispatch(showAlert('Nota eliminada', 'success'));
+
+      if (notes.activeNote.files.length > 0) {
+        notes.activeNote.files.map((file) => deleteFile(file.name));
+      }
       dispatch(removeNote(notes.activeNote.id));
 
       if (notes.folderNotes.length === 1) {

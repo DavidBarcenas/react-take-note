@@ -8,6 +8,7 @@ export const DialogFiles = ({ files, handleClose, anchorEl }) => {
       anchorEl={anchorEl}
       open={Boolean(anchorEl)}
       onClose={handleClose}
+      className="menu-files"
     >
       {files.map((file, i) => (
         <MenuItem key={i} onClick={handleClose}>

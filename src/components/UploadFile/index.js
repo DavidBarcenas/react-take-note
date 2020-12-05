@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { firebase } from '../../providers/firebase';
-import { IconButton, Tooltip } from '@material-ui/core';
+import { CircularProgress, IconButton, Tooltip } from '@material-ui/core';
 import { AttachFile } from '@material-ui/icons';
 import { saveFiles } from '../../redux/actions/noteActions';
 
@@ -9,6 +9,8 @@ export const UploadFile = () => {
   const dispatch = useDispatch();
   const noteFiles = useSelector((state) => state.notes.activeNote.files);
   const uploadFiles = useSelector((state) => state.notes.files);
+  const uid = useSelector((state) => state.auth.uid);
+  const [progress, setProgress] = useState(0);
 
   const handleFile = ({ target }) => {
     if (target.files.length) {
@@ -36,20 +38,21 @@ export const UploadFile = () => {
   const uploadFileFs = (target) => {
     const storageRef = firebase.storage().ref();
     const uploadTask = storageRef
-      .child(`cghK1k38L4bLKTYkbqIZyPStDyf1/${target.files[0].name}`)
+      .child(`${uid}/${target.files[0].name}`)
       .put(target.files[0]);
 
     uploadTask.on(
       'state_changed',
       (snapshot) => {
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        // setProgress(progress);
+        setProgress(progress);
       },
       (error) => {
-        // setProgress(0);
+        setProgress(0);
       },
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          setProgress(0);
           dispatch(
             saveFiles({
               name: target.files[0].name,
@@ -76,6 +79,7 @@ export const UploadFile = () => {
           </IconButton>
         </label>
       </Tooltip>
+      {progress > 0 && <CircularProgress value={progress} />}
     </div>
   );
 };
