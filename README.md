@@ -2,7 +2,7 @@
 
 Create notes to keep on hand at all times, keep order with folders, add files, and more.
 
-[live demo]: https://takenote-4c618.web.app/
+[live demo](https://takenote-4c618.web.app/)
 
 ## Preview
 
