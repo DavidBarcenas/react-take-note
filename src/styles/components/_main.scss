@@ -30,7 +30,7 @@
 
 .categories.no-show,
 .notelist.no-show,
-.notelist.no-show {
+.note.no-show {
   display: none;
   @include mq(md) {
     display: block !important;

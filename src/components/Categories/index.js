@@ -16,7 +16,7 @@ export const Categories = () => {
   const dispatch = useDispatch();
   const activeFolder = useSelector((state) => state.notes.activeFolder);
   const folders = useSelector((state) => state.notes.folders);
-  const showFolders = useSelector((state) => state.ui.showFolders);
+  const showFolders = useSelector((state) => state.ui.mobile.showFolders);
 
   const createNoteBtn = () => dispatch(newNote(NoteModel));
 

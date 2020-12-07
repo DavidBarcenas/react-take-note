@@ -9,7 +9,7 @@ import { showNoteMobile } from '../../redux/actions/uiActions';
 import { constants } from '../../constants';
 
 export const NoteList = () => {
-  const showNotes = useSelector((state) => state.ui.mobile.showNote);
+  const showNotes = useSelector((state) => state.ui.mobile.showNotes);
   const folderNotes = useSelector((state) => state.notes.folderNotes);
   const activeNote = useSelector((state) => state.notes.activeNote);
   const dispatch = useDispatch();
